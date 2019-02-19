@@ -26,7 +26,8 @@
     const statusMetaDiv = document.querySelector(".detailed-status__meta")
     if (statusMetaDiv == null) return // UIを出すところがないので帰る
     const boostButton = parent(document.querySelector('a[href^="/interact/"] > .fa-retweet'))
-    const favButton = parent(document.querySelector('a[href^="/interact/"] > .fa-star'))
+    const favButton = parent(document.querySelector('a[href^="/interact/"] > .detailed-status__favorites'))
+    const isNicoru = favButton && favButton.querySelector(".fa-nicoru--status")
 
     // ReactでUIを作る
 
@@ -46,8 +47,6 @@
         }
         
         componentDidMount() {
-            const boostButton = parent(document.querySelector('a[href^="/interact/"] > .fa-retweet'))
-            const favButton = parent(document.querySelector('a[href^="/interact/"] > .fa-star'))
             if (boostButton) {
                 boostButton.addEventListener("click", e => {
                     e.preventDefault()
@@ -71,10 +70,10 @@
         render() {
             const { active } = this.state
             if (active == null) return <div>
-                <i className="fa fa-retweet" /> か <i className="fa fa-star" /> をクリックするとブーストした/ふぁぼったユーザーが表示されます
+                <i className="fa fa-retweet" /> か {isNicoru ? <i className="fa fa-nicoru--status" /> : <i className="fa fa-star" />} をクリックするとブーストした/ふぁぼったユーザーが表示されます
             </div>
             const [name, icon] = ({
-                "favourite": ["ふぁぼ", "star"],
+                "favourite": isNicoru ? ["ニコる", "nicoru"] : ["ふぁぼ", "star"],
                 "reblog": ["ブースト", "retweet"]
             } as {[key: string]: [string, string]})[active]
             return <div style={{margin: "15px -15px -15px"}}>
