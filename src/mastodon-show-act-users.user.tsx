@@ -17,6 +17,7 @@
     const regex = /^\/@[A-Za-z0-9_]+\/(\d+)/
     const matchedUrl = regex.exec(location.pathname)
     if (matchedUrl == null) return // URLがそれっぽくない
+    if (location.pathname.includes("/embed")) return // 埋め込みでは動かないようにする
     // これログインしてるとひっかかることに気づいたので無効化
     // if (document.querySelector('a[href="https://joinmastodon.org/#getting-started"]') == null) return // Mastodonっぽくなさそう
     if (document.querySelector('a[href^="/interact/"]') == null) return // 新しいMastodonを使え
