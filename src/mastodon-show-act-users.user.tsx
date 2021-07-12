@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          Mastodon Show act users in /@xxx/12345
 // @namespace     https://rinsuki.net
-// @version       0.2.0
+// @version       0.3.0
 // @description   Mastodonの投稿詳細画面でBT/favしたユーザー一覧を見れるようにする
 // @author        rinsuki
 // @include       /^https:\/\/[^/]*\/@[A-Za-z0-9_]+\/[0-9]+([?#].*)?$/
