@@ -1,13 +1,15 @@
 // ==UserScript==
-// @name         Mastodon Show act users in /@xxx/12345
-// @namespace    https://rinsuki.net
-// @version      0.2.0
-// @description  Mastodonの投稿詳細画面でBT/favしたユーザー一覧を見れるようにする
-// @author       rinsuki
-// @match        https://*/@*/*
-// @grant        none
-// @require      https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js#sha256=c9486f126615859fc61ac84840a02b2efc920d287a71d99d708c74b2947750fe
-// @require      https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js#sha256=bc5b7797e8a595e365c1385b0d47683d3a85f3533c58d499659b771c48ec6d25
+// @name          Mastodon Show act users in /@xxx/12345
+// @namespace     https://rinsuki.net
+// @version       0.2.0
+// @description   Mastodonの投稿詳細画面でBT/favしたユーザー一覧を見れるようにする
+// @author        rinsuki
+// @match         https://*/@*/*
+// @exclude-match https://*/@*/*/embed
+// @exclude-match https://*.tiktok.com/*
+// @grant         none
+// @require       https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js#sha256=c9486f126615859fc61ac84840a02b2efc920d287a71d99d708c74b2947750fe
+// @require       https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js#sha256=bc5b7797e8a595e365c1385b0d47683d3a85f3533c58d499659b771c48ec6d25
 // ==/UserScript==
 
 (function() {
@@ -17,7 +19,6 @@
     const regex = /^\/@[A-Za-z0-9_]+\/(\d+)/
     const matchedUrl = regex.exec(location.pathname)
     if (matchedUrl == null) return // URLがそれっぽくない
-    if (location.pathname.includes("/embed")) return // 埋め込みでは動かないようにする
     // これログインしてるとひっかかることに気づいたので無効化
     // if (document.querySelector('a[href="https://joinmastodon.org/#getting-started"]') == null) return // Mastodonっぽくなさそう
     if (document.querySelector('a[href^="/interact/"]') == null) return // 新しいMastodonを使え
