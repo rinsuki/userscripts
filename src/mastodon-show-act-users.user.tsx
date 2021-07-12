@@ -4,7 +4,7 @@
 // @version       0.2.0
 // @description   Mastodonの投稿詳細画面でBT/favしたユーザー一覧を見れるようにする
 // @author        rinsuki
-// @match         https://*/@*/*
+// @include       /^https:\/\/[^/]*\/@[A-Za-z0-9_]+\/[0-9]+([?#].*)?$/
 // @exclude-match https://*/@*/*/embed
 // @exclude-match https://*.tiktok.com/*
 // @grant         none
