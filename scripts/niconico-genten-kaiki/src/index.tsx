@@ -1,26 +1,7 @@
-// ==UserScript==
-// @name        原点回帰(Re) あるいは ZenTube in 公式プレーヤー
-// @namespace   rinsuki.net
-// @description 動画説明文内のYouTubeへのリンクに「原点回帰」ボタンが追加され、そのボタンを押すとYouTubeの埋め込みプレーヤーで動画が再生されるようになります。
-// @match       https://www.nicovideo.jp/watch/*
-// @grant       none
-// @version     1.0
-// @author      -
-// ==/UserScript==
-
-declare var __videoplayer: {
-    play(): void
-    duration(): number
-    replace(url: string): void
-    originalCurrentTime(): number
-    paused(): boolean
-    pause(): void
-}
+import { sleep } from "./utils"
+import { YTPlayer } from "./yt-player"
 
 (async () => {
-    const YOUTUBE_ORIGIN = "https://www.youtube.com"
-    
-    function sleep(msec: number) { return new Promise(resolve => setTimeout(resolve, msec)) }
     // 本当は Observe とかしたほうがいいんだろうが…
     async function waitForSelectorExists(selector: string) {
         for (let i=0; i<5; i++) {
@@ -47,75 +28,6 @@ declare var __videoplayer: {
     body.${ccPrefix}-enableytclick .${ccPrefix}-ytb-b { fill: #f00 }
     body.${ccPrefix}-enableytclick #UadPlayer { pointer-events: none; }
     `
-
-    class YTPlayer {
-        iframe = document.createElement("iframe")
-        widgetid: number
-        connected = false
-
-        constructor(videoId: string) {
-            this.widgetid = Date.now()
-            this.iframe.src = `${YOUTUBE_ORIGIN}/embed/${videoId}?autoplay=1&fs=0&disablekb=1&modestbranding=1&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1&origin=${location.origin}&vq=highres&widgetid=${this.widgetid}`
-            window.addEventListener("message", e => {
-                if (e.origin !== YOUTUBE_ORIGIN) return console.log("invalid origin")
-                const data = JSON.parse(e.data)
-                if (data.id !== this.widgetid) return
-                this.connected = true
-                switch (data.event) {
-                case "onReady":
-                    if (this.onReadyCallback != null) this.onReadyCallback()
-                    break
-                case "infoDelivery":
-                    const info = data.info as {
-                        currentTime: number,
-                    }
-                    const diff = Math.abs(info.currentTime - __videoplayer.originalCurrentTime())
-                    if (diff > 0.5) {
-                        this.call("seekTo", __videoplayer.originalCurrentTime(), true)
-                    }
-                    break
-                case "onStateChange":
-                    const isPaused = data.info !== 1
-                    if (isPaused !== __videoplayer.paused()) {
-                        if (isPaused) {
-                            __videoplayer.pause()
-                        } else {
-                            __videoplayer.play()
-                        }
-                    }
-                default:
-                    console.log("iframe event", data)
-                }
-            })
-            this.iframe.addEventListener("load", async () => {
-                for (let i=0; i<100 && !this.connected; i++) {
-                    this.sendListening()
-                    await sleep(100)
-                }
-            })
-        }
-
-        postMessage(obj: any) {
-            this.iframe.contentWindow!.postMessage(JSON.stringify({
-                ...obj,
-                id: this.widgetid,
-            }), YOUTUBE_ORIGIN)
-        }
-
-        onReadyCallback?: () => any
-
-        onLoad(callback: () => any) {
-            this.iframe.addEventListener("load", callback)
-        }
-
-        sendListening() {
-            this.postMessage({event: "listening", channel: "widget"})
-        }
-
-        call(func: string, ...args: any[]) {
-            this.postMessage({event: "command", func, args, channel: "widget"})
-        }
-    }
 
     document.head.appendChild(style)
     function startYouTube(videoId: string) {
