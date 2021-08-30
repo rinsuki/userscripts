@@ -16,7 +16,7 @@ import { SectionHeader } from "./components/section-header"
 
     const statusMetaDiv = document.querySelector(".detailed-status__meta")
     if (statusMetaDiv == null) return // UIを出すところがないので帰る
-    const boostButton = parent(document.querySelector('a[href^="/interact/"] > .fa-retweet'))
+    const boostButton = parent(document.querySelector('a[href^="/interact/"] > .detailed-status__reblogs'))
     const favButton = parent(document.querySelector('a[href^="/interact/"] > .detailed-status__favorites'))
     const isNicoru = favButton && favButton.querySelector(".fa-nicoru--status")
 
