@@ -10,7 +10,7 @@ export default files.map(file => {
         output: [{
             name: file+".user",
             file: __dirname+"/dist/" + file + ".user.js",
-            banner: fs.readFileSync(`${__dirname}/scripts/${file}/banner.js`, { encoding: "utf-8" }),
+            banner: () => fs.readFileSync(`${__dirname}/scripts/${file}/banner.js`, { encoding: "utf-8" }),
             format: "iife",
         }],
         plugins: [
