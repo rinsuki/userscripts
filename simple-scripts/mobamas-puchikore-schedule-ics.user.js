@@ -20,7 +20,7 @@
         return input.toString().padStart(keta, "0")
     }
     /**
-     * いい感じに年とかを推定して Date を作ってくれるようにしようと思ったけど後々のこと考えてやめた
+     * いい感じに年とかを推定して Date を作ってくれるようにしようと思ったけど後々のこと考えてobjectを返すようにした
      * @param {number} month
      * @param {number} day
      * @param {number} hour
@@ -30,7 +30,6 @@
         // 12月〜1月みたいな跨ぎに対応したいという気持ちを込めたコード
         const year = (current.getMonth()) > month ? current.getFullYear() + 1 : current.getFullYear()
         const sec = minute === 0 ? 0 : 59
-        // UTC+9 を強制したいので仕方なく string を一回作っている
         return {
             year,
             month,
