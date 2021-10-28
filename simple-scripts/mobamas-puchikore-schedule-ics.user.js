@@ -10,6 +10,11 @@
 // @ts-check
 
 (() => {
+    const tpl = document.getElementById("tpl_schedule")
+    if (tpl == null) return console.warn("schedule tpl is not found")
+    const scheduleButton = document.querySelector("#event_main_graphic a.js_schedule")
+    if (scheduleButton == null) return console.warn("schedule button is not found")
+
     const current = new Date()
     /**
      * @param {string | number} input 
@@ -57,8 +62,6 @@
         ].join("")
     }
     
-    const tpl = document.getElementById("tpl_schedule")
-    if (tpl == null) return console.warn("schedule tpl is not found")
     const body = new DOMParser().parseFromString(tpl.innerHTML, "text/html").querySelector("body > div")
     let month = -1, day = -1, rival = "千川ちひろ", round = -1, stages = []
     let rounds = []
@@ -149,6 +152,5 @@
     link.innerText = "🐒.icsファイル"
     link.className = "info_link unlink"
     link.style.textAlign = "center"
-    const scheduleButton = document.querySelector("#event_main_graphic a.js_schedule")
     scheduleButton.parentElement.insertBefore(link, scheduleButton.nextElementSibling)
 })()
