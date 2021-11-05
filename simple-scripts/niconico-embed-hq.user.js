@@ -5,7 +5,7 @@
 // @grant       GM_xmlhttpRequest
 // @connect     www.nicovideo.jp
 // @version     1.0
-// @author      -
+// @author      rinsuki
 // @description ニコニコ動画の埋め込みプレーヤーでの画質を上げます。ログインしていないと埋め込みプレーヤーでの視聴に失敗するようになるので注意してください。
 // ==/UserScript==
 // @ts-check
