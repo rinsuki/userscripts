@@ -29,7 +29,7 @@
                         if (event.attributeName !== "data-response") continue
                         /** @type {typeof IResponse} */
                         const res = JSON.parse(reqdiv.dataset.response)
-                        console.log(res)
+                        console.log("hooking request finish received", res)
                         if ("error" in res) {
                             reject(res.error)
                         } else {
@@ -39,6 +39,7 @@
                             }))
                         }
                         observer.disconnect()
+                        reqdiv.remove()
                     }
                 })
                 observer.observe(reqdiv, {
@@ -69,7 +70,7 @@
                     url,
                     responseType: "blob",
                     onload(r) {
-                        console.log("!", r.response)
+                        console.log("hooking request finish", r)
                         const url = URL.createObjectURL(r.response)
                         node.dataset.response = JSON.stringify({url})
                     },
