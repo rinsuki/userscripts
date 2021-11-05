@@ -22,18 +22,15 @@
                     method: "GET",
                     url: JSON.parse(JSON.stringify(args[0])).replace("/v3_guest/", "/v3/").replace("?_frontendId=70&", "?_frontendId=6&") + "&withoutHistory=true",
                     responseType: "blob",
-                    onload: (response) => {
-                        console.log("!", response.response)
-                        const url = URL.createObjectURL(response.response)
-                        resolve(unsafeWindow.fetch(url).then(r => {
-                            URL.revokeObjectURL(url)
-                            return r
-                        }))
-                    },
-                    onerror: (response) => {
-                        console.log("fail", response.error)
-                        reject(response.error)
-                    }
+                    onload: resolve,
+                    onerror: r => reject(r.error)
+                })
+            }).then((response) => {
+                console.log("!", response.response)
+                const url = URL.createObjectURL(response.response)
+                return unsafeWindow.fetch(url).then(r => {
+                    URL.revokeObjectURL(url)
+                    return r
                 })
             })
         }
