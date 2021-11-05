@@ -10,7 +10,7 @@ http.createServer(async (req, res) => {
     }
     const path = new URL(req.url, `http://example.com`).pathname
     if (path === "/") {
-        console.log("[DEVSERVER]", req.socket.remoteAddress, req.method, path)
+        console.log("[DEVSERVER]", new Date().toISOString(), req.socket.remoteAddress, req.method, path)
         res.setHeader("Content-Type", "text/html")
         res.writeHead(200)
         res.write("<!DOCTYPE html><html lang=ja><h1>scripts</h1><ul>")
@@ -34,13 +34,13 @@ http.createServer(async (req, res) => {
             res.end()
             return
         }
-        console.log("[DEVSERVER]", req.socket.remoteAddress, req.method, path)
+        console.log("[DEVSERVER]", new Date().toISOString(), req.socket.remoteAddress, req.method, path)
         res.setHeader("ETag", etag)
         res.setHeader("Content-Type", "application/javascript")
         fs.createReadStream(__dirname+path).pipe(res)
         return
     }
-    console.log("[DEVSERVER]", req.socket.remoteAddress, req.method, path)
+    console.log("[DEVSERVER]", new Date().toISOString(), req.socket.remoteAddress, req.method, path)
     res.setHeader("Content-Type", "text/plain")
     res.writeHead(404)
     res.write("Not Found")
