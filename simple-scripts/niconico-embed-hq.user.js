@@ -6,7 +6,7 @@
 // @connect     www.nicovideo.jp
 // @version     1.0
 // @author      -
-// @description 2021/7/10 17:59:48
+// @description ニコニコ動画の埋め込みプレーヤーでの画質を上げます。ログインしていないと埋め込みプレーヤーでの視聴に失敗するようになるので注意してください。
 // ==/UserScript==
 // @ts-check
 
