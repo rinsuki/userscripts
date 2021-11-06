@@ -4,7 +4,7 @@
 // @match       https://embed.nicovideo.jp/watch/*
 // @grant       GM_xmlhttpRequest
 // @connect     www.nicovideo.jp
-// @version     1.0
+// @version     1.0.1
 // @author      rinsuki
 // @description ニコニコ動画の埋め込みプレーヤーでの画質を上げます。ログインしていないと埋め込みプレーヤーでの視聴に失敗するようになるので注意してください。
 // ==/UserScript==
@@ -34,7 +34,7 @@
                         if ("error" in res) {
                             reject(res.error)
                         } else {
-                            resolve(fetch(res.url).then(r => {
+                            resolve(fetch(res.url + "#" + args[0]).then(r => {
                                 URL.revokeObjectURL(res.url)
                                 return r
                             }))
