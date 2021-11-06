@@ -11,6 +11,7 @@
 // @ts-check
 
 (() => {
+    if ((location.hash + location.search).includes("_userscript_skip_hq_hook_")) return
     /** @type {{error: string} | {url: string}} */
     // @ts-expect-error
     const IResponse = "you shouldn't use this as value"
