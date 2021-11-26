@@ -42,7 +42,7 @@ jobs:
         COMMIT=`cat dist/COMMIT`
         cd dist-branch
         rm COMMIT
-        git config --local user.email "41898282@users.noreply.github.com"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "GitHub Actions"
         git add -A .
         git commit --allow-empty -m "update with $COMMIT"
