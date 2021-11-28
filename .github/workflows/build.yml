@@ -33,7 +33,10 @@ jobs:
       with:
         name: dist
     # upload to dist branch
-    - run: git worktree add dist-branch dist
+    - uses: actions/checkout@v2
+      with:
+        ref: dist
+        path: ./dist-branch
     - run: rm -rf ./dist-branch/* && cp -r ./dist/* ./dist-branch/
     - run: |
         COMMIT=`cat dist/COMMIT`
