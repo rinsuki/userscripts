@@ -10,6 +10,7 @@
 // ==/UserScript==
 
 (() => {
+    if (!navigator.userAgent.includes("Firefox/")) return
     const origGetter = HTMLVideoElement.prototype.__lookupGetter__("currentTime")
     const origSetter = HTMLVideoElement.prototype.__lookupSetter__("currentTime")
     class Smoother {
