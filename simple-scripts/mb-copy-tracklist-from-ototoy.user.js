@@ -11,16 +11,25 @@
 (() => {
     const tracklist = document.getElementById("tracklist")
     if (tracklist == null) return
-    const tracks = []
+    var tracks = ""
+    function createTextarea() {
+        if (tracks === "") return
+        const textarea = document.createElement("textarea")
+        textarea.value = tracks
+        document.querySelector(".album-addendum").appendChild(textarea)
+        tracks = ""
+    }
     for (const tr of tracklist.querySelectorAll("tr")) {
+        if (tr.classList.contains("disc-row")) {
+            createTextarea()
+            continue
+        }
         const number = tr.querySelector("td:nth-child(1) canvas")
         const title = tr.querySelector("td > span[id^=title-]")
         if (title == null) continue
         const artist = title.parentElement.querySelector("span > a.artist")
         const time = tr.querySelector("td:nth-child(3)")
-        tracks.push(`${number.textContent.trim()}. ${title.textContent.trim()} - ${artist.textContent.trim()} (${time.textContent.trim()})`)
+        tracks += `${number.textContent.trim()}. ${title.textContent.trim()} - ${artist.textContent.trim()} (${time.textContent.trim()})\n`
     }
-    const textarea = document.createElement("textarea")
-    textarea.value = tracks.join("\n")
-    document.querySelector(".album-addendum").appendChild(textarea)
+    createTextarea()
 })()
