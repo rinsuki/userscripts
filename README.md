@@ -1,5 +1,7 @@
 # userscripts
 
+:warning: 基本的に他人にとって使い物になるものは Greasy Fork にミラーしているので、そちらからのインストールをおすすめします https://greasyfork.org/ja/users/163419-rinsuki
+
 ビルド成果物が https://github.com/rinsuki/userscripts/tree/dist にあります
 
 ## How to develop
