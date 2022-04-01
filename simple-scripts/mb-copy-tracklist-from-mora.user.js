@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        MB: copy tracklist from mora
-// @namespace   Violentmonkey Scripts
+// @namespace   https://rinsuki.net
 // @match       https://mora.jp/package/*
 // @grant       none
 // @version     1.0
-// @author      -
-// @description 2022/3/16 0:06:25
+// @author      rinsuki
+// @description generates Track List for MusicBrainz, from mora.jp page.
 // ==/UserScript==
 
 const origFunc = Package.receivePackageData

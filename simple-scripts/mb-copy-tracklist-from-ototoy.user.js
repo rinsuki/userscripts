@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name        MB: copy tracklist from OTOTOY
-// @namespace   Violentmonkey Scripts
+// @namespace   https://rinsuki.net
 // @match       https://ototoy.jp/_/default/p/*
 // @grant       none
 // @version     1.0
-// @author      -
-// @description 2022/3/16 0:06:25
+// @author      rinsuki
+// @description generates Track List for MusicBrainz, from ototoy.jp album page.
 // ==/UserScript==
 
 (() => {
@@ -29,7 +29,9 @@
         if (title == null) continue
         const artist = title.parentElement.querySelector("span > a.artist")
         const time = tr.querySelector("td:nth-child(3)")
-        tracks += `${number.textContent.trim()}. ${title.textContent.trim()} - ${artist.textContent.trim()} (${time.textContent.trim()})\n`
+        tracks += `${number.textContent.trim()}. ${title.textContent.trim()}`
+        if (artist != null) tracks += ` - ${artist.textContent.trim()}`
+        tracks += ` (${time.textContent.trim()})\n`
     }
     createTextarea()
 })()
