@@ -5,6 +5,7 @@
 // @grant       none
 // @version     1.0
 // @author      rinsuki
+// @license     MIT
 // @description generates Track List for MusicBrainz, from ototoy.jp album page.
 // ==/UserScript==
 
