@@ -15,16 +15,21 @@ Package.receivePackageData = function(obj, json) {
     origFunc(obj, json)
     console.log(json)
     var tracks = ""
-    function createTextarea() {
-        if (tracks === "") return
-        const textarea = document.createElement("textarea")
-        textarea.value = tracks
-        const desc = document.querySelector("#package_description")
-        desc.parentElement.insertBefore(textarea, desc)
-        tracks = ""
-    }
     for (const track of json.trackList) {
         tracks += `${track.trackNo}. ${track.title} - ${track.artistName} (${track.durationStr})\n`
     }
-    createTextarea()
+    if (tracks === "") return
+    const textarea = document.createElement("textarea")
+    textarea.value = tracks
+    textarea.style.width = "100%"
+    const desc = document.querySelector("#package_description")
+    desc.parentElement.insertBefore(textarea, desc)
+    tracks = ""
+    const rawLink = SFPath.getPackage(mountPoint, labelId, materialNo) + '/packageMeta.json'
+    const rawLinkAnchor = document.createElement("a")
+    rawLinkAnchor.href = rawLink
+    rawLinkAnchor.textContent = "packageMeta.json"
+    rawLinkAnchor.style.fontSize = "1rem"
+    rawLinkAnchor.style.textDecoration = "underline"
+    desc.parentElement.insertBefore(rawLinkAnchor, desc)
 }
