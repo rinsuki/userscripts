@@ -6,7 +6,7 @@
 // @version     1.0
 // @author      rinsuki
 // @license     MIT
-// @description Use Storage Access API to Play YouTube (Music)? Premium Required Videos
+// @description Use Storage Access API to Play YouTube (Music)? Premium Required Videos on Embed Player
 // ==/UserScript==
 
 document.requestStorageAccess().then(()=> {
