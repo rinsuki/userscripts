@@ -4,7 +4,7 @@ import pluginNodeResolve from "@rollup/plugin-node-resolve"
 
 const files = fs.readdirSync(__dirname+"/scripts")
 
-export default files.map(file => {
+export default files.filter(a => !a.startsWith(".")).map(file => {
     return {
         input: "./scripts/" + file + "/src/index.tsx",
         output: [{
