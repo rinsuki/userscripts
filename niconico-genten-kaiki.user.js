@@ -82,7 +82,10 @@ body.${ccPrefix}-enableytclick #UadPlayer { pointer-events: none; }
             });
         }
         postMessage(obj) {
-            this.iframe.contentWindow.postMessage(JSON.stringify(Object.assign(Object.assign({}, obj), { id: this.widgetid })), YOUTUBE_ORIGIN);
+            this.iframe.contentWindow.postMessage(JSON.stringify({
+                ...obj,
+                id: this.widgetid,
+            }), YOUTUBE_ORIGIN);
         }
         onLoad(callback) {
             this.iframe.addEventListener("load", callback);

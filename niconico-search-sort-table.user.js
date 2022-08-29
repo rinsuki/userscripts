@@ -23,14 +23,13 @@
         links[key] = [anchor.href, anchor.parentElement.classList.contains("active"), anchor];
     }
     const Link = props => {
-        var _a, _b;
         let l = links[props.k];
         if (l == null) {
-            (_a = originalSortList.querySelector("li.active")) === null || _a === void 0 ? void 0 : _a.remove();
+            originalSortList.querySelector("li.active")?.remove();
             return React.createElement("a", { style: { padding: "4px", color: "#fff", background: "#999" }, className: "active" }, props.children);
         }
         else {
-            (_b = l[2].parentElement) === null || _b === void 0 ? void 0 : _b.remove();
+            l[2].parentElement?.remove();
             return React.createElement("a", { href: l[0], style: { padding: "4px" } }, props.children);
         }
     };
