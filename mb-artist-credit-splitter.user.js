@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        MB: Artist Credit Splitter
-// @version     1.0
+// @version     1.0.1
 // @description いい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
 // @namespace   https://rinsuki.net/
 // @author      rinsuki
@@ -55,7 +55,7 @@
             const props = container.memoizedState.element.props;
             console.log(props);
             const currentCredit = props.artistCredit.names.map(name => name.name + name.joinPhrase).join("");
-            const RE = /([ 　]*(\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] | feat[.: ．：　] *)[ 　]*)+/g;
+            const RE = /([ 　]*(\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g;
             let splittedCredits = [];
             let lastIndex = 0;
             for (const match of currentCredit.matchAll(RE)) {
