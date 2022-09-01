@@ -11,7 +11,7 @@ const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
     const button = document.createElement("button")
     button.type = "button"
     button.style.float = "left"
-    button.textContent = "Split Automatically"
+    button.textContent = "USERJS: Split Automatically"
     button.addEventListener("click", async () => {
         const container = getReactContainer(bubble)
         if (container == null) return alert("Failed to get React container")
