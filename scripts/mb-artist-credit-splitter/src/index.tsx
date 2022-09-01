@@ -30,7 +30,7 @@ const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
         }
         console.log(props)
         const currentCredit = props.artistCredit.names.map(name => name.name + name.joinPhrase).join("")
-        const RE = /([ 　]*(\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g
+        const RE = /([ 　]*(CV[.:．：] *|\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g
         let splittedCredits = [] as [string, string][]
         let lastIndex = 0
         for (const match of currentCredit.matchAll(RE)) {
