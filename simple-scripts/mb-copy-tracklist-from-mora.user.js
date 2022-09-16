@@ -3,16 +3,17 @@
 // @namespace   https://rinsuki.net
 // @match       https://mora.jp/package/*
 // @grant       none
-// @version     1.0
+// @version     1.0.1
 // @author      rinsuki
 // @license     MIT
 // @description generates Track List for MusicBrainz, from mora.jp page.
 // ==/UserScript==
 
-const origFunc = Package.receivePackageData
+const origFunc = Package.renderMain
 
-Package.receivePackageData = function(obj, json) {
-    origFunc(obj, json)
+Package.renderMain = function() {
+    origFunc.call(this)
+    const json = Package.sfPackageData
     console.log(json)
     var tracks = ""
     for (const track of json.trackList) {
