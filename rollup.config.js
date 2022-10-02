@@ -18,6 +18,9 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
             pluginNodeResolve({
                 browser: true,
             }),
-        ]
+        ],
+        watch: {
+            clearScreen: false,
+        },
     }
 })
