@@ -19,7 +19,7 @@ async function main() {
     const workId = match[1]
     /** @type {HTMLTextAreaElement} */
     // @ts-ignore
-    const textarea = document.getElementById("db_slot_rows_form_rows")
+    const textarea = document.getElementById("deprecated_db_slot_rows_form_rows")
     if (textarea == null) return console.warn("textarea not found")
 
     const episodesPage = await fetch(`/db/works/${workId}/episodes`)
