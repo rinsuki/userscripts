@@ -14,6 +14,7 @@
         ["https://music.youtube.com/search?q={query}", "YouTube Music"],
         ["https://open.spotify.com/search/{query}", "Spotify"],
         ["https://music.apple.com/jp/search?term={query}", "Apple Music"],
+        ["https://isrceam.deta.dev/apple/jp/search?q={query}", "Apple Music (ISRCeam)"],
         ["https://ototoy.jp/find/?q={query}", "OTOTOY"],
         ["https://mora.jp/search/top?keyWord={query}", "mora"],
         ["https://www.google.com/search?client=firefox-b-d&q={query}", "Google"],
