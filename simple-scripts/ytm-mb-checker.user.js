@@ -4,6 +4,8 @@
 // @match       https://music.youtube.com/*
 // @grant       GM_notification
 // @grant       GM_openInTab
+// @grant       GM_registerMenuCommand
+// @grant       GM_openInTab
 // @version     1.0
 // @author      -
 // @description Check Currently Playing Album is Registered in YouTube Music
@@ -42,24 +44,32 @@
         browseIdToPlaylistIdMap.set(browseId, playlistId)
         return playlistId
     }
-
     const mbExistsCache = new Set()
+    let currentPlaylistId = null
+    GM_registerMenuCommand("Open Album in MusicBrainz", () => {
+        const urlFind = new URL("https://musicbrainz.org/otherlookup/url")
+        urlFind.searchParams.set("other-lookup.url", "https://music.youtube.com/playlist?list=" + currentPlaylistId)
+        GM_openInTab(urlFind.href)
+    })
     const observer = new MutationObserver(events => {
         /** @type { HTMLAnchorElement | null } */
         const browseLink = contentInfoWrapper.querySelector(`a[href*="browse/"]`)
         if (browseLink == null) {
             console.log("can't find browseLink")
+            currentPlaylistId = null
             return
         }
         const albumTitle = browseLink.textContent
         if (albumTitle == null) {
             alert("albumTitle is null")
+            currentPlaylistId = null
             return
         }
         const browseId = /^\/browse\/([^?/]+)$/.exec(browseLink.pathname)?.[1]
         if (browseId == null) return
         if (!browseId.startsWith("MPREb_")) {
             console.log(`Unknown browseId ${browseId}`)
+            currentPlaylistId = null
             return
         }
         (async () => {
@@ -77,8 +87,10 @@
                         url.searchParams.set("query", albumTitle)
                         GM_openInTab(url.href)
                     })
+                    currentPlaylistId = null
                 } else if (r.status < 300) {
                     console.log("Found in MusicBrainz", albumTitle, playlistId)
+                    currentPlaylistId = playlistId
                     mbExistsCache.add(playlistId)
                 }
             } catch(e) {
