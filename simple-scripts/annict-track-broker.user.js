@@ -5,7 +5,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_xmlhttpRequest
-// @version     1.0
+// @version     1.1
 // @author      rinsuki
 // @description Annict の「記録する」ページの内容を指定されたURLに送信します。
 // ==/UserScript==
