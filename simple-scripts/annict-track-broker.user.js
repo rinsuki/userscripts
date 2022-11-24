@@ -15,7 +15,7 @@
     /** @type {MutationObserver | null} */
     let observer
     const configUI = document.createElement("details")
-    configUI.innerHTML = `<summary>Track Broker Config</summary><form><div>URL: <input name="url"></div><div>Authorization Header: <input name="auth" placeholder="Bearer ..."></div><button>Save</button></form>`
+    configUI.innerHTML = `<summary>Track Broker Config</summary><form><div>URL: <input name="url"></div><div>Authorization Header: <input name="auth" placeholder="Bearer ..."></div><div>method: <select name="method"><option>POST</option><option>PUT</option></select></div><button>Save</button></form>`
     configUI.style.position = "fixed"
     configUI.style.bottom = "1em"
     configUI.style.right = "1em"
@@ -29,15 +29,19 @@
     const urlField = form.querySelector("input[name=url]")
     /** @type {HTMLInputElement | null} */
     const authField = form.querySelector("input[name=auth]")
-    if (urlField == null || authField == null) return
+    /** @type {HTMLSelectElement | null} */
+    const methodField = form.querySelector("select[name=method]")
+    if (urlField == null || authField == null || methodField == null) return
     form.addEventListener("submit", e => {
         e.preventDefault()
         GM_setValue("url", urlField.value)
         GM_setValue("auth", authField.value)
+        GM_setValue("method", methodField.value)
         alert("Saved")
     })
     urlField.value = GM_getValue("url", "")
     authField.value = GM_getValue("auth", "")
+    methodField.value = GM_getValue("method", "POST")
     async function main() {
         if (location.pathname !== "/track") {
             configUI.remove()
@@ -77,7 +81,7 @@
                 const urlObj = new URL(url)
                 GM_xmlhttpRequest({
                     url,
-                    method: "POST",
+                    method: GM_getValue("method", "POST"),
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": auth,
