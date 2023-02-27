@@ -37,6 +37,19 @@
         });
     }
 
+    function splitCredit(input) {
+        const RE = /([ 　]*(CV[.:．：] *|[\(（](CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g;
+        const splittedCredits = [];
+        let lastIndex = 0;
+        for (const match of input.matchAll(RE)) {
+            splittedCredits.push([input.slice(lastIndex, match.index), match[0]]);
+            lastIndex = match.index + match[0].length;
+        }
+        if (input.slice(lastIndex).length > 0)
+            splittedCredits.push([input.slice(lastIndex), ""]);
+        return splittedCredits;
+    }
+
     const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
     (async () => {
         const bubble = await waitDOMByObserve(document.body, () => document.querySelector("#artist-credit-bubble"), { subtree: false });
@@ -54,16 +67,8 @@
                 return alert("Failed to get tbody");
             const props = container.memoizedState.element.props;
             console.log(props);
-            const currentCredit = props.artistCredit.names.map(name => name.name + name.joinPhrase).join("");
-            const RE = /([ 　]*(CV[.:．：] *|\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g;
-            let splittedCredits = [];
-            let lastIndex = 0;
-            for (const match of currentCredit.matchAll(RE)) {
-                splittedCredits.push([currentCredit.slice(lastIndex, match.index), match[0]]);
-                lastIndex = match.index + match[0].length;
-            }
-            if (currentCredit.slice(lastIndex).length > 0)
-                splittedCredits.push([currentCredit.slice(lastIndex), ""]);
+            const currentCredit = props.artistCredit.names.map(name => name.name + (name.joinPhrase ?? "")).join("");
+            const splittedCredits = splitCredit(currentCredit);
             if (!confirm("次のように指定します。よろしいですか？\n\n" + JSON.stringify(splittedCredits, null, 4)))
                 return;
             for (let i = props.artistCredit.names.length; i < splittedCredits.length; i++) {
