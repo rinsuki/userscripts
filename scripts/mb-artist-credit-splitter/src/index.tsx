@@ -2,6 +2,7 @@ import { getReactContainer } from "../../_common/get-react-internals";
 import { inputToTextfield } from "../../_common/input-to-textfield";
 import { waitDOMByObserve } from "../../_common/wait-dom";
 import { waitLocalStorage } from "../../_common/wait-local-storage";
+import { splitCredit } from "./splitter";
 
 const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
 
@@ -29,15 +30,8 @@ const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
             pasteArtistCredit: () => void,
         }
         console.log(props)
-        const currentCredit = props.artistCredit.names.map(name => name.name + name.joinPhrase).join("")
-        const RE = /([ 　]*(CV[.:．：] *|\((CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})\)\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g
-        let splittedCredits = [] as [string, string][]
-        let lastIndex = 0
-        for (const match of currentCredit.matchAll(RE)) {
-            splittedCredits.push([currentCredit.slice(lastIndex, match.index), match[0]])
-            lastIndex = match.index! + match[0].length
-        }
-        if (currentCredit.slice(lastIndex).length > 0) splittedCredits.push([currentCredit.slice(lastIndex), ""])
+        const currentCredit = props.artistCredit.names.map(name => name.name + (name.joinPhrase ?? "")).join("")
+        const splittedCredits = splitCredit(currentCredit)
         if (!confirm("次のように指定します。よろしいですか？\n\n" + JSON.stringify(splittedCredits, null, 4))) return
         for (let i=props.artistCredit.names.length; i<splittedCredits.length; i++) {
             props.addName()

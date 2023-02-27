@@ -1,0 +1,62 @@
+import { splitCredit } from "./splitter";
+
+describe("splitter", () => {
+    it("should split artist credit", () => {
+        expect(splitCredit("渋谷凛(CV:福原綾香)")).toMatchInlineSnapshot(`
+[
+  [
+    "渋谷凛",
+    "(CV:",
+  ],
+  [
+    "福原綾香",
+    ")",
+  ],
+]
+`)
+        expect(splitCredit("砂塚あきら（CV：富田美憂）、早坂美玲（CV：朝井彩加）、堀裕子（CV：鈴木絵理）、多田李衣菜（CV：青木瑠璃子）、二宮飛鳥（CV：青木志貴）")).toMatchInlineSnapshot(`
+[
+  [
+    "砂塚あきら",
+    "（CV：",
+  ],
+  [
+    "富田美憂",
+    "）、",
+  ],
+  [
+    "早坂美玲",
+    "（CV：",
+  ],
+  [
+    "朝井彩加",
+    "）、",
+  ],
+  [
+    "堀裕子",
+    "（CV：",
+  ],
+  [
+    "鈴木絵理",
+    "）、",
+  ],
+  [
+    "多田李衣菜",
+    "（CV：",
+  ],
+  [
+    "青木瑠璃子",
+    "）、",
+  ],
+  [
+    "二宮飛鳥",
+    "（CV：",
+  ],
+  [
+    "青木志貴",
+    "）",
+  ],
+]
+`)
+    });
+})
