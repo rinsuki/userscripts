@@ -58,5 +58,17 @@ describe("splitter", () => {
   ],
 ]
 `)
+        expect(splitCredit("みらい(cv.林鼓子)")).toMatchInlineSnapshot(`
+[
+  [
+    "みらい",
+    "(cv.",
+  ],
+  [
+    "林鼓子",
+    ")",
+  ],
+]
+`);
     });
 })
