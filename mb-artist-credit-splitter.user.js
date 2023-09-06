@@ -38,7 +38,7 @@
     }
 
     function splitCredit(input) {
-        const RE = /([ 　]*(CV[.:．：] *|[\(（](CV[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|、| [&＆] |[\/／]| feat[.: ．：　] *)[ 　]*)+/g;
+        const RE = /([ 　]*((?:CV|cv)[.:．：] *|[\(（]((?:CV|cv)[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|、|(?: & |＆)|[\/／]| feat[.: ．：　] *)[ 　]*)+/g;
         const splittedCredits = [];
         let lastIndex = 0;
         for (const match of input.matchAll(RE)) {
