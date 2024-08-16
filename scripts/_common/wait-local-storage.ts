@@ -12,3 +12,15 @@ export function waitLocalStorage(key: string, check: (value: string | null) => b
         window.addEventListener("storage", callback)
     })
 }
+
+export function waitNextLocalStorage(key: string, cb: () => void): Promise<string | null> {
+    return new Promise((resolve) => {
+        const callback = (e: StorageEvent) => {
+            if (e.key !== key) return
+            window.removeEventListener("storage", callback)
+            resolve(e.newValue)
+        }
+        window.addEventListener("storage", callback)
+        cb()
+    })
+}
