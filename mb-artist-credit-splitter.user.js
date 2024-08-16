@@ -11,9 +11,9 @@
 (function () {
     'use strict';
 
-    function getReactContainer(elem) {
+    function getReactProps(elem) {
         const properties = Object.getOwnPropertyNames(elem);
-        const name = properties.find(x => x.startsWith("__reactContainer$"));
+        const name = properties.find(x => x.startsWith("__reactProps$"));
         if (name != null)
             return elem[name];
     }
@@ -38,7 +38,7 @@
     }
 
     function splitCredit(input) {
-        const RE = /([ 　]*((?:CV|cv)[.:．：] *|[\(（]((?:CV|cv)[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|[、,\/／]|(?: & |＆)| feat[.: ．：　] *)[ 　]*)+/g;
+        const RE = /([ 　]*((?:CV|cv)[.:．：] *|[\(（]((?:CV|cv)[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|[、,\/／［］\[\]]|(?: & |＆)| feat[.: ．：　] *)[ 　]*)+/g;
         const splittedCredits = [];
         let lastIndex = 0;
         for (const match of input.matchAll(RE)) {
@@ -59,39 +59,37 @@
         button.style.float = "left";
         button.textContent = "USERJS: Split Automatically";
         button.addEventListener("click", async () => {
-            const container = getReactContainer(bubble);
-            if (container == null)
+            const props = getReactProps(bubble);
+            console.log(props);
+            if (props == null)
                 return alert("Failed to get React container");
             const tbody = bubble.querySelector("tbody");
             if (tbody == null)
                 return alert("Failed to get tbody");
-            const props = container.memoizedState.element.props;
-            console.log(props);
-            const currentCredit = props.artistCredit.names.map(name => name.name + (name.joinPhrase ?? "")).join("");
+            const dispatch = props.children[0].props.children.props.dispatch;
+            dispatch({ type: "copy" });
+            await new Promise(resolve => requestAnimationFrame(resolve));
+            const currentCredit = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT) ?? "").names.map(name => name.name + (name.joinPhrase ?? "")).join("");
             const splittedCredits = splitCredit(currentCredit);
             if (!confirm("次のように指定します。よろしいですか？\n\n" + JSON.stringify(splittedCredits, null, 4)))
                 return;
-            for (let i = props.artistCredit.names.length; i < splittedCredits.length; i++) {
-                props.addName();
-                await waitDOMByObserve(tbody, () => tbody.childNodes.item(i), { subtree: false });
-            }
             // localStorage.removeItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT)
             // let p = waitLocalStorage(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT)
             // props.copyArtistCredit()
             // await p
             // const stubArtistCredit = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT)!)
-            localStorage.setItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT, JSON.stringify(splittedCredits.map(([name, joinPhrase], i) => {
-                return {
-                    joinPhrase,
-                    name,
-                    // artist: {
-                    //     entityType: "artist",
-                    //     uniqueID: stubArtistCredit[i].artist.uniqueID,
-                    //     name,
-                    // }
-                };
-            })));
-            props.pasteArtistCredit();
+            localStorage.setItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT, JSON.stringify({ names: splittedCredits.map(([name, joinPhrase], i) => {
+                    return {
+                        joinPhrase,
+                        name,
+                        // artist: {
+                        //     entityType: "artist",
+                        //     uniqueID: stubArtistCredit[i].artist.uniqueID,
+                        //     name,
+                        // }
+                    };
+                }) }));
+            dispatch({ type: "paste" });
             alert("finish!");
         });
         buttons.appendChild(button);
