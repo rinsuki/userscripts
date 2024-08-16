@@ -1,5 +1,5 @@
 export function splitCredit(input: string) {
-    const RE = /([ 　]*((?:CV|cv)[.:．：] *|[\(（]((?:CV|cv)[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|[、,\/／]|(?: & |＆)| feat[.: ．：　] *)[ 　]*)+/g
+    const RE = /([ 　]*((?:CV|cv)[.:．：] *|[\(（]((?:CV|cv)[.:．：] *)?(?=[^)]{3,})|(?<=[^(]{3})[\)）]\/?|[、,\/／［］\[\]]|(?: & |＆)| feat[.: ．：　] *)[ 　]*)+/g
     const splittedCredits = [] as [string, string][]
     let lastIndex = 0
     for (const match of input.matchAll(RE)) {
