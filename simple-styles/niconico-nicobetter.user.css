@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           nvbetter
 @namespace      rinsuki.net
-@version        1.0.5
+@version        1.0.6
 @description    ニコニコ動画の新HTML5プレーヤーを旧HTML5プレーヤーっぽい配置にしたりします
 @author         rinsuki
 ==/UserStyle== */
@@ -42,6 +42,12 @@
         @media screen and (min-width: calc(854px + 440px + calc(24px * 3) + 15px)) {
             & {
                 --watch-player-max-width: 854px !important;
+            }
+        }
+        /* 960pxの動画が入るなら 960px まで大きくする */
+        @media screen and (min-width: calc(960px + 440px + calc(24px * 3) + 15px)) {
+            & {
+                --watch-player-max-width: 960px !important;
             }
         }
         /* 1280pxの動画が入るなら 1280px まで大きくする */
