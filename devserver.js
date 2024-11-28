@@ -23,10 +23,15 @@ http.createServer(async (req, res) => {
             if (!script.endsWith(".user.js")) continue
             res.write(`<li><a href="/simple-scripts/${script}">${script}</a></li>`)
         }
+        res.write("</ul><h1>simple-styles</h1><ul>")
+        for (const script of await fs.promises.readdir(__dirname+"/simple-styles/")) {
+            if (!script.endsWith(".user.css")) continue
+            res.write(`<li><a href="/simple-styles/${script}">${script}</a></li>`)
+        }
         res.write("</ul>")
         res.end()
         return
-    } else if (/^\/(dist|simple-scripts)\/[a-z0-9\.\-]+\.user\.js$/.test(path)) {
+    } else if (/^\/(dist|simple-scripts|simple-styles)\/[a-z0-9\.\-]+\.user\.(js|css)$/.test(path)) {
         const stat = await fs.promises.stat(__dirname+path)
         const etag = `"${stat.mtimeMs}"`
         if (req.headers["if-none-match"] === etag) {
@@ -36,7 +41,12 @@ http.createServer(async (req, res) => {
         }
         console.log("[DEVSERVER]", new Date().toISOString(), req.socket.remoteAddress, req.method, path)
         res.setHeader("ETag", etag)
-        res.setHeader("Content-Type", "application/javascript")
+        if (path.endsWith(".js")) {
+            res.setHeader("Content-Type", "application/javascript")
+        } else {
+            res.setHeader("Content-Type", "text/css")
+        }
+        res.setHeader("X-Content-Type-Options", "nosniff")
         fs.createReadStream(__dirname+path).pipe(res)
         return
     }
