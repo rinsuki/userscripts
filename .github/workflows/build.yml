@@ -14,9 +14,9 @@ jobs:
       with:
         node-version: 16
     - name: Install dependencies
-      run: yarn install --pure-lockfile
+      run: pnpm install --frozen-lockfile
     - name: Build 
-      run: NODE_ENV=production yarn build
+      run: NODE_ENV=production pnpm build
     - run: echo `git rev-parse HEAD` > dist/COMMIT
     - name: Upload Build Result
       uses: actions/upload-artifact@v1

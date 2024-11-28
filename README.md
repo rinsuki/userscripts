@@ -6,9 +6,9 @@
 
 ## How to develop
 
-needs: ViolentMonkeyが入ったブラウザ, Node.js, Yarn
+needs: ViolentMonkeyが入ったブラウザ, Node.js, pnpm
 
-1. `yarn dev` をすると watch & HTTPサーバーが起動します
+1. `pnpm dev` をすると watch & HTTPサーバーが起動します
 1. http://localhost:9191/ を開いて開発したい user.js を開くと ViolentMonkey のインストール画面が開くはずです
 1. 「このページを閉じるまでローカルファイルの変更を監視する」にチェックを入れてからインストールします
 1. そのタブを放っておいてソースコードを変更します
