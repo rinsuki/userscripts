@@ -33,6 +33,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: dist
+    - run: find . -type f
     # upload to dist branch
     - uses: actions/checkout@v2
       with:
