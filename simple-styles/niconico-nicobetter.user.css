@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           nvbetter
 @namespace      rinsuki.net
-@version        1.0.3
+@version        1.0.4
 @description    ニコニコ動画の新HTML5プレーヤーを旧HTML5プレーヤーっぽい配置にしたりします
 @author         rinsuki
 ==/UserStyle== */
@@ -27,13 +27,35 @@
         border-radius: unset !important;
     }
     
-    /* 動画情報を上に持ってくる */
     .grid-template-areas_\[_\"player_sidebar\"_\"meta_sidebar\"_\"bottom_sidebar\"_\"\._sidebar\"_\] {
+        /* 動画情報を上に持ってくる */
         grid-template-areas:
             "meta   meta"
             "player sidebar"
             "bottom sidebar"
             ".      sidebar" !important;
+        
+        /* 旧プレーヤーのようにリサイズ時にガタガタさせる */
+        --watch-player-max-width: 640px !important;
+
+        /* 854pxの動画が入るなら 854px まで大きくする */
+        @media screen and (min-width: calc(854px + 440px + calc(24px * 3) + 15px)) {
+            & {
+                --watch-player-max-width: 854px !important;
+            }
+        }
+        /* 1280pxの動画が入るなら 1280px まで大きくする */
+        @media screen and (min-width: calc(1280px + 440px + calc(24px * 3) + 15px)) {
+            & {
+                --watch-player-max-width: 1280px !important;
+            }
+        }
+        /* 1920pxの動画が入るなら 1920px まで大きくする */
+        @media screen and (min-width: calc(1920px + 440px + calc(24px * 3) + 15px)) {
+            & {
+                --watch-player-max-width: 1920px !important;
+            }
+        }
     }
 
     section > .grid-area_\[meta\] {
