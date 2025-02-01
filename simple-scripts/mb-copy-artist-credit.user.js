@@ -40,7 +40,7 @@
                             alert("invalid...")
                             continue
                         }
-                        localStorage.setItem("copiedArtistCredit", JSON.stringify(credits))
+                        localStorage.setItem("copiedArtistCredit", JSON.stringify({names: credits}))
                         button.textContent = "Copied!"
                         return
                     }
