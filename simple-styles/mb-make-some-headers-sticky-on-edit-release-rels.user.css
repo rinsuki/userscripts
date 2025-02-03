@@ -1,0 +1,42 @@
+/* ==UserStyle==
+@name           MB: make some headers sticky on edit release relationships
+@namespace      rinsuki.net
+@version        1.0.0
+@author         rinsuki
+==/UserStyle== */
+
+@-moz-document regexp("https?://(?:.+?\\.)?musicbrainz.org/release/(?:[0-9a-f-]+)/edit-relationships") {
+    /* ここにコードを挿入... */
+    #batch-tools {
+        position: sticky;
+        top: 0;
+        background: white;
+        border-bottom: 1px solid #888;
+    }
+    #tracklist > thead {
+        position: sticky;
+        top: calc(1.9em + 1px);
+    }
+    #tracklist > tbody:has(tr.subh)::before {
+        /* fake border */
+        position: absolute;
+        background: #888;
+        height: 1px;
+        width: 100%;
+        top: 0px;
+        content: " ";
+    }
+    #tracklist > tbody:has(tr.subh)::after {
+        /* fake border */
+        position: absolute;
+        background: #888;
+        height: 1px;
+        width: 100%;
+        bottom: 0px;
+        content: " ";
+    }
+    #tracklist > tbody:has(tr.subh) {
+        position: sticky;
+        top: calc(1.9em + 1px + 14px + 6px + 0.4em);
+    }
+}
