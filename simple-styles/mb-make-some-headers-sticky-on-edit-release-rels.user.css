@@ -5,7 +5,7 @@
 @author         rinsuki
 ==/UserStyle== */
 
-@-moz-document regexp("https?://(?:.+?\\.)?musicbrainz.org/release/(?:[0-9a-f-]+)/edit-relationships") {
+@-moz-document regexp("https?://(?:[^/]+\\.)?musicbrainz.org/release/(?:[0-9a-f-]+)/edit-relationships") {
     /* ここにコードを挿入... */
     #batch-tools {
         position: sticky;
