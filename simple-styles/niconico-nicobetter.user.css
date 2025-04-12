@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           nvbetter
 @namespace      rinsuki.net
-@version        1.0.6
+@version        1.0.7
 @description    ニコニコ動画の新HTML5プレーヤーを旧HTML5プレーヤーっぽい配置にしたりします
 @author         rinsuki
 ==/UserStyle== */
@@ -148,7 +148,7 @@
     section:has(> .grid-area_\[sidebar\] > div > div:first-child > section > header + div) {
         & > .grid-area_\[sidebar\] > div > .h_var\(--watch-player-height\) {
             /* コメントリストをプレーヤーの高さと合わせる */
-            height: var(--watch-player-height);
+            height: calc(var(--watch-player-height) + var(--watch-controller-height));
             /* 上でコメント入力欄を右まで伸ばした分の受け入れスペースを作る */
             margin-bottom: calc(40px + var(--watch-player-actionbar-gap-height) - var(--spacing-x0_5));
         }
