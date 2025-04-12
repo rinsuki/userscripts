@@ -148,7 +148,7 @@
     section:has(> .grid-area_\[sidebar\] > div > div:first-child > section > header + div) {
         & > .grid-area_\[sidebar\] > div > .h_var\(--watch-player-height\) {
             /* コメントリストをプレーヤーの高さと合わせる */
-            height: calc(var(--watch-player-height) + 60px);
+            height: var(--watch-player-height);
             /* 上でコメント入力欄を右まで伸ばした分の受け入れスペースを作る */
             margin-bottom: calc(40px + var(--watch-player-actionbar-gap-height) - var(--spacing-x0_5));
         }
