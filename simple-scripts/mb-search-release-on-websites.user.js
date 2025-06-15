@@ -9,6 +9,8 @@
 // ==/UserScript==
 // @ts-check
 
+/// <reference types="typedbrainz" />
+
 (async () => {
     const sites = [
         ["https://music.youtube.com/search?q={query}", "YouTube Music", "https://music.youtube.com/search?q=\"{upc}\""],
@@ -29,14 +31,30 @@
     const linkList = document.createElement("ul")
     function refresh() {
         linkList.innerHTML = ""
+        /** @type {{url: string}[]} */
+        // @ts-expect-error
+        const links = Array.from(window.MB?.releaseEditor?.externalLinksEditData().newLinks.values() ?? [])
         for (const [pattern, name, barcodePattern] of sites) {
+            let exists = false
+            for (const link of links) {
+                if (link.url.startsWith(new URL(pattern).origin)) {
+                    exists = true
+                    break
+                }
+            }
             const domain = new URL(pattern).hostname
             const link = document.createElement("a")
-            /** @type {HTMLInputElement} */
+            if (exists) {
+                link.style.opacity = "0.5"
+            }
+            /** @type {HTMLInputElement | null} */
             const barcodeInput = document.querySelector("input#barcode")
-            if (barcodeInput.value.length > 4 && barcodePattern != null) {
+            if (barcodeInput && barcodeInput.value.length > 4 && barcodePattern != null) {
                 // seems barcode
                 const link2 = document.createElement("a")
+                if (exists) {
+                    link2.style.opacity = "0.5"
+                }
                 link2.href = barcodePattern.replace("{upc}", encodeURIComponent(barcodeInput.value))
                 link2.textContent = `Search on ${name} (by barcode)`
                 link2.target = "_blank"
@@ -45,8 +63,9 @@
                 li2.appendChild(link2)
                 linkList.appendChild(li2)
             }
-            /** @type {HTMLInputElement} */
+            /** @type {HTMLInputElement | null} */
             const nameInput = document.querySelector(`input#name`)
+            if (!nameInput) continue;
             link.href = pattern.replace("{query}", encodeURIComponent(nameInput.value))
             link.textContent = `Search on ${name}`
             link.target = "_blank"
@@ -62,6 +81,6 @@
         li.appendChild(button)
         linkList.appendChild(li)
     }
-    externalLinkEditor.parentElement.parentElement.appendChild(linkList)
+    externalLinkEditor.parentElement?.parentElement?.appendChild(linkList)
     refresh()
 })()
