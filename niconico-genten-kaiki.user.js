@@ -159,4 +159,4 @@ body.${ccPrefix}-enableytclick #UadPlayer { pointer-events: none; }
         }
     })();
 
-}());
+})();

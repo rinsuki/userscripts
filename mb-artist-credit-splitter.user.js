@@ -95,4 +95,4 @@
         buttons.appendChild(button);
     })();
 
-}());
+})();

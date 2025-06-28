@@ -149,4 +149,4 @@
         statusMetaDiv.appendChild(myDiv);
     })();
 
-}());
+})();

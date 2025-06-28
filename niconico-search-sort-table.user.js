@@ -58,4 +58,4 @@
         React.createElement(Row, { title: "\u518D\u751F\u6642\u9593", k: "l", desc: "\u9577\u3044", asc: "\u77ED\u3044" })), li);
     originalSortList.appendChild(li);
 
-}());
+})();
