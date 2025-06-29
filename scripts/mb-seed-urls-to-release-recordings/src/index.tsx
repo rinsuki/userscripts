@@ -103,7 +103,7 @@ async function main() {
                                     href_url: "",
                                     pretty_name: "",
                                 },
-                                entity1_credit: "test",
+                                entity1_credit: "",
                             },
                             batchSelectionCount: undefined,
                             creditsToChangeForSource: "",
