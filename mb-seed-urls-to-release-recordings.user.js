@@ -6,6 +6,7 @@
 // @grant       none
 // @version     0.1
 // @author      rinsuki
+// @description Import recording-url relationship to release's recordings.
 // ==/UserScript==
 
 (function () {
