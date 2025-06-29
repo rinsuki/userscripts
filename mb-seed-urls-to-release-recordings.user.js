@@ -26,6 +26,7 @@
             types: Zod.array(Zod.string()), // link_type UUID
         })),
         note: Zod.string(),
+        version: Zod.number(),
     });
     async function main() {
         // check hash
@@ -47,6 +48,10 @@
         button.style.zoom = "2";
         button.addEventListener("click", () => {
             const json = zSeedJSON.parse(JSON.parse(rawJson));
+            if (json.version !== 1) {
+                alert("Unsupported version: " + json.version + ", please update the script (or contacat to seeder's developer)");
+                return;
+            }
             console.log(json);
             const errors = [];
             relationshipEditor.dispatch({
