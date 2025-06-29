@@ -12,6 +12,7 @@ const zSeedJSON = Zod.object({
         }),
     ),
     note: Zod.string(),
+    version: Zod.number(),
 })
 
 async function main() {
@@ -34,6 +35,10 @@ async function main() {
     button.style.zoom = "2"
     button.addEventListener("click", () => {
         const json = zSeedJSON.parse(JSON.parse(rawJson))
+        if (json.version !== 1) {
+            alert("Unsupported version: " + json.version + ", please update the script (or contacat to seeder's developer)")
+            return
+        }
         console.log(json)
         const errors: string[] = []
         relationshipEditor.dispatch({
