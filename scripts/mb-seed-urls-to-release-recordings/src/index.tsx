@@ -127,6 +127,7 @@ async function main() {
     
     const before = document.querySelector("#content > p")!
     before.parentElement!.insertBefore(button, before)
+    button.focus()
     console.log("done")
 }
 
