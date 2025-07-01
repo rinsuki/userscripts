@@ -1,6 +1,6 @@
 import { isReleaseRelationshipEditor } from "typedbrainz"
-import type { RelationshipEditStatusT } from "typedbrainz/types"
 import { zSeedJSON, zSeedJSONFallback } from "./schema"
+import { applyRelationships, PreparedRelationship } from "./apply-relationships"
 
 async function main() {
     // check hash
@@ -29,97 +29,59 @@ async function main() {
         }
         const json = zSeedJSON.parse(anyJSON)
         const errors: string[] = []
-        relationshipEditor.dispatch({
-            type: "update-edit-note",
-            editNote: (relationshipEditor.state.editNoteField.value + "\n" + json.note + "\n''Powered by \"" + GM_info.script.name + "\" script''").trim(),
-        })
-        for (const medium of relationshipEditor.state.entity.mediums) {
-            console.log(medium)
-            for (const track of medium.tracks ?? []) {
-                console.log(track)
-                if (track.recording.gid in json.recordings) {
-                    const rels = json.recordings[track.recording.gid]
-                    delete json.recordings[track.recording.gid]
-                    const alreadyAddedDomains = new Set<string>()
-                    for (const rel of Array.isArray(rels) ? rels : [rels]) {
-                        const relUrl = new URL(rel.url)
-                        if (alreadyAddedDomains.has(relUrl.hostname)) {
-                            errors.push(`You can't add multiple same domain URLs for a recording at once! Skipped ${rel.url} for recording ${track.recording.gid}`)
-                            continue
-                        }
-                        alreadyAddedDomains.add(relUrl.hostname)
-                        for (const relType of rel.types) {
-                            let linkTypeID: number | undefined
-                            if (relType in linkedEntities.link_type && linkedEntities.link_type[relType].type0 === "recording" && linkedEntities.link_type[relType].type1 === "url") {
-                                linkTypeID = linkedEntities.link_type[relType].id
+        const preparedRelationships: PreparedRelationship[] = []
+        for (const track of relationshipEditor.state.entity.mediums.flatMap(m => m.tracks ?? [])) {
+            if (!(track.recording.gid in json.recordings)) continue
+            const rels = json.recordings[track.recording.gid]
+            delete json.recordings[track.recording.gid]
+
+            const alreadyAddedDomains = new Set<string>()
+            for (const rel of Array.isArray(rels) ? rels : [rels]) {
+                const relUrl = new URL(rel.url)
+                if (alreadyAddedDomains.has(relUrl.hostname)) {
+                    errors.push(`You can't add multiple same domain URLs for a recording at once! URL: ${rel.url} Recording: ${track.recording.gid}`)
+                    continue
+                }
+                alreadyAddedDomains.add(relUrl.hostname)
+                for (const relType of rel.types) {
+                    let linkTypeID: number | undefined
+                    if (relType in linkedEntities.link_type && linkedEntities.link_type[relType].type0 === "recording" && linkedEntities.link_type[relType].type1 === "url") {
+                        linkTypeID = linkedEntities.link_type[relType].id
+                    }
+                    if (linkTypeID == null) {
+                        for (const lt of Object.values(linkedEntities.link_type)) {
+                            if (lt.type0 !== "recording") continue
+                            if (lt.type1 !== "url") continue
+                            console.log(lt)
+                            if (lt.name === relType) {
+                                linkTypeID = lt.id
+                                break
                             }
-                            if (linkTypeID == null) {
-                                for (const lt of Object.values(linkedEntities.link_type)) {
-                                    if (lt.type0 !== "recording") continue
-                                    if (lt.type1 !== "url") continue
-                                    console.log(lt)
-                                    if (lt.name === relType) {
-                                        linkTypeID = lt.id
-                                        break
-                                    }
-                                }
-                            }
-                            if (linkTypeID == null) {
-                                errors.push(`Failed to find link type ${JSON.stringify(relType)} for recording ${track.recording.gid}`)
-                                continue
-                            }
-                            // it will be marked as "incomplete" in the UI, but actually working?
-                            // @see https://github.com/metabrainz/musicbrainz-server/blob/e214b4d3c13f7ee6b2eb2f9c186ecab310354a5b/root/static/scripts/relationship-editor/components/RelationshipItem.js#L153-L163
-                            relationshipEditor.dispatch({
-                                type: "update-relationship-state",
-                                sourceEntity: track.recording,
-                                oldRelationshipState: null,
-                                newRelationshipState: {
-                                    id: relationshipEditor.getRelationshipStateId(null),
-                                    linkOrder: 0,
-                                    linkTypeID,
-                                    _lineage: ["added"],
-                                    _original: null,
-                                    _status: 1 as RelationshipEditStatusT,
-                                    attributes: null,
-                                    begin_date: null, // TODO: support?
-                                    end_date: null, // TODO: support?
-                                    editsPending: false,
-                                    ended: false,
-                                    entity0: track.recording,
-                                    entity0_credit: "",
-                                    entity1: {
-                                        decoded: "",
-                                        editsPending: false,
-                                        entityType: "url",
-                                        gid: "",
-                                        name: rel.url,
-                                        id: relationshipEditor.getRelationshipStateId(null),
-                                        last_updated: null,
-                                        href_url: "",
-                                        pretty_name: "",
-                                    },
-                                    entity1_credit: "",
-                                },
-                                batchSelectionCount: undefined,
-                                creditsToChangeForSource: "",
-                                creditsToChangeForTarget: "",
-                            })
                         }
                     }
+                    if (linkTypeID == null) {
+                        errors.push(`Failed to find link type ${JSON.stringify(relType)} for recording ${track.recording.gid}`)
+                        continue
+                    }
+                    preparedRelationships.push({
+                        recording: track.recording,
+                        url: rel.url,
+                        linkTypeID,
+                    })
                 }
             }
         }
 
         for (const remainingRecordingId of Object.keys(json.recordings)) {
-            errors.push(`Can't find ${remainingRecordingId}, skipped`)
+            errors.push(`Failed to find recording: ${remainingRecordingId}, you might be need to expand mediums before press seed button.`)
         }
 
         if (errors.length === 0) {
+            applyRelationships(preparedRelationships, json.note, relationshipEditor)
             button.textContent = "URLs seeded successfully!"
             button.disabled = true
         } else {
-            alert("URLs seeded, but with some errors:\n" + errors.map(x => "* " + x).join("\n"))
+            alert("Failed to seed urls:\n" + errors.map(x => "* " + x).join("\n"))
         }
     })
     
