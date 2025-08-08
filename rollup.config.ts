@@ -4,17 +4,17 @@ import pluginNodeResolve from "@rollup/plugin-node-resolve"
 import type { RollupOptions } from "rollup"
 import type { BannerType } from "./scripts/_common/banner-type"
 
-const files = fs.readdirSync(import.meta.dirname+"/scripts")
+const files = fs.readdirSync("./scripts")
 
 export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).map(file => {
-    const baseId = import.meta.dirname + "/node_modules/";
+    const baseId = process.cwd() + "/node_modules/";
     return {
         input: "./scripts/" + file + "/src/index.tsx",
         output: [{
             name: file+".user",
-            file: import.meta.dirname+"/dist/" + file + ".user.js",
+            file: "./dist/" + file + ".user.js",
             banner: async (chunk) => {
-                const content = fs.readFileSync(`${import.meta.dirname}/scripts/${file}/banner.js`, { encoding: "utf-8" })
+                const content = fs.readFileSync(`./scripts/${file}/banner.js`, { encoding: "utf-8" })
                 if (content.startsWith("// ==UserScript==")) {
                     return content
                 }
