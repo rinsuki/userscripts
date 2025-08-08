@@ -120,9 +120,9 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                     header += [
                         ...await Promise.all(Array.from(requires).map(async np => {
                             const [name, path] = np.split(":")
-                            const { default: pj } = await import(`${name}/package.json`, { with: { type: "json" } })
+                            const pj = JSON.parse(await readFile(`./node_modules/${name}/package.json`, "utf-8"))
                             const file = await readFile(`./node_modules/${name}/${path}`)
-                            const hash = ["sha256", "sha512"].map(f =>  f + "-" + createHash(f).update(file).digest("base64url")).join(",")
+                            const hash = ["sha256", "sha512"].map(f =>  f + "-" + createHash(f).update(file).digest("base64")).join(",")
                             return `// ${"@require".padEnd(pad)} https://cdn.jsdelivr.net/npm/${name}@${pj.version}/${path}#${hash}`
                         })),
                     ].join("\n")
