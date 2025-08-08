@@ -126,8 +126,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                             return `// ${"@require".padEnd(pad)} https://cdn.jsdelivr.net/npm/${name}@${pj.version}/${path}#${hash}`
                         })),
                     ].join("\n")
-                    code = header + code.slice(headerEnd-1).trimStart()
-                    
+                    code = header.trimEnd() + "\n" + code.slice(headerEnd)
                     firstBundle.code = code
                 }
             }
