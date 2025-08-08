@@ -1,4 +1,4 @@
-declare var Zod: typeof import("zod")
+import Zod from "zod"
 
 export const zSeedJSON = Zod.object({
     version: Zod.literal(1),

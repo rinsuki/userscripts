@@ -4,11 +4,25 @@ import pluginNodeResolve from "@rollup/plugin-node-resolve"
 import string from "rollup-plugin-string-import"
 import type { RollupOptions } from "rollup"
 import type { BannerType } from "./scripts/_common/banner-type"
+import externalGlobals from "rollup-plugin-external-globals"
+/// @ts-expect-error
+import { table as externalGlobalsTable } from "./external-globals.js"
+import { readFile } from "node:fs/promises"
+import { createHash } from "node:crypto"
 
 const files = fs.readdirSync("./scripts")
+const umdTables = Object.entries(externalGlobalsTable as Record<string, { var: string, path: string }>)
+    .map(kv => {
+        return [kv[0], kv[1].var + ` /* ${[
+            "__UMD_IMPORT",
+            kv[0],
+            kv[1].path,
+        ].join(":")} */`] as const
+    })
 
 export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).map(file => {
     const baseId = process.cwd() + "/node_modules/";
+
     return {
         input: "./scripts/" + file + "/src/index.tsx",
         output: [{
@@ -73,6 +87,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
             pluginNodeResolve({
                 browser: true,
             }),
+            externalGlobals(Object.fromEntries(umdTables)),
             string({
                 include: ["**/*.html", "**/*.css"],
             }),
@@ -83,6 +98,37 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                         return code;
                     }
                     return "//#region node_modules/" + id.slice(baseId.length) + "\n" + code + "\n//#endregion"
+                }
+            },
+            {
+                name: "add-require",
+                async generateBundle(options, bundle) {
+                    const firstBundle = Object.values(bundle)[0];
+                    if (firstBundle.type !== "chunk") {
+                        throw new Error("Expected first bundle to be a chunk");
+                    }
+                    const requires = new Set<string>()
+                    let code = firstBundle.code
+                    code = code.replaceAll(/ \/\* __UMD_IMPORT:([^:]+:.+?) \*\//g, (match, np) => {
+                        requires.add(np)
+                        return ""
+                    })
+                    console.log(requires)
+                    const headerEnd = code.indexOf("// ==/UserScript==")
+                    let header = code.slice(0, headerEnd)
+                    const pad = /\/\/ @([a-zA-Z]+ +)/.exec(header)![1].length
+                    header += [
+                        ...await Promise.all(Array.from(requires).map(async np => {
+                            const [name, path] = np.split(":")
+                            const { default: pj } = await import(`${name}/package.json`, { with: { type: "json" } })
+                            const file = await readFile(`./node_modules/${name}/${path}`)
+                            const hash = ["sha256", "sha512"].map(f =>  f + "-" + createHash(f).update(file).digest("base64url")).join(",")
+                            return `// ${"@require".padEnd(pad)} https://cdn.jsdelivr.net/npm/${name}@${pj.version}/${path}#${hash}`
+                        })),
+                    ].join("\n")
+                    code = header + code.slice(headerEnd-1)
+                    
+                    firstBundle.code = code
                 }
             }
         ],
