@@ -15,9 +15,12 @@ export type BannerType = {
     exclude?: (string|RegExp)[],
     excludeMatch?: string[],
 
-    grant?: (
-        void
-    )[],
+    grant: (
+        | "GM_getValue"
+        | "GM_setValue"
+        | "GM.registerMenuCommand"
+        | "GM.xmlHttpRequest"
+    )[] | "none",
 
     require: string[],
     resource?: Record<string, string>,

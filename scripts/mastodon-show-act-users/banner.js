@@ -13,6 +13,7 @@ export default {
         "https://*/@*/*/embed",
         "https://*.tiktok.com/*",
     ],
+    grant: [],
     
     require: [
         "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js#sha256=c9486f126615859fc61ac84840a02b2efc920d287a71d99d708c74b2947750fe",
