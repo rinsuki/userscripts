@@ -12,7 +12,6 @@
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues
-
 // ==/UserScript==
 
 (function () {
