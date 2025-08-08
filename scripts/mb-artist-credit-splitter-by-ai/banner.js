@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        MB: Artist Credit Splitter, but Powered by AI
-// @version     1.0.2
+// @version     1.1.0
 // @description OpenRouter でいい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
 // @namespace   https://rinsuki.net/
 // @author      rinsuki

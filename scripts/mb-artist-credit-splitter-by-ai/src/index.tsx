@@ -36,7 +36,7 @@ function copiedArtistCreditToPlainString(artistCredit: MBCopiedArtistCredit["nam
     return artistCredit.map(credit => credit.name + credit.joinPhrase).join("")
 }
 
-GM.registerMenuCommand("Split clipboard content", () => {
+GM.registerMenuCommand("Split clipboard content (OpenRouter)", () => {
     const inputString = localStorage.getItem("copiedArtistCredit")
     if (inputString == null) {
         alert("No copied artist credit found.")
@@ -78,6 +78,72 @@ GM.registerMenuCommand("Split clipboard content", () => {
         },
         body: JSON.stringify({
             model: prompt("model", "google/gemini-2.0-flash-exp:free"),
+            temperature: 0,
+            messages: [
+                { role: "system", content: SYSTEM_PROMPT },
+                ...exampleInputs,
+                { role: "user", content: input },
+            ],
+        })
+    }).then(r => r.json()).then(r => {
+        div.remove()
+        console.log(r)
+        const generated = JSON.parse(r.choices[0].message.content) as MBCopiedArtistCredit["names"]
+        const output = copiedArtistCreditToPlainString(generated)
+        if (output !== input) {
+            alert("LLM's output does not match with input. The LLM moment...\n\n" + input + "\n" + output)
+            return
+        }
+        if (confirm("Done! ... according to the LLM (" + r.model +  ").\n\n" + generated.map(a => JSON.stringify(a)).join("\n"))) {
+            localStorage.setItem("copiedArtistCredit", JSON.stringify({
+                names: generated,
+            }))
+        }
+    })
+})
+
+GM.registerMenuCommand("Split clipboard content (OpenAI)", () => {
+    const inputString = localStorage.getItem("copiedArtistCredit")
+    if (inputString == null) {
+        alert("No copied artist credit found.")
+        return
+    }
+    const inputJSON = JSON.parse(inputString) as MBCopiedArtistCredit
+    const input = copiedArtistCreditToPlainString(inputJSON.names)
+
+    let apiKey = GM_getValue<string | undefined>("openai_api_key")
+    if (apiKey == null) {
+        apiKey = prompt("Please input your OpenAI API key") ?? undefined
+        if (apiKey == null) {
+            return
+        }
+        GM_setValue("openai_api_key", apiKey)
+    }
+
+    const div = document.createElement("div")
+    div.style.position = "fixed"
+    div.style.top = "0"
+    div.style.left = "0"
+    div.style.width = "100%"
+    div.style.height = "100%"
+    div.style.backgroundColor = "rgba(0, 0, 0, 0.5)"
+    div.style.zIndex = "9999"
+    div.style.display = "flex"
+    div.style.alignItems = "center"
+    div.style.justifyContent = "center"
+    div.style.color = "white"
+    div.style.fontSize = "20px"
+    div.textContent = "Asking to the LLM..."
+    document.body.appendChild(div)
+
+    fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            model: prompt("model", "gpt-4.1-mini"),
             temperature: 0,
             messages: [
                 { role: "system", content: SYSTEM_PROMPT },
