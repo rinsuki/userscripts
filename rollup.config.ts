@@ -6,17 +6,17 @@ import type { RollupOptions } from "rollup"
 import type { BannerType } from "./scripts/_common/banner-type"
 import externalGlobals from "rollup-plugin-external-globals"
 /// @ts-expect-error
-import { table as externalGlobalsTable } from "./external-globals.js"
+import { table as externalGlobalsTableRaw } from "./external-globals.js"
 import { readFile } from "node:fs/promises"
 import { createHash } from "node:crypto"
 
 const files = fs.readdirSync("./scripts")
-const umdTables = Object.entries(externalGlobalsTable as Record<string, { var: string, path: string }>)
+const externalGlobalsTable: Record<string, { var: string } & ({ path: string } | { url: string })> = externalGlobalsTableRaw
+const umdTables = Object.entries(externalGlobalsTable)
     .map(kv => {
         return [kv[0], kv[1].var + ` /* ${[
             "__UMD_IMPORT",
-            kv[0],
-            kv[1].path,
+            kv[0]
         ].join(":")} */`] as const
     })
 
@@ -109,8 +109,8 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                     }
                     const requires = new Set<string>()
                     let code = firstBundle.code
-                    code = code.replaceAll(/ \/\* __UMD_IMPORT:([^:]+:.+?) \*\//g, (match, np) => {
-                        requires.add(np)
+                    code = code.replaceAll(/ \/\* __UMD_IMPORT:(.+?) \*\//g, (match, name) => {
+                        requires.add(name)
                         return ""
                     })
                     console.log(requires)
@@ -118,12 +118,19 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                     let header = code.slice(0, headerEnd)
                     const pad = /\/\/ @([a-zA-Z]+ +)/.exec(header)![1].length
                     header += [
-                        ...await Promise.all(Array.from(requires).map(async np => {
-                            const [name, path] = np.split(":")
-                            const pj = JSON.parse(await readFile(`./node_modules/${name}/package.json`, "utf-8"))
-                            const file = await readFile(`./node_modules/${name}/${path}`)
-                            const hash = ["sha256", "sha512"].map(f =>  f + "-" + createHash(f).update(file).digest("base64")).join(",")
-                            return `// ${"@require".padEnd(pad)} https://cdn.jsdelivr.net/npm/${name}@${pj.version}/${path}#${hash}`
+                        ...await Promise.all(Array.from(requires).map(async name => {
+                            const v = externalGlobalsTable[name]
+                            let url: string
+                            if ("path" in v) {
+                                const path = v.path
+                                const pj = JSON.parse(await readFile(`./node_modules/${name}/package.json`, "utf-8"))
+                                const file = await readFile(`./node_modules/${name}/${path}`)
+                                const hash = ["sha256", "sha512"].map(f =>  f + "-" + createHash(f).update(file).digest("base64")).join(",")
+                                url = `https://cdn.jsdelivr.net/npm/${name}@${pj.version}/${path}#${hash}`
+                            } else {
+                                url = v.url
+                            }
+                            return `// ${"@require".padEnd(pad)} ${url}`
                         })),
                     ].join("\n")
                     code = header.trimEnd() + "\n" + code.slice(headerEnd)
