@@ -1,14 +1,18 @@
 // ==UserScript==
-// @name        MB: Artist Credit Splitter, but Powered by AI
-// @version     1.1.0
-// @description OpenRouter でいい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
-// @namespace   https://rinsuki.net/
-// @author      rinsuki
-// @match       https://musicbrainz.org/*
-// @grant       GM_getValue
-// @grant       GM_setValue
-// @grant       GM.registerMenuCommand
-// @grant       GM.xmlHttpRequest
+// @name            MB: Artist Credit Splitter, but Powered by AI
+// @namespace       https://rinsuki.net/
+// @version         1.1.0
+// @description     OpenRouter でいい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
+// @author          rinsuki
+// @match           https://musicbrainz.org/*
+// @grant           GM_getValue
+// @grant           GM_setValue
+// @grant           GM.registerMenuCommand
+// @grant           GM.xmlHttpRequest
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

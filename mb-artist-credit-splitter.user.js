@@ -1,11 +1,15 @@
 // ==UserScript==
-// @name        MB: Artist Credit Splitter
-// @version     1.0.2
-// @description いい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
-// @namespace   https://rinsuki.net/
-// @author      rinsuki
-// @match       https://musicbrainz.org/*
-// @grant       none
+// @name            MB: Artist Credit Splitter
+// @namespace       https://rinsuki.net/
+// @version         1.0.2
+// @description     いい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
+// @author          rinsuki
+// @match           https://musicbrainz.org/*
+// @grant           none
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {
