@@ -1,3 +1,6 @@
+import React from "react"
+import ReactDOM from "react-dom"
+
 const sort = document.querySelector(".searchOption .sort.optionList")! as HTMLElement
 sort.style.width="220px"
 const originalSortList = sort.querySelector(".sortList")!

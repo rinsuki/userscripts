@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { List } from "./components/list"
 import { SectionHeader } from "./components/section-header"
+import React from "react";
+import { render } from "react-dom";
 
 (function() {
     'use strict';
@@ -23,8 +26,8 @@ import { SectionHeader } from "./components/section-header"
     // ReactでUIを作る
 
     const Root: React.FC = () => {
-        const [active, setActive] = React.useState<"favourite" | "reblog" | undefined>(undefined)
-        React.useEffect(() => {
+        const [active, setActive] = useState<"favourite" | "reblog" | undefined>(undefined)
+        useEffect(() => {
             if (boostButton) {
                 boostButton.addEventListener("click", e => {
                     e.preventDefault()
@@ -62,6 +65,6 @@ import { SectionHeader } from "./components/section-header"
     }
     // Reactをマウント
     const myDiv = document.createElement("div")
-    const component = ReactDOM.render(<Root />, myDiv)
+    const component = render(<Root />, myDiv)
     statusMetaDiv.appendChild(myDiv)
 })();

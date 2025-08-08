@@ -8,6 +8,5 @@ export default {
     author: "-",
     match: "https://www.nicovideo.jp/watch/*",
     grant: "none",
-    require: [],
     includeContributionURL: true,
 }

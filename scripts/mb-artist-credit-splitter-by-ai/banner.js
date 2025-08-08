@@ -13,6 +13,5 @@ export default {
         "GM.registerMenuCommand",
         "GM.xmlHttpRequest",
     ],
-    require: [],
     includeContributionURL: true,
 }

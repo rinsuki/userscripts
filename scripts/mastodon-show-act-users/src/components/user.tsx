@@ -1,3 +1,4 @@
+import React from "react"
 import { MastodonUser } from "../types"
 
 export const User: React.FC<{user: MastodonUser}> = ({user}) => {

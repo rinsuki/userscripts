@@ -1,12 +1,14 @@
+import { useEffect, useState } from "react"
 import { MastodonUser } from "../types"
 import { User } from "./user"
+import React from "react"
 
 export const List: React.FC<{type: "favourite" | "reblog", statusId: string}> = ({type, statusId}) => {
-    const [loading, setLoading] = React.useState(false)
-    const [users, setUsers] = React.useState<MastodonUser[]>([])
-    const [error, setError] = React.useState<Error | undefined>(undefined)
+    const [loading, setLoading] = useState(false)
+    const [users, setUsers] = useState<MastodonUser[]>([])
+    const [error, setError] = useState<Error | undefined>(undefined)
 
-    React.useEffect(() => ((async () => {
+    useEffect(() => ((async () => {
         setLoading(true)
         try {
             const res = await fetch(`${location.origin}/api/v1/statuses/${statusId}/${type === "favourite" ? "favourited_by" : "reblogged_by"}`)

@@ -1,3 +1,5 @@
+import React from "react"
+
 export const SectionHeader: React.FC<{icon: string, name: string}> = ({icon, name}) => {
     return <div style={{
         backgroundColor: document.body.style.backgroundColor || "#17191f",

@@ -8,6 +8,5 @@ export default {
     author: "rinsuki",
     match: "https://musicbrainz.org/*",
     grant: "none",
-    require: [],
     includeContributionURL: true,
 }
