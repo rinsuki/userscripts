@@ -36,9 +36,10 @@ body.${ccPrefix}-enableytclick #UadPlayer { pointer-events: none; }
     function sleep(msec) { return new Promise(resolve => setTimeout(resolve, msec)); }
 
     class YTPlayer {
+        iframe = document.createElement("iframe");
+        widgetid;
+        connected = false;
         constructor(videoId) {
-            this.iframe = document.createElement("iframe");
-            this.connected = false;
             this.widgetid = Date.now();
             this.iframe.src = `${YOUTUBE_ORIGIN}/embed/${videoId}?autoplay=1&fs=0&disablekb=1&modestbranding=1&playsinline=1&rel=0&showinfo=0&iv_load_policy=3&enablejsapi=1&origin=${location.origin}&vq=highres&widgetid=${this.widgetid}`;
             window.addEventListener("message", e => {
@@ -87,6 +88,7 @@ body.${ccPrefix}-enableytclick #UadPlayer { pointer-events: none; }
                 id: this.widgetid,
             }), YOUTUBE_ORIGIN);
         }
+        onReadyCallback;
         onLoad(callback) {
             this.iframe.addEventListener("load", callback);
         }
