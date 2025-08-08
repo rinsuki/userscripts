@@ -19,7 +19,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                 if (content.startsWith("// ==UserScript==")) {
                     return content
                 }
-                const mod = await import(`./scripts/${file}/banner.js?_=${Date.now()}`)
+                const mod = await import(`${process.cwd()}/scripts/${file}/banner.js?_=${Date.now()}`)
                 if (mod.default?.name == null) {
                     throw new Error(`Invalid banner in ${file}: Expected a default export with a 'name' property`)
                 }
@@ -27,8 +27,10 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                     ...mod.default,
                 }
 
-                opts.homepageURL ??= "https://github.com/rinsuki/userscripts"
-                opts.supportURL ??= "https://github.com/rinsuki/userscripts/issues"
+                if (process.env.NO_URLS !== "true") {
+                    opts.homepageURL ??= "https://github.com/rinsuki/userscripts"
+                    opts.supportURL ??= "https://github.com/rinsuki/userscripts/issues"
+                }
 
                 const optsArray: (readonly [string, string])[] = Object.entries(opts).flatMap(([key, value]) => {
                     if (key === "includeContributionURL" && value) {
@@ -48,6 +50,9 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                     if (value === false) return [] as [string, string][]
                     let stringValue = String(value)
                     if (value === true) stringValue = ""
+                    if (typeof value === "object" && value != null) {
+                        return Object.entries(value).map(kv => kv.join(" ")).map(x => [normalizedKey, x])
+                    }
                     return [[normalizedKey, stringValue]] as const
                 })
                 const keysMax = Math.max(...optsArray.map(a => a[0].length))
