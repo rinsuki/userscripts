@@ -42,6 +42,9 @@ importers:
       rollup:
         specifier: ^4.44.1
         version: 4.44.1
+      rollup-plugin-string-import:
+        specifier: ^1.2.6
+        version: 1.2.6(rollup@4.44.1)
       ts-jest:
         specifier: ^29.0.5
         version: 29.0.5(@babel/core@7.21.0)(@jest/types@29.4.3)(babel-jest@29.4.3(@babel/core@7.21.0))(jest@29.4.3(@types/node@24.2.0))(typescript@5.8.3)
@@ -1356,6 +1359,11 @@ packages:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
     engines: {node: '>= 0.4'}
     hasBin: true
+
+  rollup-plugin-string-import@1.2.6:
+    resolution: {integrity: sha512-vChs/dPkgErR7RBXOuOoZ6gBnwQqoUILuQxdcb8uynKSSn9fzjympIIVa3b2iTW3J78Ufk6q9nOKM7jxtJJUxw==}
+    peerDependencies:
+      rollup: '>=1.20.0'
 
   rollup@4.44.1:
     resolution: {integrity: sha512-x8H8aPvD+xbl0Do8oez5f5o8eMS3trfCghc4HhLAnCkj7Vl0d1JWGs0UF/D886zLW2rOj2QymV/JcSSsw+XDNg==}
@@ -3173,6 +3181,11 @@ snapshots:
       is-core-module: 2.16.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
+
+  rollup-plugin-string-import@1.2.6(rollup@4.44.1):
+    dependencies:
+      '@rollup/pluginutils': 5.2.0(rollup@4.44.1)
+      rollup: 4.44.1
 
   rollup@4.44.1:
     dependencies:

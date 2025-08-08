@@ -1,6 +1,7 @@
 import fs from "node:fs"
 import pluginTypescript from "@rollup/plugin-typescript"
 import pluginNodeResolve from "@rollup/plugin-node-resolve"
+import string from "rollup-plugin-string-import"
 import type { RollupOptions } from "rollup"
 import type { BannerType } from "./scripts/_common/banner-type"
 
@@ -20,7 +21,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
                 }
                 const mod = await import(`./scripts/${file}/banner.js?_=${Date.now()}`)
                 if (mod.default?.name == null) {
-                    throw new Error(`Invalid banner in ${file}: Expected a default export with a 'name' property`)  
+                    throw new Error(`Invalid banner in ${file}: Expected a default export with a 'name' property`)
                 }
                 const opts: BannerType = {
                     ...mod.default,
@@ -66,6 +67,9 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).m
             pluginTypescript(),
             pluginNodeResolve({
                 browser: true,
+            }),
+            string({
+                include: ["**/*.html", "**/*.css"],
             }),
             {
                 name: "region",
