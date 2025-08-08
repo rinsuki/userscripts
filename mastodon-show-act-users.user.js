@@ -7,12 +7,12 @@
 // @include         /^https:\/\/[^/]*\/@[A-Za-z0-9_]+\/[0-9]+([?#].*)?$/
 // @exclude-match   https://*/@*/*/embed
 // @exclude-match   https://*.tiktok.com/*
-// @require         https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js#sha256=c9486f126615859fc61ac84840a02b2efc920d287a71d99d708c74b2947750fe
-// @require         https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js#sha256=bc5b7797e8a595e365c1385b0d47683d3a85f3533c58d499659b771c48ec6d25
 // @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues
+// @require         https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js#sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK_xTsvnUxN0,sha512-QVs8Lo43F9lSuBykadDb0oSXDL_BbZ588urWVCRwSIoewQv_Ewg1f84mK3U790bZ0FfhFa1YSQUmIhG-pIRKeg
+// @require         https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js#sha256-NfT5dPSyvNRNpzljNH-JUuNB-DkJ5EmCJ9Tia5j2bw0,sha512-6a1107rTlA4gYpgHAqbwLAtxmWipBdJFcq8y5S_aTge3Bp-VAklABm2LO-Kg51vOWR9JMZq1Ovjl5tpluNpTeQ
 // ==/UserScript==
 
 (function () {
