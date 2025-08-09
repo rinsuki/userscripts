@@ -41,25 +41,25 @@
         return React.createElement("tr", null,
             React.createElement("td", { style: { textAlign: "right", padding: "4px" } },
                 props.title,
-                "\u304C"),
+                "が"),
             React.createElement("td", null,
                 React.createElement(Link, { k: props.k + ":d" },
                     props.desc,
-                    "\u9806")),
+                    "順")),
             React.createElement("td", null,
                 React.createElement(Link, { k: props.k + ":a" },
                     props.asc,
-                    "\u9806")));
+                    "順")));
     };
     const li = document.createElement("li");
     ReactDOM.render(React.createElement("table", null,
-        React.createElement(Row, { title: "\u6295\u7A3F\u65E5\u6642", k: "f", desc: "\u65B0\u3057\u3044", asc: "\u53E4\u3044" }),
-        React.createElement(Row, { title: "\u518D\u751F\u6570", k: "v", desc: "\u591A\u3044", asc: "\u5C11\u306A\u3044" }),
-        React.createElement(Row, { title: "\u30B3\u30E1\u30F3\u30C8\u6570", k: "r", desc: "\u591A\u3044", asc: "\u5C11\u306A\u3044" }),
-        React.createElement(Row, { title: "\u3044\u3044\u306D\u6570", k: "likeCount", desc: "\u591A\u3044", asc: "\u5C11\u306A\u3044" }),
-        React.createElement(Row, { title: "\u30DE\u30A4\u30EA\u30B9\u30C8\u6570", k: "m", desc: "\u591A\u3044", asc: "\u5C11\u306A\u3044" }),
-        React.createElement(Row, { title: "\u30B3\u30E1\u30F3\u30C8", k: "n", desc: "\u65B0\u3057\u3044", asc: "\u53E4\u3044" }),
-        React.createElement(Row, { title: "\u518D\u751F\u6642\u9593", k: "l", desc: "\u9577\u3044", asc: "\u77ED\u3044" })), li);
+        React.createElement(Row, { title: "投稿日時", k: "f", desc: "新しい", asc: "古い" }),
+        React.createElement(Row, { title: "再生数", k: "v", desc: "多い", asc: "少ない" }),
+        React.createElement(Row, { title: "コメント数", k: "r", desc: "多い", asc: "少ない" }),
+        React.createElement(Row, { title: "いいね数", k: "likeCount", desc: "多い", asc: "少ない" }),
+        React.createElement(Row, { title: "マイリスト数", k: "m", desc: "多い", asc: "少ない" }),
+        React.createElement(Row, { title: "コメント", k: "n", desc: "新しい", asc: "古い" }),
+        React.createElement(Row, { title: "再生時間", k: "l", desc: "長い", asc: "短い" })), li);
     originalSortList.appendChild(li);
 
 })();

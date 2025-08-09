@@ -129,9 +129,9 @@
             if (active == null)
                 return React.createElement("div", null,
                     React.createElement("i", { className: "fa fa-retweet" }),
-                    " \u304B ",
+                    " か ",
                     isNicoru ? React.createElement("i", { className: "fa fa-nicoru--status" }) : React.createElement("i", { className: "fa fa-star" }),
-                    " \u3092\u30AF\u30EA\u30C3\u30AF\u3059\u308B\u3068\u30D6\u30FC\u30B9\u30C8\u3057\u305F/\u3075\u3041\u307C\u3063\u305F\u30E6\u30FC\u30B6\u30FC\u304C\u8868\u793A\u3055\u308C\u307E\u3059");
+                    " をクリックするとブーストした/ふぁぼったユーザーが表示されます");
             const [name, icon] = {
                 "favourite": isNicoru ? ["ニコる", "nicoru"] : ["ふぁぼ", "star"],
                 "reblog": ["ブースト", "retweet"]
@@ -140,7 +140,7 @@
                 React.createElement(SectionHeader, { icon: icon, name: name }),
                 React.createElement("div", null,
                     React.createElement(List, { type: active, key: active, statusId: statusId })),
-                React.createElement(SectionHeader, { icon: "reply", name: "\u8FD4\u4FE1" }));
+                React.createElement(SectionHeader, { icon: "reply", name: "返信" }));
         };
         function parent(dom) {
             if (dom == null)
