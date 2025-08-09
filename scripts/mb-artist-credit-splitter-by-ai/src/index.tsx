@@ -1,3 +1,19 @@
+defineUserScript({
+    name: "MB: Artist Credit Splitter, but Powered by AI",
+    namespace: "https://rinsuki.net/",
+    version: "1.1.0",
+    description: "OpenRouter でいい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)",
+    author: "rinsuki",
+    match: "https://musicbrainz.org/*",
+    grant: [
+        "GM_getValue",
+        "GM_setValue",
+        "GM.registerMenuCommand",
+        "GM.xmlHttpRequest",
+    ],
+    includeContributionURL: true,
+})
+
 const SYSTEM_PROMPT = [
     "あなたはアーティストクレジットを分割するプロフェッショナルです。",
     "あなたは与えられた文字列を分割し、適切なオブジェクトの配列に変換する必要があります。",

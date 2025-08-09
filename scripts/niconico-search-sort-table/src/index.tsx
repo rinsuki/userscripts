@@ -1,6 +1,20 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
+defineUserScript({
+    name: "ニコニコ動画の検索のソート選択を表にする",
+    namespace: "rinsuki.net",
+    version: "1.0",
+    description: "ニコニコ動画の検索のソート順を選ぶところを表レイアウトにします。",
+    author: "rinsuki",
+    match: [
+        "https://www.nicovideo.jp/tag/*",
+        "https://www.nicovideo.jp/search/*",
+    ],
+    grant: [],
+    includeContributionURL: true,
+})
+
 const sort = document.querySelector(".searchOption .sort.optionList")! as HTMLElement
 sort.style.width="220px"
 const originalSortList = sort.querySelector(".sortList")!

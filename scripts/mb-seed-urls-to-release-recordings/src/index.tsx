@@ -2,6 +2,20 @@ import { isReleaseRelationshipEditor } from "typedbrainz"
 import { zSeedJSON, zSeedJSONFallback } from "./schema"
 import { applyRelationships, PreparedRelationship } from "./apply-relationships"
 
+defineUserScript({
+    name: "MusicBrainz: Seed URLs to Release Recordings",
+    namespace: "https://rinsuki.net",
+    version: "0.2.1",
+    description: "Import recording-url relationship to release's recordings.",
+    author: "rinsuki",
+    match: [
+        "https://musicbrainz.org/release/*/edit-relationships",
+        "https://*.musicbrainz.org/release/*/edit-relationships",
+    ],
+    grant: "none",
+    includeContributionURL: true,
+})
+
 async function main() {
     // check hash
     const urlParams = new URLSearchParams(location.hash.slice(1))

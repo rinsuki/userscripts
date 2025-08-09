@@ -6,6 +6,17 @@ import { splitCredit } from "./splitter";
 
 const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
 
+defineUserScript({
+    name: "MB: Artist Credit Splitter",
+    namespace: "https://rinsuki.net/",
+    version: "1.0.2",
+    description: "いい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)",
+    author: "rinsuki",
+    match: "https://musicbrainz.org/*",
+    grant: "none",
+    includeContributionURL: true,
+});
+
 (async () => {
     const bubble = await waitDOMByObserve(document.body, () => document.querySelector("#artist-credit-bubble"), { subtree: false });
     const buttons = await waitDOMByObserve(bubble, () => bubble.querySelector(".buttons"), { subtree: false });
