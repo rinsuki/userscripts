@@ -39,6 +39,9 @@ importers:
       '@types/tampermonkey':
         specifier: ^5.0.4
         version: 5.0.4
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
       jest:
         specifier: ^29.4.3
         version: 29.4.3(@types/node@24.2.0)

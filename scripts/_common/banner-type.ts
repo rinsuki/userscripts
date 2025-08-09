@@ -35,3 +35,7 @@ export type BannerType = {
     homepageURL?: string,
     supportURL?: string,
 }
+
+declare global {
+    function defineUserScript(banner: BannerType): void;
+}
