@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      magic-string:
+        specifier: ^0.30.17
+        version: 0.30.17
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -2049,12 +2052,12 @@ snapshots:
   '@jridgewell/gen-mapping@0.1.1':
     dependencies:
       '@jridgewell/set-array': 1.1.2
-      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/sourcemap-codec': 1.5.4
 
   '@jridgewell/gen-mapping@0.3.2':
     dependencies:
       '@jridgewell/set-array': 1.1.2
-      '@jridgewell/sourcemap-codec': 1.4.14
+      '@jridgewell/sourcemap-codec': 1.5.4
       '@jridgewell/trace-mapping': 0.3.17
 
   '@jridgewell/resolve-uri@3.1.0': {}

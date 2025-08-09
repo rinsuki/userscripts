@@ -12,6 +12,7 @@ import { createHash } from "node:crypto"
 import { join } from "node:path"
 import { walk } from "estree-walker"
 import { runInNewContext } from "node:vm"
+import MagicString from "magic-string"
 
 const files = fs.readdirSync("./scripts")
 const externalGlobalsTable: Record<string, { var: string } & ({ path: string } | { url: string })> = externalGlobalsTableRaw
@@ -100,6 +101,34 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
             string({
                 include: ["**/*.html", "**/*.css"],
             }),
+            {
+                name: "raw-unicode",
+                // https://github.com/microsoft/TypeScript/issues/36174
+                transform(code, id) {
+                    const ms = new MagicString(code);
+                    const ast = this.parse(code);
+                    walk(ast, {
+                        enter(node) {
+                            console.log(node)
+                            if (
+                                node.type === "Literal" &&
+                                "start" in node && typeof node.start === "number" &&
+                                "end" in node && typeof node.end === "number" &&
+                                typeof node.value === "string" &&
+                                node.value != null &&
+                                node.raw != null &&
+                                node.raw.includes("\\u")
+                            ) {
+                                ms.overwrite(node.start, node.end, JSON.stringify(node.value));
+                            }
+                        }
+                    })
+                    return {
+                        code: ms.toString(),
+                        map: ms.generateMap({ hires: true }),
+                    };
+                }
+            },
             {
                 name: "region",
                 transform(code, id) {
