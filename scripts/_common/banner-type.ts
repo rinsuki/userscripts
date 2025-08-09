@@ -22,6 +22,7 @@ export type BannerType = {
         | "GM.xmlHttpRequest"
         | "GM_addStyle"
         | "GM.getResourceUrl"
+        | "GM_getResourceURL"
     )[] | "none",
     connect?: string[],
 
