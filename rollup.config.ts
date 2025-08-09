@@ -77,16 +77,18 @@ function convertBannerObjectToString(opts: BannerType): string {
     ].join("\n")
 }
 
-export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common")).map(file => {
+export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") && (a.includes(".user.") || !a.includes("."))).map(file => {
     const baseId = process.cwd() + "/node_modules/";
 
-    const entry = join(process.cwd(), "scripts", file, "src", "index.tsx");
+    const fileAbs = join(process.cwd(), "scripts", file);
+    const stat = fs.statSync(fileAbs);
+    const entry = stat.isDirectory() ? join(fileAbs, "src", "index.tsx") : fileAbs;
 
     return {
         input: entry,
         output: [{
             name: file+".user",
-            file: "./dist/" + file + ".user.js",
+            file: "./dist/" + file.split(".user.")[0] + ".user.js",
             format: "iife",
         }],
         plugins: [
