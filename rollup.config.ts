@@ -13,6 +13,7 @@ import { join } from "node:path"
 import { walk } from "estree-walker"
 import { runInNewContext } from "node:vm"
 import MagicString from "magic-string"
+import pluginCommonjs from "@rollup/plugin-commonjs"
 
 const files = fs.readdirSync("./scripts")
 const externalGlobalsTable: Record<string, { var: string } & ({ path: string } | { url: string })> = externalGlobalsTableRaw
@@ -27,6 +28,9 @@ const umdTables = Object.entries(externalGlobalsTable)
 function evalDefineUserScript(code: string): BannerType {
     return JSON.parse(runInNewContext(`
         RegExp.prototype.toJSON = function() {
+            return this.toString();
+        }
+        Function.prototype.toJSON = function() {
             return this.toString();
         }
         function defineUserScript(banner) {
@@ -49,6 +53,7 @@ function convertBannerObjectToString(opts: BannerType): string {
                 ["contributionURL", "https://github.com/sponsors/rinsuki"],
             ] as const
         }
+        if (key === "topInject") return [] as const
         const normalizedKey = key
             .replace(/[A-Z]/g, (m) => {
                 return "-" + m.toLowerCase()
@@ -74,6 +79,7 @@ function convertBannerObjectToString(opts: BannerType): string {
         }),
         "// ==/UserScript==",
         "",
+        ...(opts.topInject ? ["(" + opts.topInject.toString() + ")();", ""] : []),
         "",
     ].join("\n")
 }
@@ -97,6 +103,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
             pluginNodeResolve({
                 browser: true,
             }),
+            pluginCommonjs(),
             externalGlobals(Object.fromEntries(umdTables)),
             string({
                 include: ["**/*.html", "**/*.css"],

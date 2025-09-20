@@ -23,6 +23,7 @@ export type BannerType = {
         | "GM_addStyle"
         | "GM.getResourceUrl"
         | "GM_getResourceURL"
+        | "unsafeWindow"
     )[] | "none",
     connect?: string[],
 
@@ -34,6 +35,8 @@ export type BannerType = {
     author?: string,
     homepageURL?: string,
     supportURL?: string,
+
+    topInject: (() => void),
 }
 
 declare global {
