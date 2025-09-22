@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        1Password Extension Passkey Fix
 // @namespace   rinsuki.net
+// @description Treat 1Password extension's response as a instance of window.PublicKeyCredential
 // @version     1.0
 // @match       https://accounts.nintendo.com/*
 // @grant       none
