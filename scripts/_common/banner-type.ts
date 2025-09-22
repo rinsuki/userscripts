@@ -36,7 +36,7 @@ export type BannerType = {
     homepageURL?: string,
     supportURL?: string,
 
-    topInject: (() => void),
+    topInject?: (() => void),
 }
 
 declare global {
