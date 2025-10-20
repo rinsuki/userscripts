@@ -54,6 +54,9 @@ importers:
       jest:
         specifier: ^29.4.3
         version: 29.4.3(@types/node@24.2.0)
+      knockout:
+        specifier: ^3.5.1
+        version: 3.5.1
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -1205,6 +1208,9 @@ packages:
   kleur@3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
+
+  knockout@3.5.1:
+    resolution: {integrity: sha512-wRJ9I4az0QcsH7A4v4l0enUpkS++MBx0BnL/68KaLzJg7x1qmbjSlwEoCNol7KTYZ+pmtI7Eh2J0Nu6/2Z5J/Q==}
 
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
@@ -3115,6 +3121,8 @@ snapshots:
   json5@2.2.3: {}
 
   kleur@3.0.3: {}
+
+  knockout@3.5.1: {}
 
   leven@3.1.0: {}
 
