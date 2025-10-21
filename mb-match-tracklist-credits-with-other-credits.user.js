@@ -69,7 +69,7 @@
         const currentCredits = [
             ...editor.rootField.release().releaseGroup().artistCredit.names,
             ...editor.rootField.release().artistCredit().names,
-            ...Array.from(editor.rootField.release().allTracks()).flatMap(t => t.artistCredit().names),
+            ...Array.from(editor.rootField.release().allTracks()).flatMap(t => [...t.artistCredit().names, ...t.recording().artistCredit.names]),
         ];
         const creditMap = new Map();
         for (const credit of currentCredits) {
