@@ -21,6 +21,11 @@ declare class EditorTrack {
     artistCredit: Observable<{
         names: ArtistCreditNameT[]
     }>
+    recording: Observable<{
+        artistCredit: {
+            names: ArtistCreditNameT[]
+        }
+    }>
 }
 
 function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, artistCredit: Observable<{ names: ArtistCreditNameT[] }>) {
@@ -91,9 +96,7 @@ function doItEntirely() {
     const currentCredits: ArtistCreditNameT[] = [
         ...editor.rootField.release().releaseGroup().artistCredit.names,
         ...editor.rootField.release().artistCredit().names,
-        ...Array.from(
-            editor.rootField.release().allTracks()
-        ).flatMap(t => t.artistCredit().names),
+        ...Array.from(editor.rootField.release().allTracks()).flatMap(t => [...t.artistCredit().names, ...t.recording().artistCredit.names]),
     ]
 
     const creditMap = new Map<string, ArtistT | null>()
