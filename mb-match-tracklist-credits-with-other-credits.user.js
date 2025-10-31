@@ -61,16 +61,32 @@
             names,
         });
     }
-    function doItEntirely() {
+    async function doItEntirely(withShiftKey) {
         const MB = window.MB;
         if (MB == null)
             return;
         const editor = MB.releaseEditor;
         const currentCredits = [
-            ...editor.rootField.release().releaseGroup().artistCredit.names,
+            ...editor.rootField.release().releaseGroup().artistCredit?.names ?? [],
             ...editor.rootField.release().artistCredit().names,
             ...Array.from(editor.rootField.release().allTracks()).flatMap(t => [...t.artistCredit().names, ...t.recording().artistCredit.names]),
         ];
+        if (withShiftKey) {
+            const releaseUrl = prompt("Enter the release URL to copy credits from");
+            if (releaseUrl == null || releaseUrl === "")
+                return;
+            const mbid = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.exec(releaseUrl)?.[0];
+            if (mbid == null) {
+                alert("Invalid release URL");
+                return;
+            }
+            const otherJS = await fetch(`/ws/js/entity/${mbid}`).then(r => r.json());
+            if (!("artistCredit" in otherJS)) {
+                alert("Could not fetch artist credit data");
+                return;
+            }
+            currentCredits.push(...otherJS.artistCredit.names);
+        }
         const creditMap = new Map();
         for (const credit of currentCredits) {
             if (!creditMap.has(credit.name)) {
@@ -92,16 +108,20 @@
                 }
             }
         }
+        console.log(creditMap);
         doItForSpecificArtistCredit(creditMap, editor.rootField.release().artistCredit);
         for (const track of editor.rootField.release().allTracks()) {
             doItForSpecificArtistCredit(creditMap, track.artistCredit);
         }
+        alert("Done");
     }
     const button = document.createElement("button");
     button.id = "mb-match-tracklist-credits-with-other-credits-button";
     document.getElementById(button.id)?.remove();
     button.textContent = "Match Tracklist Credits with Other Credits";
-    button.addEventListener("click", doItEntirely);
+    button.addEventListener("click", (e) => {
+        doItEntirely(e.shiftKey);
+    });
     document.getElementById("release-editor")?.prepend(button);
 
 })();
