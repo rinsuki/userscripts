@@ -83,4 +83,10 @@
     }
     externalLinkEditor.parentElement?.parentElement?.appendChild(linkList)
     refresh()
+
+    /** @type {import("../scripts/_common/mb/release-editor").MBReleaseEditor} */
+    // @ts-expect-error
+    const releaseEditor = window.MB.releaseEditor
+    releaseEditor.rootField.release().name.subscribe(() => refresh())
+    releaseEditor.rootField.release().barcode.value.subscribe(() => refresh())
 })()
