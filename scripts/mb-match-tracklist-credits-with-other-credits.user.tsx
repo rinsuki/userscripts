@@ -1,6 +1,7 @@
 import { ArtistCreditNameT, ArtistT } from "typedbrainz/types"
 import { getReleaseRelationshipEditorOrThrow } from "./_common/mb/get-release-relationship-editor-or-throw"
 import type { Observable, ObservableArray } from "knockout"
+import { MBReleaseEditor } from "./_common/mb/release-editor"
 
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",
@@ -11,22 +12,6 @@ defineUserScript({
         "https://*musicbrainz.org/release/add",
     ]
 })
-
-declare class EditorMedium {
-    tracks: ObservableArray<EditorTrack>
-}
-
-declare class EditorTrack {
-    medium: EditorMedium
-    artistCredit: Observable<{
-        names: ArtistCreditNameT[]
-    }>
-    recording: Observable<{
-        artistCredit: {
-            names: ArtistCreditNameT[]
-        }
-    }>
-}
 
 function isArtistExist(artist: ArtistT | null): artist is ArtistT {
     return artist != null && artist.id != 0
@@ -87,21 +72,7 @@ function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, art
 async function doItEntirely(withShiftKey: boolean) {
     const MB = window.MB
     if (MB == null) return
-    const editor: {
-        rootField: {
-            release: Observable<{
-                artistCredit: Observable<{
-                    names: ArtistCreditNameT[]
-                }>,
-                allTracks: () => Iterable<EditorTrack>,
-                releaseGroup: Observable<{
-                    artistCredit?: {
-                        names: ArtistCreditNameT[]
-                    }
-                }>,
-            }>
-        }
-    } = (MB as any).releaseEditor
+    const editor: MBReleaseEditor = (MB as any).releaseEditor
 
     const currentCredits: ArtistCreditNameT[] = [
         ...editor.rootField.release().releaseGroup().artistCredit?.names ?? [],
