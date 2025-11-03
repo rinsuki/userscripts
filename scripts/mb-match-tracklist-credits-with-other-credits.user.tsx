@@ -28,40 +28,49 @@ declare class EditorTrack {
     }>
 }
 
+function isArtistExist(artist: ArtistT | null): artist is ArtistT {
+    return artist != null && artist.id != 0
+}
+
 function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, artistCredit: Observable<{ names: ArtistCreditNameT[] }>) {
     const names = [...artistCredit().names]
+    console.log(JSON.stringify(names))
     // ループ中にnamesを書き換えるのであえて for-of を使わない
     for (let i = 0; i < names.length; i++) {
         const name = names[i]
-        if (name.artist == null) {
+        // アーティストIDが不明の場合、先頭一致できる名前を探す
+        if (!isArtistExist(name.artist)) {
             for (const [knownName, knownArtist] of creditMap) {
-                if (knownArtist == null) continue
+                if (!isArtistExist(knownArtist)) continue
                 if (!name.name.startsWith(knownName)) continue
                 const remainName = name.name.slice(knownName.length)
                 if (remainName === "") {
-                    // 完全一致
+                    // 完全一致したら設定だけでよい
                     name.artist = knownArtist
                     break
                 }
+                // おまけがある場合はそれをjoinPhraseに回す
                 name.name = knownName
                 name.artist = knownArtist
                 name.joinPhrase = remainName + name.joinPhrase
                 break
             }
         }
+        // joinPhraseに既知の名前があれば分割する
         let firstArtist: null | [number, string, ArtistT] = null
         for (const [knownName, knownArtist] of creditMap) {
-            if (knownArtist == null) continue
-            const i = name.joinPhrase.indexOf(knownName)
-            if (i === -1) continue
-            if (firstArtist == null || firstArtist[0] > i) {
-                firstArtist = [i, knownName, knownArtist]
+            if (!isArtistExist(knownArtist)) continue
+            const index = name.joinPhrase.indexOf(knownName)
+            if (index === -1) continue
+            if (firstArtist == null || firstArtist[0] > index) {
+                firstArtist = [index, knownName, knownArtist]
             }
         }
+        // 既知の名前があった!
         if (firstArtist != null) {
-            const [i, knownName, knownArtist] = firstArtist
-            const remainName = name.joinPhrase.slice(i + knownName.length)
-            name.joinPhrase = name.joinPhrase.slice(0, i)
+            const [index, knownName, knownArtist] = firstArtist
+            const remainName = name.joinPhrase.slice(index + knownName.length)
+            name.joinPhrase = name.joinPhrase.slice(0, index)
             const newCreditName: ArtistCreditNameT = {
                 name: knownName,
                 artist: knownArtist,
@@ -119,11 +128,11 @@ async function doItEntirely(withShiftKey: boolean) {
     const creditMap = new Map<string, ArtistT | null>()
     for (const credit of currentCredits) {
         if (!creditMap.has(credit.name)) {
-            if (credit.artist != null) {
+            if (isArtistExist(credit.artist)) {
                 creditMap.set(credit.name, credit.artist)
             }
         } else {
-            if (credit.artist == null) {
+            if (!isArtistExist(credit.artist)) {
                 creditMap.set(credit.name, null)
             } else {
                 const current = creditMap.get(credit.name)
