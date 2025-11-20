@@ -34,7 +34,7 @@ export function applyRelationships(
                 begin_date: null, // TODO: support?
                 end_date: null, // TODO: support?
                 editsPending: false,
-                ended: false,
+                ended: !!relationship.ended, // defaults to false
                 entity0: relationship.recording,
                 entity0_credit: "",
                 entity1: {

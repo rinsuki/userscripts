@@ -7,6 +7,7 @@ export const zSeedJSON = Zod.object({
         Zod.object({
             url: Zod.string().url(),
             types: Zod.array(Zod.string()), // link_type UUID
+            ended: Zod.boolean().optional(),
         }),
     ),
     note: Zod.string(),
@@ -17,6 +18,7 @@ export const zSeedJSON = Zod.object({
         Zod.array(Zod.object({ // NOTE: you cannot have multiple *same domain* URLs for a recording at once!
             url: Zod.string().url(),
             types: Zod.array(Zod.string()), // link_type UUID
+            ended: Zod.boolean().optional(),
         })),
     ),
     note: Zod.string(),
