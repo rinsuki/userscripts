@@ -81,6 +81,7 @@ async function main() {
                         recording: track.recording,
                         url: rel.url,
                         linkTypeID,
+                        ended: rel.ended ?? false,
                     })
                 }
             }
