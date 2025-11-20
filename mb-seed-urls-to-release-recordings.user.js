@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            MusicBrainz: Seed URLs to Release Recordings
 // @namespace       https://rinsuki.net
-// @version         0.2.1
+// @version         0.2.2
 // @description     Import recording-url relationship to release's recordings.
 // @author          rinsuki
 // @match           https://musicbrainz.org/release/*/edit-relationships
@@ -31,6 +31,7 @@
         Zod.object({
             url: Zod.string().url(),
             types: Zod.array(Zod.string()), // link_type UUID
+            ended: Zod.boolean().optional(),
         })),
         note: Zod.string(),
     }).or(Zod.object({
@@ -39,6 +40,7 @@
         Zod.array(Zod.object({
             url: Zod.string().url(),
             types: Zod.array(Zod.string()), // link_type UUID
+            ended: Zod.boolean().optional(),
         }))),
         note: Zod.string(),
     }));
@@ -69,7 +71,7 @@
                     begin_date: null, // TODO: support?
                     end_date: null, // TODO: support?
                     editsPending: false,
-                    ended: false,
+                    ended: !!relationship.ended, // defaults to false
                     entity0: relationship.recording,
                     entity0_credit: "",
                     entity1: {
@@ -159,6 +161,7 @@
                             recording: track.recording,
                             url: rel.url,
                             linkTypeID,
+                            ended: rel.ended ?? false,
                         });
                     }
                 }
