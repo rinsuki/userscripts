@@ -5,7 +5,7 @@ import { applyRelationships, PreparedRelationship } from "./apply-relationships"
 defineUserScript({
     name: "MusicBrainz: Seed URLs to Release Recordings",
     namespace: "https://rinsuki.net",
-    version: "0.2.1",
+    version: "0.2.2",
     description: "Import recording-url relationship to release's recordings.",
     author: "rinsuki",
     match: [
