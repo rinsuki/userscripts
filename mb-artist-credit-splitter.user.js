@@ -22,6 +22,23 @@
             return elem[name];
     }
 
+    const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
+    function getArtistCreditClipboard() {
+        const str = localStorage.getItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT);
+        if (str == null)
+            return undefined;
+        try {
+            return JSON.parse(str);
+        }
+        catch (e) {
+            console.warn("Failed to parse artist credit clipboard data", e);
+            return undefined;
+        }
+    }
+    function setArtistCreditClipboard(artistCredit) {
+        localStorage.setItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT, JSON.stringify(artistCredit));
+    }
+
     function waitDOMByObserve(root, check, options) {
         const firstRes = check();
         if (firstRes != null)
@@ -54,7 +71,6 @@
         return splittedCredits;
     }
 
-    const LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT = "copiedArtistCredit";
     (async () => {
         const bubble = await waitDOMByObserve(document.body, () => document.querySelector("#artist-credit-bubble"), { subtree: false });
         const buttons = await waitDOMByObserve(bubble, () => bubble.querySelector(".buttons"), { subtree: false });
@@ -73,7 +89,7 @@
             const dispatch = props.children[0].props.children.props.dispatch;
             dispatch({ type: "copy" });
             await new Promise(resolve => requestAnimationFrame(resolve));
-            const currentCredit = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT) ?? "").names.map(name => name.name + (name.joinPhrase ?? "")).join("");
+            const currentCredit = getArtistCreditClipboard()?.names.map(name => name.name + (name.joinPhrase ?? "")).join("") ?? "";
             const splittedCredits = splitCredit(currentCredit);
             if (!confirm("次のように指定します。よろしいですか？\n\n" + JSON.stringify(splittedCredits, null, 4)))
                 return;
@@ -82,17 +98,18 @@
             // props.copyArtistCredit()
             // await p
             // const stubArtistCredit = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT)!)
-            localStorage.setItem(LOCALSTORAGE_KEY_COPIED_ARTIST_CREDIT, JSON.stringify({ names: splittedCredits.map(([name, joinPhrase], i) => {
+            setArtistCreditClipboard({ names: splittedCredits.map(([name, joinPhrase], i) => {
                     return {
                         joinPhrase,
                         name,
+                        artist: null,
                         // artist: {
                         //     entityType: "artist",
                         //     uniqueID: stubArtistCredit[i].artist.uniqueID,
                         //     name,
                         // }
                     };
-                }) }));
+                }) });
             dispatch({ type: "paste" });
             alert("finish!");
         });

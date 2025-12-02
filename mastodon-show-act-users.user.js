@@ -68,7 +68,7 @@
         };
         if (error) {
             return React.createElement("div", { style: centeringStyle },
-                React.createElement("span", { style: { color: "hsl(0, 100%, 60%)", whiteSpace: "pre-wrap" } }, error.stack));
+                React.createElement("span", { style: { color: "hsl(0, 100%, 60%)", whiteSpace: "pre-wrap" } }, error != null && typeof error === "object" && "stack" in error && typeof error.stack === "string" && error.stack));
         }
         else if (loading) {
             return React.createElement("div", { style: centeringStyle },

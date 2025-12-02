@@ -30,7 +30,7 @@
         return res;
     }
 
-    //#region node_modules/.pnpm/typedbrainz@0.1.3/node_modules/typedbrainz/lib/index.js
+    //#region node_modules/.pnpm/typedbrainz@0.1.4/node_modules/typedbrainz/lib/index.js
     // SPDX-License-Identifier: MIT
     function isReleaseRelationshipEditor(relationshipEditor) {
         return relationshipEditor.state?.entity.entityType === "release";
