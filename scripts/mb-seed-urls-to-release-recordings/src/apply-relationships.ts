@@ -5,6 +5,7 @@ export type PreparedRelationship = {
     recording: RecordingT,
     url: string,
     linkTypeID: number,
+    ended: boolean,
 }
 
 export function applyRelationships(
