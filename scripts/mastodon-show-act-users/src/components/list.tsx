@@ -6,7 +6,7 @@ import React from "react"
 export const List: React.FC<{type: "favourite" | "reblog", statusId: string}> = ({type, statusId}) => {
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState<MastodonUser[]>([])
-    const [error, setError] = useState<Error | undefined>(undefined)
+    const [error, setError] = useState<unknown | undefined>(undefined)
 
     useEffect(() => ((async () => {
         setLoading(true)
@@ -41,7 +41,7 @@ export const List: React.FC<{type: "favourite" | "reblog", statusId: string}> = 
     if (error) {
         return <div style={centeringStyle}>
             <span style={{color: "hsl(0, 100%, 60%)", whiteSpace: "pre-wrap"}}>
-                {error.stack}
+                {error != null && typeof error === "object" && "stack" in error && typeof error.stack === "string" && error.stack}
             </span>
         </div>
     } else if (loading) {

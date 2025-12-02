@@ -29,6 +29,7 @@ for (const anchor of originalSortList.querySelectorAll("a")) {
 
 const Link: React.FC<{
     k: string,
+    children: React.ReactNode,
 }> = props => {
     let l = links[props.k]
     if (l == null) {
