@@ -116,7 +116,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
                     const ast = this.parse(code);
                     walk(ast, {
                         enter(node) {
-                            console.log(node)
+                            // console.log(node)
                             if (
                                 node.type === "Literal" &&
                                 "start" in node && typeof node.start === "number" &&
@@ -214,7 +214,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
                         return
                     }
 
-                    console.log(inlineBannerUntilEnd, ourBannerUntilEnd)
+                    // console.log(inlineBannerUntilEnd, ourBannerUntilEnd)
 
                     throw new Error(`Inline banner in ${file} does not match the banner in banner.js.`)
                 }
@@ -232,7 +232,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
                         requires.add(name)
                         return ""
                     })
-                    console.log(requires)
+                    // console.log(requires)
                     const headerEnd = code.indexOf("// ==/UserScript==")
                     let header = code.slice(0, headerEnd)
                     const pad = /\/\/ @([a-zA-Z]+ +)/.exec(header)![1].length
