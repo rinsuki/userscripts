@@ -1,5 +1,6 @@
 // ==UserScript==
 // @name        MB: Copy Recording Relationships to Karaoke/Edited Recordings
+// @description Copy recording-{artist, work, etc...} relationships to karaoke/edited recordings with one button!
 // @version     0.2.0
 // @grant       none
 // @namespace   https://rinsuki.net
