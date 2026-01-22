@@ -4,7 +4,7 @@
 // @match       https://musicbrainz.org/release/*/edit
 // @match       https://musicbrainz.org/release/add
 // @grant       none
-// @version     1.0
+// @version     1.1
 // @author      rinsuki
 // ==/UserScript==
 // @ts-check
@@ -12,16 +12,44 @@
 /// <reference types="typedbrainz" />
 
 (async () => {
-    const sites = [
-        ["https://music.youtube.com/search?q={query}", "YouTube Music", "https://music.youtube.com/search?q=\"{upc}\""],
-        ["https://open.spotify.com/search/{query}", "Spotify", "https://open.spotify.com/search/upc:{upc}"],
-        ["https://music.apple.com/jp/search?term={query}", "Apple Music"],
-        ["https://isrceam.rinsuki.net/apple/jp/search?q={query}", "Apple Music (ISRCeam)"],
-        ["https://ototoy.jp/find/?q={query}", "OTOTOY"],
-        ["https://www.google.com/search?client=firefox-b-d&q=site:ototoy.jp+{query}", "OTOTOY (Google)"],
-        ["https://mora.jp/search/top?keyWord={query}", "mora"],
-        ["https://www.google.com/search?client=firefox-b-d&q={query}", "Google"],
-    ]
+    /** @type {{domains: string[], search: string, barcodeSearch?: string, name: string}[]} */
+    const sites = Object.entries({
+        "YouTube Music": {
+            domains: ["music.youtube.com"],
+            search: "https://music.youtube.com/search?q={query}",
+            barcodeSearch: "https://music.youtube.com/search?q=\"{upc}\"",
+        },
+        "Spotify": {
+            domains: ["open.spotify.com"],
+            search: "https://open.spotify.com/search/{query}/albums",
+            barcodeSearch: "https://open.spotify.com/search/upc:{upc}/albums",
+        },
+        "Apple Music": {
+            domains: ["music.apple.com", "itunes.apple.com"],
+            search: "https://music.apple.com/jp/search?term={query}",
+        },
+        "Apple Music (ISRCeam)": {
+            domains: ["music.apple.com", "itunes.apple.com"],
+            search: "https://isrceam.rinsuki.net/apple/jp/search?q={query}",
+            barcodeSearch: "https://isrceam.rinsuki.net/apple/jp/upc?upc={upc}",
+        },
+        "OTOTOY": {
+            domains: ["ototoy.jp"],
+            search: "https://ototoy.jp/find/?q={query}",
+        },
+        "OTOTOY (Google)": {
+            domains: ["ototoy.jp"],
+            search: "https://www.google.com/search?client=firefox-b-d&q=site:ototoy.jp+{query}",
+        },
+        "mora": {
+            domains: ["mora.jp"],
+            search: "https://mora.jp/search/top?keyWord={query}",
+        },
+        "Google": {
+            domains: [],
+            search: "https://www.google.com/search?client=firefox-b-d&q={query}",
+        }
+    }).map(e => ({...e[1], name: e[0]}))
 
     let externalLinkEditor
     while (null == (externalLinkEditor = document.getElementById("external-links-editor"))) {
@@ -34,29 +62,30 @@
         /** @type {{url: string}[]} */
         // @ts-expect-error
         const links = Array.from(window.MB?.releaseEditor?.externalLinksEditData().newLinks.values() ?? [])
-        for (const [pattern, name, barcodePattern] of sites) {
+        for (const site of sites) {
             let exists = false
             for (const link of links) {
-                if (link.url.startsWith(new URL(pattern).origin)) {
+                if (link.url === "") continue;
+                const domain = new URL(link.url).hostname
+                if (site.domains.includes(domain)) {
                     exists = true
                     break
                 }
             }
-            const domain = new URL(pattern).hostname
             const link = document.createElement("a")
             if (exists) {
                 link.style.opacity = "0.5"
             }
             /** @type {HTMLInputElement | null} */
             const barcodeInput = document.querySelector("input#barcode")
-            if (barcodeInput && barcodeInput.value.length > 4 && barcodePattern != null) {
+            if (barcodeInput && barcodeInput.value.length > 4 && site.barcodeSearch != null) {
                 // seems barcode
                 const link2 = document.createElement("a")
                 if (exists) {
                     link2.style.opacity = "0.5"
                 }
-                link2.href = barcodePattern.replace("{upc}", encodeURIComponent(barcodeInput.value))
-                link2.textContent = `Search on ${name} (by barcode)`
+                link2.href = site.barcodeSearch.replace("{upc}", encodeURIComponent(barcodeInput.value))
+                link2.textContent = `Search on ${site.name} (by barcode)`
                 link2.target = "_blank"
                 link2.style.marginRight = "1em"
                 const li2 = document.createElement("li")
@@ -66,8 +95,8 @@
             /** @type {HTMLInputElement | null} */
             const nameInput = document.querySelector(`input#name`)
             if (!nameInput) continue;
-            link.href = pattern.replace("{query}", encodeURIComponent(nameInput.value))
-            link.textContent = `Search on ${name}`
+            link.href = site.search.replace("{query}", encodeURIComponent(nameInput.value))
+            link.textContent = `Search on ${site.name}`
             link.target = "_blank"
             link.style.marginRight = "1em"
             const li = document.createElement("li")
