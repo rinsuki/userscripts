@@ -38,7 +38,7 @@ function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, art
                 // おまけがある場合はそれをjoinPhraseに回す
                 name.name = knownName
                 name.artist = knownArtist
-                name.joinPhrase = remainName + name.joinPhrase
+                name.joinPhrase = remainName + (name.joinPhrase ?? "")
                 break
             }
         }
@@ -46,6 +46,7 @@ function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, art
         let firstArtist: null | [number, string, ArtistT] = null
         for (const [knownName, knownArtist] of creditMap) {
             if (!isArtistExist(knownArtist)) continue
+            if (name.joinPhrase == null) continue
             const index = name.joinPhrase.indexOf(knownName)
             if (index === -1) continue
             if (firstArtist == null || firstArtist[0] > index) {
