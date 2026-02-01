@@ -76,8 +76,8 @@ importers:
         specifier: ^2.8.1
         version: 2.8.1
       typedbrainz:
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.2.0
+        version: 0.2.0
       typescript:
         specifier: ^5.9.2
         version: 5.9.2
@@ -1638,8 +1638,8 @@ packages:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
 
-  typedbrainz@0.1.4:
-    resolution: {integrity: sha512-qSwPKhfy0A2IoL94jllHNrMk+Z51LXGFymYpLd7yQ68RDnZ/4mQSymNo22piv3jGchAbddAHoAsTenR55+q9LA==}
+  typedbrainz@0.2.0:
+    resolution: {integrity: sha512-LMwmoJCv7diKpCqEPHmf53i6JpMAxrxZ1oDGBXWhp0IMM//FZj3Cb1/nMMuYq/VTmX0/rh0Ll1EXse1KdVhHUQ==}
 
   typescript@5.9.2:
     resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
@@ -3539,7 +3539,7 @@ snapshots:
 
   type-fest@0.21.3: {}
 
-  typedbrainz@0.1.4: {}
+  typedbrainz@0.2.0: {}
 
   typescript@5.9.2: {}
 
