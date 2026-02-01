@@ -17,12 +17,14 @@ export type BannerType = {
 
     grant: (
         | "GM_getValue"
+        | "GM.getValue"
         | "GM_setValue"
         | "GM.registerMenuCommand"
         | "GM.xmlHttpRequest"
         | "GM_addStyle"
         | "GM.getResourceUrl"
         | "GM_getResourceURL"
+        | "GM.openInTab"
         | "unsafeWindow"
     )[] | "none",
     connect?: string[],
