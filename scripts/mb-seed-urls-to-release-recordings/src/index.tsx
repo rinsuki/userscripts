@@ -5,7 +5,7 @@ import { applyRelationships, PreparedRelationship } from "./apply-relationships"
 defineUserScript({
     name: "MusicBrainz: Seed URLs to Release Recordings",
     namespace: "https://rinsuki.net",
-    version: "0.2.2",
+    version: "0.2.3",
     description: "Import recording-url relationship to release's recordings.",
     author: "rinsuki",
     match: [
@@ -30,7 +30,8 @@ async function main() {
         return
     }
 
-    const { linkedEntities, relationshipEditor } = window.MB
+    const { linkedEntities, relationshipEditor, tree } = window.MB
+    if (tree == null) throw new Error("MB.tree is missing...")
     const button = document.createElement("button")
     button.textContent = "Seed URLs to Recordings"
     button.style.zoom = "2"
@@ -44,7 +45,7 @@ async function main() {
         const json = zSeedJSON.parse(anyJSON)
         const errors: string[] = []
         const preparedRelationships: PreparedRelationship[] = []
-        for (const track of relationshipEditor.state.entity.mediums.flatMap(m => m.tracks ?? [])) {
+        for (const track of tree.iterate(relationshipEditor.state.mediums).flatMap(m => tree.iterate(m[1]))) {
             if (!(track.recording.gid in json.recordings)) continue
             const rels = json.recordings[track.recording.gid]
             delete json.recordings[track.recording.gid]
