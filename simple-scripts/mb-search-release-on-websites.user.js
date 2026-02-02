@@ -118,4 +118,5 @@
     const releaseEditor = window.MB.releaseEditor
     releaseEditor.rootField.release().name.subscribe(() => refresh())
     releaseEditor.rootField.release().barcode.value.subscribe(() => refresh())
+    releaseEditor.externalLinksEditData.subscribe(() => refresh())
 })()
