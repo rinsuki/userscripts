@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            MusicBrainz: Seed URLs to Release Recordings
 // @namespace       https://rinsuki.net
-// @version         0.2.2
+// @version         0.2.3
 // @description     Import recording-url relationship to release's recordings.
 // @author          rinsuki
 // @match           https://musicbrainz.org/release/*/edit-relationships
@@ -108,7 +108,9 @@
         if (!isReleaseRelationshipEditor(window.MB.relationshipEditor)) {
             return;
         }
-        const { linkedEntities, relationshipEditor } = window.MB;
+        const { linkedEntities, relationshipEditor, tree } = window.MB;
+        if (tree == null)
+            throw new Error("MB.tree is missing...");
         const button = document.createElement("button");
         button.textContent = "Seed URLs to Recordings";
         button.style.zoom = "2";
@@ -122,7 +124,7 @@
             const json = zSeedJSON.parse(anyJSON);
             const errors = [];
             const preparedRelationships = [];
-            for (const track of relationshipEditor.state.entity.mediums.flatMap(m => m.tracks ?? [])) {
+            for (const track of tree.iterate(relationshipEditor.state.mediums).flatMap(m => tree.iterate(m[1]))) {
                 if (!(track.recording.gid in json.recordings))
                     continue;
                 const rels = json.recordings[track.recording.gid];
