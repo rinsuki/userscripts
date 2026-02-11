@@ -6,7 +6,7 @@ import { MBReleaseEditor } from "./_common/mb/release-editor"
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",
     namespace: "https://rinsuki.net",
-    version: "0.2.0",
+    version: "0.2.1",
     grant: "none",
     match: [
         "https://*musicbrainz.org/release/*/edit",
@@ -24,6 +24,7 @@ function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, art
     // ループ中にnamesを書き換えるのであえて for-of を使わない
     for (let i = 0; i < names.length; i++) {
         const name = names[i]
+        name.joinPhrase ??= ""
         // アーティストIDが不明の場合、先頭一致できる名前を探す
         if (!isArtistExist(name.artist)) {
             for (const [knownName, knownArtist] of creditMap) {
