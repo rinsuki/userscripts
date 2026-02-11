@@ -3,6 +3,8 @@ import { ArtistCreditNameT, LabelT, LinkMapT } from "typedbrainz/types"
 import { ExternalLinksEditorResult } from "./external-links-editor"
 
 declare class EditorMedium {
+    position: Observable<number>
+    name: Observable<string>
     tracks: ObservableArray<EditorTrack>
 }
 
@@ -46,6 +48,7 @@ declare class EditorRelease {
             names: ArtistCreditNameT[]
         }
     }>
+    mediums: ObservableArray<EditorMedium>
 
     allTracks: () => Iterable<EditorTrack>
 }
@@ -65,4 +68,8 @@ export interface MBReleaseEditor {
 
 export type MBWithReleaseEditor = typeof window.MB & {
     releaseEditor: MBReleaseEditor
+}
+
+export function isMBWithReleaseEditor(mb: typeof window.MB): mb is MBWithReleaseEditor {
+    return (mb as MBWithReleaseEditor).releaseEditor !== undefined
 }
