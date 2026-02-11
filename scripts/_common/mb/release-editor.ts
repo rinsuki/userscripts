@@ -53,6 +53,7 @@ declare class EditorRelease {
 export interface MBReleaseEditor {
     rootField: {
         release: Observable<EditorRelease>
+        editNote: Observable<string>
     }
     externalLinks: ExternalLinksEditorResult
     externalLinksEditData: Observable<{
