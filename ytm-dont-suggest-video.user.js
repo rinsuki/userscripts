@@ -5,6 +5,8 @@
 // @grant       none
 // @author      rinsuki
 // @run-at      document-start
+// @version     0.1.0
+// @description Hide video-only tracks from "Up Next" tab on YTM.
 // @homepageURL https://github.com/rinsuki/userscripts
 // @supportURL  https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
