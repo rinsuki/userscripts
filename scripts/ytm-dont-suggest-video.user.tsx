@@ -31,20 +31,16 @@ function shouldFilterThisEntry(json: any): boolean {
 }
 
 function handleNextResponse(json: any) {
-    let checked = false
     if (Array.isArray(json.continuationContents?.playlistPanelContinuation?.contents)) {
         json.continuationContents.playlistPanelContinuation.contents = json.continuationContents.playlistPanelContinuation.contents.filter(shouldFilterThisEntry);
-        checked = true
     }
     if (Array.isArray(json.contents?.singleColumnMusicWatchNextResultsRenderer?.tabbedRenderer?.watchNextTabbedResultsRenderer?.tabs)) {
         for (const tab of json.contents.singleColumnMusicWatchNextResultsRenderer.tabbedRenderer.watchNextTabbedResultsRenderer.tabs) {
             if (Array.isArray(tab.tabRenderer?.content?.musicQueueRenderer?.content?.playlistPanelRenderer?.contents)) {
                 tab.tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents = tab.tabRenderer.content.musicQueueRenderer.content.playlistPanelRenderer.contents.filter(shouldFilterThisEntry);
-                checked = true
             }
         }
     }
-    if (!checked) debugger;
 }
 
 window.fetch = new Proxy(window.fetch, {
