@@ -5,6 +5,8 @@ defineUserScript({
     grant: "none",
     author: "rinsuki",
     runAt: "document-start",
+    version: "0.1.0",
+    description: "Hide video-only tracks from \"Up Next\" tab on YTM.",
 })
 
 function urlFromFetch(input: Parameters<typeof fetch>[0]): string {
