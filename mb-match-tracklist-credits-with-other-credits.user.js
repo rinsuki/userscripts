@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MB: Match Tracklist Credits with Other Credits
 // @namespace   https://rinsuki.net
-// @version     0.2.1
+// @version     0.2.2
 // @grant       none
 // @match       https://*musicbrainz.org/release/*/edit
 // @match       https://*musicbrainz.org/release/add
@@ -13,7 +13,7 @@
     'use strict';
 
     function isArtistExist(artist) {
-        return artist != null && artist.id != 0;
+        return artist != null && artist.id != 0 && artist.id != null;
     }
     function doItForSpecificArtistCredit(creditMap, artistCredit) {
         const names = [...artistCredit().names];
@@ -122,7 +122,7 @@
                     if (current == null)
                         continue;
                     console.log(current);
-                    if (current.id !== credit.artist.id) {
+                    if (current.id != null && current.id !== credit.artist.id) {
                         creditMap.set(credit.name, null);
                     }
                 }
