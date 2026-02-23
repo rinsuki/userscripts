@@ -6,7 +6,7 @@ import { MBReleaseEditor } from "./_common/mb/release-editor"
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",
     namespace: "https://rinsuki.net",
-    version: "0.2.1",
+    version: "0.2.2",
     grant: "none",
     match: [
         "https://*musicbrainz.org/release/*/edit",
@@ -15,7 +15,7 @@ defineUserScript({
 })
 
 function isArtistExist(artist: ArtistT | null): artist is ArtistT {
-    return artist != null && artist.id != 0
+    return artist != null && artist.id != 0 && artist.id != null
 }
 
 function doItForSpecificArtistCredit(creditMap: Map<string, ArtistT | null>, artistCredit: Observable<{ names: ArtistCreditNameT[] }>) {
@@ -119,7 +119,7 @@ async function doItEntirely(withShiftKey: boolean) {
                 const current = creditMap.get(credit.name)
                 if (current == null) continue
                 console.log(current)
-                if (current.id !== credit.artist.id) {
+                if (current.id != null && current.id !== credit.artist.id) {
                     creditMap.set(credit.name, null)
                 }
             }
