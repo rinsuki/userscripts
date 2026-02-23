@@ -6,7 +6,7 @@ import { MBReleaseEditor } from "./_common/mb/release-editor"
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",
     namespace: "https://rinsuki.net",
-    version: "0.2.2",
+    version: "0.2.3",
     grant: "none",
     match: [
         "https://*musicbrainz.org/release/*/edit",
@@ -139,7 +139,7 @@ async function doItEntirely(withShiftKey: boolean) {
 const button = document.createElement("button")
 button.id = "mb-match-tracklist-credits-with-other-credits-button"
 document.getElementById(button.id)?.remove()
-button.textContent = "Match Tracklist Credits with Other Credits"
+button.textContent = "Match Tracklist Credits with Other Credits (Click with Shift key to load from another release)"
 button.addEventListener("click", (e) => {
     doItEntirely(e.shiftKey)
 })
