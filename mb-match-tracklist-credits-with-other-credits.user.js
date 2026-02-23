@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MB: Match Tracklist Credits with Other Credits
 // @namespace   https://rinsuki.net
-// @version     0.2.3
+// @version     0.3.0
 // @grant       none
 // @match       https://*musicbrainz.org/release/*/edit
 // @match       https://*musicbrainz.org/release/add
@@ -83,10 +83,10 @@
             ...editor.rootField.release().artistCredit().names,
             ...Array.from(editor.rootField.release().allTracks()).flatMap(t => [...t.artistCredit().names, ...t.recording().artistCredit.names]),
         ];
-        if (withShiftKey) {
-            const releaseUrl = prompt("Enter the release URL to copy credits from");
-            if (releaseUrl == null || releaseUrl === "")
-                return;
+        const releaseUrl = prompt("Enter the release URL to copy credits from (If you keep it empty, it will only match within the current release)");
+        if (releaseUrl == null)
+            return;
+        if (releaseUrl.length) {
             const mbid = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i.exec(releaseUrl)?.[0];
             if (mbid == null) {
                 alert("Invalid release URL");
@@ -138,7 +138,7 @@
     const button = document.createElement("button");
     button.id = "mb-match-tracklist-credits-with-other-credits-button";
     document.getElementById(button.id)?.remove();
-    button.textContent = "Match Tracklist Credits with Other Credits (Click with Shift key to load from another release)";
+    button.textContent = "Match Tracklist Credits with Other Credits";
     button.addEventListener("click", (e) => {
         doItEntirely(e.shiftKey);
     });
