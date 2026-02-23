@@ -1,6 +1,5 @@
 import { ArtistCreditNameT, ArtistT } from "typedbrainz/types"
-import { getReleaseRelationshipEditorOrThrow } from "./_common/mb/get-release-relationship-editor-or-throw"
-import type { Observable, ObservableArray } from "knockout"
+import type { Observable } from "knockout"
 import { MBReleaseEditor } from "./_common/mb/release-editor"
 
 defineUserScript({
