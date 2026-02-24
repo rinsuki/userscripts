@@ -1,0 +1,1 @@
+export const MEDIUM_FORMAT_DIGITAL_RELEASE = "12"
