@@ -1,5 +1,5 @@
 import { Computed, Observable, ObservableArray } from "knockout"
-import { ArtistCreditNameT, LabelT, LinkMapT } from "typedbrainz/types"
+import { ArtistCreditNameT, LabelT, LinkMapT, MediumT, TrackT } from "typedbrainz/types"
 import { ExternalLinksEditorResult } from "./external-links-editor"
 
 export declare class EditorMedium {
@@ -9,11 +9,17 @@ export declare class EditorMedium {
     position: Observable<number>
     name: Observable<string>
     tracks: ObservableArray<EditorTrack>
+
+    pushTrack(data: Partial<TrackT>): void
+
+    constructor(medium: Partial<MediumT>, release: EditorRelease)
 }
 
-declare class EditorTrack {
+export declare class EditorTrack {
     name: Observable<string>
     medium: EditorMedium
+    /// milliseconds
+    length: Observable<number | null>
     artistCredit: Observable<{
         names: ArtistCreditNameT[]
     }>
