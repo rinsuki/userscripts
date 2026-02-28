@@ -9,11 +9,11 @@ defineUserScript({
     author: "rinsuki",
     grant: "none",
     match: [
-        "https://*musicbrainz.org/release/add*",
-        "https://*musicbrainz.org/release/*/edit*"
+        "https://*.musicbrainz.org/release/add*",
+        "https://*.musicbrainz.org/release/*/edit*"
     ],
     excludeMatch: [
-        "https://*musicbrainz.org/release/*/edit-relationships*"
+        "https://*.musicbrainz.org/release/*/edit-relationships*"
     ],
     runAt: "document-idle",
 })

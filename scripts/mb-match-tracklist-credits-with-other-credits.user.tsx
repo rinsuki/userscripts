@@ -8,8 +8,8 @@ defineUserScript({
     version: "0.3.0",
     grant: "none",
     match: [
-        "https://*musicbrainz.org/release/*/edit",
-        "https://*musicbrainz.org/release/add",
+        "https://*.musicbrainz.org/release/*/edit",
+        "https://*.musicbrainz.org/release/add",
     ]
 })
 

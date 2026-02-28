@@ -11,7 +11,7 @@ defineUserScript({
     namespace: "https://rinsuki.net",
     author: "rinsuki",
     match: [
-        "https://*musicbrainz.org/release/*/edit-relationships*"
+        "https://*.musicbrainz.org/release/*/edit-relationships*"
     ]
 })
 

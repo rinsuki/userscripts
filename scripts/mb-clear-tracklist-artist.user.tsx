@@ -4,8 +4,8 @@ defineUserScript({
     name: "MB: Clear Tracklist Artist",
     namespace: "https://rinsuki.net",
     match: [
-        "https://*musicbrainz.org/release/add",
-        "https://*musicbrainz.org/release/*/edit"
+        "https://*.musicbrainz.org/release/add",
+        "https://*.musicbrainz.org/release/*/edit"
     ],
     grant: "none",
     author: "rinsuki",
