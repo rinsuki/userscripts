@@ -1,12 +1,14 @@
 // ==UserScript==
-// @name        MB: Create Release from Other Release
-// @match       https://*.musicbrainz.org/release-group/*
-// @grant       none
-// @namespace   https://rinsuki.net
-// @author      rinsuki
-// @description in the release group page
-// @homepageURL https://github.com/rinsuki/userscripts
-// @supportURL  https://github.com/rinsuki/userscripts/issues
+// @name            MB: Create Release from Other Release
+// @match           https://*.musicbrainz.org/release-group/*
+// @grant           none
+// @namespace       https://rinsuki.net
+// @author          rinsuki
+// @description     in the release group page
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

@@ -1,12 +1,14 @@
 // ==UserScript==
-// @name        MB: Match Tracklist Credits with Other Credits
-// @namespace   https://rinsuki.net
-// @version     0.3.0
-// @grant       none
-// @match       https://*.musicbrainz.org/release/*/edit
-// @match       https://*.musicbrainz.org/release/add
-// @homepageURL https://github.com/rinsuki/userscripts
-// @supportURL  https://github.com/rinsuki/userscripts/issues
+// @name            MB: Match Tracklist Credits with Other Credits
+// @namespace       https://rinsuki.net
+// @version         0.3.0
+// @grant           none
+// @match           https://*.musicbrainz.org/release/*/edit
+// @match           https://*.musicbrainz.org/release/add
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

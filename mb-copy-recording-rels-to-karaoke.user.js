@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name        MB: Copy Recording Relationships to Karaoke/Edited Recordings
-// @description Copy recording-{artist, work, etc...} relationships to karaoke/edited recordings with one button!
-// @version     0.2.0
-// @grant       none
-// @namespace   https://rinsuki.net
-// @author      rinsuki
-// @match       https://*.musicbrainz.org/release/*/edit-relationships*
-// @homepageURL https://github.com/rinsuki/userscripts
-// @supportURL  https://github.com/rinsuki/userscripts/issues
-// @require     https://cdn.jsdelivr.net/npm/@rinsuki/dom-chef@5.1.1/umd.js#sha256-EvGMVNob2jRhcwSo8gGGJp3mZJENNaQwrpYlNRQlUMc=,sha512-b/5dx8A+dc01RsqR2hF2Na/DFwwn64M4PQFka7dXhcAeXjPfpkgWS9YFs1LHPaEckkxAI7ivhVn6i+OrFivnYQ==
+// @name            MB: Copy Recording Relationships to Karaoke/Edited Recordings
+// @description     Copy recording-{artist, work, etc...} relationships to karaoke/edited recordings with one button!
+// @version         0.2.0
+// @grant           none
+// @namespace       https://rinsuki.net
+// @author          rinsuki
+// @match           https://*.musicbrainz.org/release/*/edit-relationships*
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @require         https://cdn.jsdelivr.net/npm/@rinsuki/dom-chef@5.1.1/umd.js#sha256-EvGMVNob2jRhcwSo8gGGJp3mZJENNaQwrpYlNRQlUMc=,sha512-b/5dx8A+dc01RsqR2hF2Na/DFwwn64M4PQFka7dXhcAeXjPfpkgWS9YFs1LHPaEckkxAI7ivhVn6i+OrFivnYQ==
 // ==/UserScript==
 
 (function () {

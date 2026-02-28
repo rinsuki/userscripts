@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name        YTM: Don't Suggest Video
-// @namespace   https://rinsuki.net
-// @match       https://music.youtube.com/*
-// @grant       none
-// @author      rinsuki
-// @run-at      document-start
-// @version     0.1.0
-// @description Hide video-only tracks from "Up Next" tab on YTM.
-// @homepageURL https://github.com/rinsuki/userscripts
-// @supportURL  https://github.com/rinsuki/userscripts/issues
+// @name            YTM: Don't Suggest Video
+// @namespace       https://rinsuki.net
+// @match           https://music.youtube.com/*
+// @grant           none
+// @author          rinsuki
+// @run-at          document-start
+// @version         0.1.0
+// @description     Hide video-only tracks from "Up Next" tab on YTM.
+// @contributionURL https://rinsuki.fanbox.cc/
+// @contributionURL https://github.com/sponsors/rinsuki
+// @homepageURL     https://github.com/rinsuki/userscripts
+// @supportURL      https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {
