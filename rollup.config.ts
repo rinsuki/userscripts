@@ -49,7 +49,10 @@ function convertBannerObjectToString(opts: BannerType): string {
     const optsArray: (readonly [string, string])[] = Object.entries(opts).flatMap(([key, value]) => {
         if (key === "includeContributionURL" && value) {
             return [
-                ["contributionURL", "https://rinsuki.fanbox.cc/"],
+                // Greasy Fork は最初の contributionURL しか表示しない
+                // ので、GitHub Sponsors だけを置く
+                // (どちらにせよ GitHub Sponsors の説明に FANBOX のリンクもあるし、GitHub Sponsors は手数料がタダなのでそちらを優先したい……)
+                // ["contributionURL", "https://rinsuki.fanbox.cc/"],
                 ["contributionURL", "https://github.com/sponsors/rinsuki"],
             ] as const
         }
