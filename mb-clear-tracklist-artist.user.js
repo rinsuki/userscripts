@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        MB: Clear Tracklist Artist
 // @namespace   https://rinsuki.net
-// @match       https://*musicbrainz.org/release/add
-// @match       https://*musicbrainz.org/release/*/edit
+// @match       https://*.musicbrainz.org/release/add
+// @match       https://*.musicbrainz.org/release/*/edit
 // @grant       none
 // @author      rinsuki
 // @homepageURL https://github.com/rinsuki/userscripts

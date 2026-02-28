@@ -3,8 +3,8 @@
 // @namespace   https://rinsuki.net
 // @version     0.3.0
 // @grant       none
-// @match       https://*musicbrainz.org/release/*/edit
-// @match       https://*musicbrainz.org/release/add
+// @match       https://*.musicbrainz.org/release/*/edit
+// @match       https://*.musicbrainz.org/release/add
 // @homepageURL https://github.com/rinsuki/userscripts
 // @supportURL  https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==

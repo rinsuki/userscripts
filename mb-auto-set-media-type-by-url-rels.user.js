@@ -4,9 +4,9 @@
 // @namespace     https://rinsuki.net
 // @author        rinsuki
 // @grant         none
-// @match         https://*musicbrainz.org/release/add*
-// @match         https://*musicbrainz.org/release/*/edit*
-// @exclude-match https://*musicbrainz.org/release/*/edit-relationships*
+// @match         https://*.musicbrainz.org/release/add*
+// @match         https://*.musicbrainz.org/release/*/edit*
+// @exclude-match https://*.musicbrainz.org/release/*/edit-relationships*
 // @run-at        document-idle
 // @homepageURL   https://github.com/rinsuki/userscripts
 // @supportURL    https://github.com/rinsuki/userscripts/issues

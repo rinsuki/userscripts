@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        MB: Create Release from Other Release
-// @match       https://*musicbrainz.org/release-group/*
+// @match       https://*.musicbrainz.org/release-group/*
 // @grant       none
 // @namespace   https://rinsuki.net
 // @author      rinsuki
