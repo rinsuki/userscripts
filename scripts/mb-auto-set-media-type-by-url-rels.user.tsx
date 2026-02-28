@@ -16,6 +16,7 @@ defineUserScript({
         "https://*.musicbrainz.org/release/*/edit-relationships*"
     ],
     runAt: "document-idle",
+    includeContributionURL: true,
 })
 
 const DIGITAL_MEDIA_TYPES = [

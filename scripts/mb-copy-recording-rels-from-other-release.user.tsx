@@ -12,7 +12,8 @@ defineUserScript({
     author: "rinsuki",
     match: [
         "https://*.musicbrainz.org/release/*/edit-relationships*"
-    ]
+    ],
+    includeContributionURL: false, // since its wip
 })
 
 let abortController: AbortController | null = null

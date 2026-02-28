@@ -6,6 +6,7 @@ defineUserScript({
     match: ["https://*.musicbrainz.org/search*"],
     description: "Add seed barcode to new release button, highlights barcode-matched releases",
     grant: "none",
+    includeContributionURL: true,
 })
 
 function main() {

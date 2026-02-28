@@ -9,6 +9,7 @@ defineUserScript({
     ],
     grant: "none",
     author: "rinsuki",
+    includeContributionURL: true,
 })
 
 function main() {

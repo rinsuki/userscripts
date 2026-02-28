@@ -7,6 +7,7 @@ defineUserScript({
     namespace: "https://rinsuki.net",
     author: "rinsuki",
     description: "in the release group page",
+    includeContributionURL: true,
 })
 
 function main() {

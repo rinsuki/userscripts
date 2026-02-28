@@ -7,7 +7,8 @@ defineUserScript({
     match: [
         "https://*.musicbrainz.org/release/*/edit",
         "https://*.musicbrainz.org/release/add",
-    ]
+    ],
+    includeContributionURL: false, // still wip
 })
 
 function main() {

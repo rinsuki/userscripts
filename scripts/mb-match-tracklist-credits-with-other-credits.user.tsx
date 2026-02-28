@@ -10,7 +10,8 @@ defineUserScript({
     match: [
         "https://*.musicbrainz.org/release/*/edit",
         "https://*.musicbrainz.org/release/add",
-    ]
+    ],
+    includeContributionURL: true,
 })
 
 function isArtistExist(artist: ArtistT | null): artist is ArtistT {

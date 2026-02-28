@@ -5,6 +5,7 @@ defineUserScript({
     version: "1.0",
     match: ["https://accounts.nintendo.com/*"],
     grant: "none",
+    includeContributionURL: false,
 });
 
 (() => {

@@ -12,7 +12,8 @@ defineUserScript({
     author: "rinsuki",
     match: [
         "https://*.musicbrainz.org/release/*/edit-relationships*"
-    ]
+    ],
+    includeContributionURL: true,
 })
 
 const KARAOKE_REL_LINK_TYPE_ID = 226 // gid: 39a08d0e-26e4-44fb-ae19-906f5fe9435d

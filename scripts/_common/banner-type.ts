@@ -33,7 +33,7 @@ export type BannerType = {
     resource?: Record<string, string>,
 
     license?: typeof licenses[number],
-    includeContributionURL?: boolean,
+    includeContributionURL: boolean,
     author?: string,
     homepageURL?: string,
     supportURL?: string,
