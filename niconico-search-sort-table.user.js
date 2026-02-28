@@ -6,7 +6,6 @@
 // @author          rinsuki
 // @match           https://www.nicovideo.jp/tag/*
 // @match           https://www.nicovideo.jp/search/*
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

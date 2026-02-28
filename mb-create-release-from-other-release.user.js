@@ -5,7 +5,6 @@
 // @namespace       https://rinsuki.net
 // @author          rinsuki
 // @description     in the release group page
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

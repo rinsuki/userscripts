@@ -9,7 +9,6 @@
 // @grant           GM_setValue
 // @grant           GM.registerMenuCommand
 // @grant           GM.xmlHttpRequest
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

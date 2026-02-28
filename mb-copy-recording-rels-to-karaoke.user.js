@@ -6,7 +6,6 @@
 // @namespace       https://rinsuki.net
 // @author          rinsuki
 // @match           https://*.musicbrainz.org/release/*/edit-relationships*
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

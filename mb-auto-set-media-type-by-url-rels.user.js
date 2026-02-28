@@ -8,7 +8,6 @@
 // @match           https://*.musicbrainz.org/release/*/edit*
 // @exclude-match   https://*.musicbrainz.org/release/*/edit-relationships*
 // @run-at          document-idle
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

@@ -4,7 +4,6 @@
 // @match           https://*.musicbrainz.org/search*
 // @description     Add seed barcode to new release button, highlights barcode-matched releases
 // @grant           none
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues

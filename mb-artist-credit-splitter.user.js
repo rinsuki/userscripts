@@ -6,7 +6,6 @@
 // @author          rinsuki
 // @match           https://musicbrainz.org/*
 // @grant           none
-// @contributionURL https://rinsuki.fanbox.cc/
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
 // @supportURL      https://github.com/rinsuki/userscripts/issues
