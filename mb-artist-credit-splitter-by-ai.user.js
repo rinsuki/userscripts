@@ -4,7 +4,7 @@
 // @version         1.1.0
 // @description     OpenRouter でいい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)
 // @author          rinsuki
-// @match           https://musicbrainz.org/*
+// @match           https://*.musicbrainz.org/*
 // @grant           GM_getValue
 // @grant           GM_setValue
 // @grant           GM.registerMenuCommand

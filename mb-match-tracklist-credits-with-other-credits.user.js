@@ -115,17 +115,15 @@
             }
             else {
                 if (!isArtistExist(credit.artist)) {
-                    console.warn("?");
-                    creditMap.set(credit.name, null);
+                    // 同じ名前で、名寄せ済みのクレジットと名寄せされていないクレジットがある → 名寄せされていないクレジットは無視
+                    continue;
                 }
-                else {
-                    const current = creditMap.get(credit.name);
-                    if (current == null)
-                        continue;
-                    console.log(current);
-                    if (current.id != null && current.id !== credit.artist.id) {
-                        creditMap.set(credit.name, null);
-                    }
+                const current = creditMap.get(credit.name);
+                if (current == null)
+                    continue;
+                console.log(current);
+                if (current.id != null && current.id !== credit.artist.id) {
+                    creditMap.set(credit.name, null);
                 }
             }
         }
