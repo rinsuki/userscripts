@@ -14,8 +14,7 @@ defineUserScript({
     includeContributionURL: true,
 });
 
-(async () => {
-    const bubble = await waitDOMByObserve(document.body, () => document.querySelector("#artist-credit-bubble"), { subtree: false });
+async function whenBubbleHappens(bubble: HTMLElement) {
     const buttons = await waitDOMByObserve(bubble, () => bubble.querySelector(".buttons"), { subtree: false });
     const button = document.createElement("button")
     button.type = "button"
@@ -65,4 +64,17 @@ defineUserScript({
         alert("finish!")
     })
     buttons.appendChild(button)
-})()
+}
+
+const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+            if (!(node instanceof HTMLElement)) continue
+            if (node.dataset.floatingUiPortal == null) continue
+            const bubble = node.querySelector("#artist-credit-bubble")
+            if (bubble != null && bubble instanceof HTMLElement) whenBubbleHappens(bubble)
+        }
+    }
+})
+
+observer.observe(document.body, { childList: true, subtree: false })
