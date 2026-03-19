@@ -87,6 +87,50 @@ function convertBannerObjectToString(opts: BannerType): string {
     ].join("\n")
 }
 
+const ourTsPlugin = (() => {
+    const basePlugin = pluginTypescript()
+    let isBuildStarted = false
+
+    let timer: ReturnType<typeof setTimeout> | null = null
+
+    return {
+        ...basePlugin,
+        buildStart(ro) {
+            if (timer != null) {
+                clearTimeout(timer)
+                timer = null
+            }
+            if (!isBuildStarted) {
+                if (!(basePlugin.buildStart instanceof Function)) throw new Error(`Expected buildStart to be a function`);
+                basePlugin.buildStart.call(this, ro)
+                isBuildStarted = true
+            }
+        },
+        buildEnd(error) {
+            if (timer != null) clearTimeout(timer)
+            timer = setTimeout(() => {
+                if (!(basePlugin.buildEnd instanceof Function)) throw new Error(`Expected buildEnd to be a function`);
+                basePlugin.buildEnd.call(this, error)
+                isBuildStarted = false
+            }, 100)
+        }
+    } satisfies import("rollup").Plugin
+})()
+
+const sharedPlugins = [
+    ourTsPlugin,
+    pluginNodeResolve({
+        browser: true,
+    }),
+    pluginCommonjs(),
+    externalGlobals(Object.fromEntries(umdTables)),
+    string({
+        include: ["**/*.html", "**/*.css"],
+    }),
+]
+
+console.log(sharedPlugins[0])
+
 export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") && (a.includes(".user.") || !a.includes("."))).map(file => {
     const baseId = process.cwd() + "/node_modules/";
 
@@ -102,15 +146,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
             format: "iife",
         }],
         plugins: [
-            pluginTypescript(),
-            pluginNodeResolve({
-                browser: true,
-            }),
-            pluginCommonjs(),
-            externalGlobals(Object.fromEntries(umdTables)),
-            string({
-                include: ["**/*.html", "**/*.css"],
-            }),
+            ...sharedPlugins,
             {
                 name: "raw-unicode",
                 // https://github.com/microsoft/TypeScript/issues/36174
