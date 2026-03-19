@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MB: Add Spotify Search Link on ISRC page
 // @namespace   https://rinsuki.net
-// @match       https://musicbrainz.org/isrc/*
+// @match       https://*.musicbrainz.org/isrc/*
 // @grant       none
 // @version     1.0
 // @author      rinsuki

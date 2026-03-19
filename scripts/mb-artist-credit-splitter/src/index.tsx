@@ -9,7 +9,7 @@ defineUserScript({
     version: "1.0.2",
     description: "いい感じに MusicBrainz のアーティストクレジットを分割します (失敗することもあります)",
     author: "rinsuki",
-    match: "https://musicbrainz.org/*",
+    match: "https://*.musicbrainz.org/*",
     grant: "none",
     includeContributionURL: true,
 });

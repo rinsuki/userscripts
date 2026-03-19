@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name        MusicBrainz: Search Release on Websites
 // @namespace   https://rinsuki.net
-// @match       https://musicbrainz.org/release/*/edit
-// @match       https://musicbrainz.org/release/add
+// @match       https://*.musicbrainz.org/release/*/edit
+// @match       https://*.musicbrainz.org/release/add
 // @grant       none
 // @version     1.1
 // @author      rinsuki
@@ -44,6 +44,14 @@
         "mora": {
             domains: ["mora.jp"],
             search: "https://mora.jp/search/top?keyWord={query}",
+        },
+        "Qobuz": {
+            domains: ["www.qobuz.com"],
+            search: "https://www.qobuz.com/jp-ja/search/albums/{query}",
+        },
+        "TIDAL": {
+            domains: ["tidal.com"],
+            search: `https://tidal.com/search/albums?q={query}`,
         },
         "Google": {
             domains: [],

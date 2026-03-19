@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MB (New Work): Add JASRAC and NexTone ID Fields
 // @namespace   https://rinsuki.net
-// @match       https://musicbrainz.org/dialog?path=%2Fwork%2Fcreate
+// @match       https://*.musicbrainz.org/dialog?path=%2Fwork%2Fcreate
 // @grant       none
 // @version     1.0
 // @author      rinsuki

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        MB: copy artist credit
 // @namespace   https://rinsuki.net
-// @match       https://musicbrainz.org/artist/*/aliases
+// @match       https://*.musicbrainz.org/artist/*/aliases
 // @grant       none
 // @version     1.0.0
 // @author      rinsuki
