@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            MB: Match Tracklist Credits with Other Credits
 // @namespace       https://rinsuki.net
-// @version         0.3.0
+// @version         0.3.1
 // @grant           none
 // @match           https://*.musicbrainz.org/release/*/edit
 // @match           https://*.musicbrainz.org/release/add
@@ -108,23 +108,15 @@
         }
         const creditMap = new Map();
         for (const credit of currentCredits) {
-            if (!creditMap.has(credit.name)) {
-                if (isArtistExist(credit.artist)) {
-                    creditMap.set(credit.name, credit.artist);
-                }
+            if (!isArtistExist(credit.artist))
+                continue;
+            const current = creditMap.get(credit.name);
+            if (current == null || !isArtistExist(current)) {
+                creditMap.set(credit.name, credit.artist);
             }
-            else {
-                if (!isArtistExist(credit.artist)) {
-                    // 同じ名前で、名寄せ済みのクレジットと名寄せされていないクレジットがある → 名寄せされていないクレジットは無視
-                    continue;
-                }
-                const current = creditMap.get(credit.name);
-                if (current == null)
-                    continue;
-                console.log(current);
-                if (current.id != null && current.id !== credit.artist.id) {
-                    creditMap.set(credit.name, null);
-                }
+            else if (current.id !== credit.artist.id) {
+                // conflict
+                creditMap.set(credit.name, null);
             }
         }
         console.log(creditMap);
