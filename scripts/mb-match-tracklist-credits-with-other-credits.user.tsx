@@ -5,7 +5,7 @@ import { MBReleaseEditor } from "./_common/mb/release-editor"
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",
     namespace: "https://rinsuki.net",
-    version: "0.3.0",
+    version: "0.3.1",
     grant: "none",
     match: [
         "https://*.musicbrainz.org/release/*/edit",
@@ -107,21 +107,13 @@ async function doItEntirely(withShiftKey: boolean) {
 
     const creditMap = new Map<string, ArtistT | null>()
     for (const credit of currentCredits) {
-        if (!creditMap.has(credit.name)) {
-            if (isArtistExist(credit.artist)) {
-                creditMap.set(credit.name, credit.artist)
-            }
-        } else {
-            if (!isArtistExist(credit.artist)) {
-                // 同じ名前で、名寄せ済みのクレジットと名寄せされていないクレジットがある → 名寄せされていないクレジットは無視
-                continue
-            }
-            const current = creditMap.get(credit.name)
-            if (current == null) continue
-            console.log(current)
-            if (current.id != null && current.id !== credit.artist.id) {
-                creditMap.set(credit.name, null)
-            }
+        if (!isArtistExist(credit.artist)) continue
+        const current = creditMap.get(credit.name)
+        if (current == null || !isArtistExist(current)) {
+            creditMap.set(credit.name, credit.artist)
+        } else if (current.id !== credit.artist.id) {
+            // conflict
+            creditMap.set(credit.name, null)
         }
     }
 
