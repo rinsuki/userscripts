@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            MB: Copy Recording Relationships to Karaoke/Edited Recordings
 // @description     Copy recording-{artist, work, etc...} relationships to karaoke/edited recordings with one button!
-// @version         0.3.0
+// @version         0.4.0
 // @grant           none
 // @namespace       https://rinsuki.net
 // @author          rinsuki
@@ -61,7 +61,7 @@
     const WORK_REL_LINK_TYPE_ID = 278; // gid: a3005666-a872-32c3-ad06-98af558e99b0
     const WORK_REL_KARAOKE_LINK_ATTR_TYPE_ID = 1261; // gid: 3d984f6e-bbe2-4620-9425-5f32e945b60d
     const WORK_REL_PARTIAL_LINK_ATTR_TYPE_ID = 579; // gid: d2b63be6-91ec-426a-987a-30b47f8aae2d
-    async function doIt(button) {
+    async function doIt(button, doReverse) {
         const MB = window.MB;
         if (MB == null)
             return alert("MB global not found");
@@ -82,8 +82,8 @@
         for (const dstRecording of Array.from(/* currentRecordings はループ内で変化するので Array.from で確定させる */ currentRecordings.values())) {
             console.log("dstrec", dstRecording);
             const srcRecordingRels = [
-                ...dstRecording.relationships.filter(rel => KARAOKE_REL_LINK_TYPE_ID === rel.linkTypeID && rel.entity1_id === dstRecording.id),
-                ...dstRecording.relationships.filter(rel => EDITS_REL_LINK_TYPE_ID === rel.linkTypeID && rel.entity0_id === dstRecording.id),
+                ...dstRecording.relationships.filter(rel => KARAOKE_REL_LINK_TYPE_ID === rel.linkTypeID && (doReverse ? rel.entity0_id : rel.entity1_id) === dstRecording.id),
+                ...dstRecording.relationships.filter(rel => EDITS_REL_LINK_TYPE_ID === rel.linkTypeID && (doReverse ? rel.entity1_id : rel.entity0_id) === dstRecording.id),
             ];
             for (const srcRecordingRel of srcRecordingRels) {
                 const srcRecording = srcRecordingRel.target;
@@ -112,6 +112,13 @@
         await resolveRecordingsRelationships(Array.from(recToRecRelationships.values())
             .map(x => x.srcRecordingId)
             .map(gid => currentRecordings.get(gid)), button);
+        {
+            const srcRecordingIds = new Set(Array.from(recToRecRelationships.values()).map(x => x.srcRecordingId));
+            const srcRecordingsWithoutRels = Array.from(srcRecordingIds)
+                .map(gid => currentRecordings.get(gid))
+                .filter(rec => rec.relationships == null);
+            await resolveRecordingsRelationships(srcRecordingsWithoutRels, button);
+        }
         for (const recToRecRel of recToRecRelationships.values()) {
             const srcRecording = currentRecordings.get(recToRecRel.srcRecordingId);
             const dstRecording = currentRecordings.get(recToRecRel.dstRecordingId);
@@ -120,25 +127,35 @@
                     continue; // probably don't want to copy
                 if (rel.source_type === "url" || rel.target_type === "url")
                     continue; // probably don't want to copy
-                const attrs = [...rel.attributes];
+                let attrs = [...rel.attributes];
                 let oldRelationshipState = null;
                 if (rel.linkTypeID === WORK_REL_LINK_TYPE_ID) {
-                    const neededAttrIds = new Set();
-                    if (recToRecRel.karaoke)
-                        neededAttrIds.add(WORK_REL_KARAOKE_LINK_ATTR_TYPE_ID);
-                    if (recToRecRel.partial)
-                        neededAttrIds.add(WORK_REL_PARTIAL_LINK_ATTR_TYPE_ID);
-                    for (const neededAttrId of neededAttrIds) {
-                        if (attrs.find(x => x.typeID === neededAttrId) != null)
-                            continue;
-                        const neededAttr = MB.linkedEntities.link_attribute_type[neededAttrId];
-                        attrs.push({
-                            type: neededAttr,
-                            typeID: neededAttr.id,
-                            typeName: neededAttr.name,
-                        });
+                    if (doReverse) {
+                        const removeAttrIds = new Set();
+                        if (recToRecRel.karaoke)
+                            removeAttrIds.add(WORK_REL_KARAOKE_LINK_ATTR_TYPE_ID);
+                        if (recToRecRel.partial)
+                            removeAttrIds.add(WORK_REL_PARTIAL_LINK_ATTR_TYPE_ID);
+                        attrs = attrs.filter(x => !removeAttrIds.has(x.typeID));
                     }
-                    const dstRecAllRels = dstRecordingStates.get(dstRecording.gid).targetTypeGroups;
+                    else {
+                        const neededAttrIds = new Set();
+                        if (recToRecRel.karaoke)
+                            neededAttrIds.add(WORK_REL_KARAOKE_LINK_ATTR_TYPE_ID);
+                        if (recToRecRel.partial)
+                            neededAttrIds.add(WORK_REL_PARTIAL_LINK_ATTR_TYPE_ID);
+                        for (const neededAttrId of neededAttrIds) {
+                            if (attrs.find(x => x.typeID === neededAttrId) != null)
+                                continue;
+                            const neededAttr = MB.linkedEntities.link_attribute_type[neededAttrId];
+                            attrs.push({
+                                type: neededAttr,
+                                typeID: neededAttr.id,
+                                typeName: neededAttr.name,
+                            });
+                        }
+                    }
+                    const dstRecAllRels = dstRecordingStates.get(dstRecording.gid)?.targetTypeGroups;
                     const dstRecWorkRelsObj = dstRecAllRels && MB.tree
                         .iterate(dstRecAllRels)
                         .find(r => r[0] === "work")?.[1];
@@ -217,11 +234,19 @@
         DOMChef.h("button", { onClick: (e) => {
                 const button = e.currentTarget;
                 button.disabled = true;
-                doIt(button).finally(() => {
+                doIt(button, false).finally(() => {
                     button.querySelector(".only-for-loading")?.remove();
                     button.disabled = false;
                 });
-            } }, "Copy Recording Relationships to Karaoke Recordings"));
+            } }, "Copy Recording Relationships to Karaoke/Edited Recordings"),
+        DOMChef.h("button", { onClick: e => {
+                const button = e.currentTarget;
+                button.disabled = true;
+                doIt(button, true).finally(() => {
+                    button.querySelector(".only-for-loading")?.remove();
+                    button.disabled = false;
+                });
+            }, style: { marginLeft: "1em" } }, "... or FROM Karaoke/Edited Recordings"));
     document.querySelector("#content > div.tabs")?.insertAdjacentElement("afterend", elm);
 
 })();
