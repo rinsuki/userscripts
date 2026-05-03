@@ -1,18 +1,20 @@
-// ==UserScript==
-// @name        MusicBrainz: Search Release on Websites
-// @namespace   https://rinsuki.net
-// @match       https://*.musicbrainz.org/release/*/edit
-// @match       https://*.musicbrainz.org/release/add
-// @grant       none
-// @version     1.1
-// @author      rinsuki
-// ==/UserScript==
-// @ts-check
+import { iterate } from "weight-balanced-tree";
+import { isMBWithReleaseEditor } from "./_common/mb/release-editor";
 
-/// <reference types="typedbrainz" />
+defineUserScript({
+    name: "MusicBrainz: Search Release on Websites",
+    namespace: "https://rinsuki.net",
+    match: [
+        "https://*.musicbrainz.org/release/*/edit",
+        "https://*.musicbrainz.org/release/add"
+    ],
+    grant: "none",
+    version: "1.1",
+    author: "rinsuki",
+    includeContributionURL: true,
+});
 
 (async () => {
-    /** @type {{domains: string[], search: string, barcodeSearch?: string, name: string}[]} */
     const sites = Object.entries({
         "YouTube Music": {
             domains: ["music.youtube.com"],
@@ -54,22 +56,25 @@
             search: `https://tidal.com/search/albums?q={query}`,
         },
         "Google": {
-            domains: [],
+            domains: [] as string[],
             search: "https://www.google.com/search?client=firefox-b-d&q={query}",
         }
-    }).map(e => ({...e[1], name: e[0]}))
+    } satisfies Record<string, {domains: string[], search: string, barcodeSearch?: string}>).map(e => ({...e[1], name: e[0]}))
 
     let externalLinkEditor
     while (null == (externalLinkEditor = document.getElementById("external-links-editor"))) {
         await new Promise(r => setTimeout(r, 100))
     }
+    const MB = (() => {
+        const MB = window.MB
+        if (!isMBWithReleaseEditor(MB)) throw new Error("window.MB is not ready")
+        return MB
+    })()
 
     const linkList = document.createElement("ul")
     function refresh() {
         linkList.innerHTML = ""
-        /** @type {{url: string}[]} */
-        // @ts-expect-error
-        const links = Array.from(window.MB?.releaseEditor?.externalLinksEditData().newLinks.values() ?? [])
+        const links = Array.from(iterate(MB.releaseEditor.externalLinksData()))
         for (const site of sites) {
             let exists = false
             for (const link of links) {
@@ -84,8 +89,7 @@
             if (exists) {
                 link.style.opacity = "0.5"
             }
-            /** @type {HTMLInputElement | null} */
-            const barcodeInput = document.querySelector("input#barcode")
+            const barcodeInput = document.querySelector<HTMLInputElement>("input#barcode")
             if (barcodeInput && barcodeInput.value.length > 4 && site.barcodeSearch != null) {
                 // seems barcode
                 const link2 = document.createElement("a")
@@ -100,8 +104,7 @@
                 li2.appendChild(link2)
                 linkList.appendChild(li2)
             }
-            /** @type {HTMLInputElement | null} */
-            const nameInput = document.querySelector(`input#name`)
+            const nameInput = document.querySelector<HTMLInputElement>(`input#name`)
             if (!nameInput) continue;
             link.href = site.search.replace("{query}", encodeURIComponent(nameInput.value))
             link.textContent = `Search on ${site.name}`
@@ -121,10 +124,7 @@
     externalLinkEditor.parentElement?.parentElement?.appendChild(linkList)
     refresh()
 
-    /** @type {import("../scripts/_common/mb/release-editor").MBReleaseEditor} */
-    // @ts-expect-error
-    const releaseEditor = window.MB.releaseEditor
-    releaseEditor.rootField.release().name.subscribe(() => refresh())
-    releaseEditor.rootField.release().barcode.value.subscribe(() => refresh())
-    releaseEditor.externalLinksEditData.subscribe(() => refresh())
+    MB.releaseEditor.rootField.release().name.subscribe(() => refresh())
+    MB.releaseEditor.rootField.release().barcode.value.subscribe(() => refresh())
+    MB.releaseEditor.externalLinksData.subscribe(() => refresh())
 })()
