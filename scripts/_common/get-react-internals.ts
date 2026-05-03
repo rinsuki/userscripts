@@ -14,6 +14,7 @@ export function getReactContainer(elem: Element): ReactInternalContainer | undef
 
 type ReactInternalFiber = {
     memoizedProps: {}
+    return?: ReactInternalFiber
 }
 
 export function getReactFiber(elem: Element): ReactInternalFiber | undefined {

@@ -1,3 +1,4 @@
+import { iterate } from "weight-balanced-tree"
 import { LINK_TYPE_GID_RELEASE_FREE_STREAMING, LINK_TYPE_GID_RELEASE_PAID_DOWNLOAD, LINK_TYPE_GID_RELEASE_PAID_STREAMING } from "./_common/mb/gid"
 import { MEDIUM_FORMAT_DIGITAL_RELEASE } from "./_common/mb/medium-format-id"
 import { type EditorMedium, type EditorRelease, isMBWithReleaseEditor, MBWithReleaseEditor } from "./_common/mb/release-editor"
@@ -26,11 +27,13 @@ const DIGITAL_MEDIA_TYPES = [
 ]
 
 function estimateMediumType(MB: MBWithReleaseEditor) {
-    for (const url of MB.releaseEditor.externalLinks?.externalLinksEditorRef.current?.state.links ?? []) {
-        if (url.type == null) continue
-        const gid = MB.linkedEntities.link_type[url.type]?.gid
-        if (DIGITAL_MEDIA_TYPES.includes(gid)) {
-            return MEDIUM_FORMAT_DIGITAL_RELEASE
+    for (const url of iterate(MB.releaseEditor.externalLinksData())) {
+        for (const rel of url.relationships) {
+            if (rel.linkTypeID == null) continue
+            const gid = MB.linkedEntities.link_type[rel.linkTypeID]?.gid
+            if (DIGITAL_MEDIA_TYPES.includes(gid)) {
+                return MEDIUM_FORMAT_DIGITAL_RELEASE
+            }
         }
     }
 }

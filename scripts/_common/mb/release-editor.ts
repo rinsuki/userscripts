@@ -1,6 +1,6 @@
 import { Computed, Observable, ObservableArray } from "knockout"
-import { ArtistCreditNameT, LabelT, LinkMapT, MediumT, TrackT } from "typedbrainz/types"
-import { ExternalLinksEditorResult } from "./external-links-editor"
+import { ArtistCreditNameT, LabelT, LinkStateT, MediumT, TrackT } from "typedbrainz/types"
+import { ImmutableTree } from "weight-balanced-tree"
 
 export declare class EditorMedium {
     release: EditorRelease
@@ -79,17 +79,13 @@ export interface MBReleaseEditor {
         release: Observable<EditorRelease>
         editNote: Observable<string>
     }
-    externalLinks?: ExternalLinksEditorResult
-    externalLinksEditData: Observable<{
-        allLinks: LinkMapT,
-        newLinks: LinkMapT,
-        oldLinks: LinkMapT,
-    }>
+    externalLinksData: Observable<ImmutableTree<LinkStateT>>
     activeTabID: Observable<(string & {}) | "#information" | "#tracklist" | "#recordings" | "#edit-note">
 }
 
 export type MBWithReleaseEditor = typeof window.MB & {
     releaseEditor: MBReleaseEditor
+    tree: NonNullable<NonNullable<typeof window.MB>["tree"]>
 }
 
 export function isMBWithReleaseEditor(mb: typeof window.MB): mb is MBWithReleaseEditor {
