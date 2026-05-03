@@ -2,6 +2,7 @@ import React from "@rinsuki/dom-chef"
 
 defineUserScript({
     name: "ErogameScape: ゲームのセール履歴を追加",
+    description: "エロゲー批評空間のゲームページに、ゲームのセール(キャンペーン)履歴を表示します。",
     version: "0.1.0",
     grant: "none",
     match: ["https://erogamescape.dyndns.org/~ap2/ero/toukei_kaiseki/game.php?*"],
