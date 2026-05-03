@@ -30,7 +30,7 @@
         return res;
     }
 
-    //#region node_modules/.pnpm/typedbrainz@0.2.0/node_modules/typedbrainz/lib/index.js
+    //#region node_modules/.pnpm/typedbrainz@0.3.0/node_modules/typedbrainz/lib/index.js
     // SPDX-License-Identifier: MIT
     function isReleaseRelationshipEditor(relationshipEditor) {
         return relationshipEditor.state?.entity.entityType === "release";
@@ -111,6 +111,7 @@
         const srcMedia = await resRaw.json().catch(e => { throw new Error(`failed to fetch medium (parsing json): ${e.message}`, { cause: e }); });
         const elm = DOMChef.h("div", null,
             DOMChef.h("button", { onClick: () => {
+                    const { MB } = window;
                     if (MB == null)
                         return;
                     const relEditor = MB.relationshipEditor;

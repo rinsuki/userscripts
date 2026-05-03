@@ -15,7 +15,7 @@
 (function () {
     'use strict';
 
-    //#region node_modules/.pnpm/typedbrainz@0.2.0/node_modules/typedbrainz/lib/index.js
+    //#region node_modules/.pnpm/typedbrainz@0.3.0/node_modules/typedbrainz/lib/index.js
     // SPDX-License-Identifier: MIT
     function isReleaseRelationshipEditor(relationshipEditor) {
         return relationshipEditor.state?.entity.entityType === "release";

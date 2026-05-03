@@ -15,7 +15,7 @@
 (function () {
     'use strict';
 
-    //#region node_modules/.pnpm/typedbrainz@0.2.0/node_modules/typedbrainz/lib/index.js
+    //#region node_modules/.pnpm/typedbrainz@0.3.0/node_modules/typedbrainz/lib/index.js
     // SPDX-License-Identifier: MIT
     function isReleaseRelationshipEditor(relationshipEditor) {
         return relationshipEditor.state?.entity.entityType === "release";
@@ -169,11 +169,11 @@
                         ? r.entity0.id === rel.target.id && r.entity1.id === dstRecording.id
                         : r.entity0.id === dstRecording.id && r.entity1.id === rel.target.id);
                     if (dstRecWorkRel != null) {
-                        const oldRelAttrIds = new Set(MB.tree.iterate(dstRecWorkRel.attributes).map(x => x.typeID));
+                        const oldRelAttrIds = new Set(MB.tree.iterate(dstRecWorkRel.attributes ?? MB.tree.empty).map(x => x.typeID));
                         if (attrs.every(x => oldRelAttrIds.has(x.typeID))) {
                             continue;
                         }
-                        const oldRelAttrNames = MB.tree.iterate(dstRecWorkRel.attributes).map(x => x.typeName).toArray().join(", ") || "(none)";
+                        const oldRelAttrNames = MB.tree.iterate(dstRecWorkRel.attributes ?? MB.tree.empty).map(x => x.typeName).toArray().join(", ") || "(none)";
                         const newRelAttrNames = attrs.map(x => x.typeName).join(", ") || "(none)";
                         if (confirm([
                             `While copying`,
