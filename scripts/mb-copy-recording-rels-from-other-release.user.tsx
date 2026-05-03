@@ -96,6 +96,7 @@ async function fetchMediumAndShowCopyUI(releasegid: string, mediumid: number, ac
 
     const elm = <div>
         <button onClick={() => {
+            const { MB } = window
             if (MB == null) return
             const relEditor = MB.relationshipEditor
             if (MB.tree == null || !isReleaseRelationshipEditor(relEditor)) return

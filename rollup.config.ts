@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import fs from "node:fs"
 import pluginTypescript from "@rollup/plugin-typescript"
 import pluginNodeResolve from "@rollup/plugin-node-resolve"

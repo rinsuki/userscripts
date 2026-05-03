@@ -26,6 +26,7 @@ export type BannerType = {
         | "GM_getResourceURL"
         | "GM.openInTab"
         | "unsafeWindow"
+        | "window.close"
     )[] | "none",
     connect?: string[],
 

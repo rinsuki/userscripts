@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { splitCredit } from "./splitter";
 
 describe("splitter", () => {
