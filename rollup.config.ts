@@ -16,7 +16,12 @@ import { runInNewContext } from "node:vm"
 import MagicString from "magic-string"
 import pluginCommonjs from "@rollup/plugin-commonjs"
 
-const files = fs.readdirSync("./scripts")
+const files = fs.readdirSync("./scripts").filter(x => !x.startsWith("_") && !x.startsWith("."))
+if (fs.existsSync("./scripts/_groups")) {
+    files.push(...fs.globSync("./scripts/_groups/*/*").map(s => s.slice("scripts/".length)))
+}
+console.log(files)
+
 const externalGlobalsTable: Record<string, { var: string } & ({ path: string } | { url: string })> = externalGlobalsTableRaw
 const umdTables = Object.entries(externalGlobalsTable)
     .map(kv => {
@@ -132,7 +137,7 @@ const sharedPlugins = [
 
 console.log(sharedPlugins[0])
 
-export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") && (a.includes(".user.") || !a.includes("."))).map(file => {
+export default files.filter(a => (a.includes(".user.") || !a.includes("."))).map(file => {
     const baseId = process.cwd() + "/node_modules/";
 
     const fileAbs = join(process.cwd(), "scripts", file);
@@ -143,7 +148,7 @@ export default files.filter(a => !a.startsWith(".") && !a.endsWith("_common") &&
         input: entry,
         output: [{
             name: file+".user",
-            file: "./dist/" + file.split(".user.")[0] + ".user.js",
+            file: "./dist/" + file.split("/").at(-1)!.split(".user.")[0] + ".user.js",
             format: "iife",
         }],
         plugins: [

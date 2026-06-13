@@ -2,7 +2,7 @@
 import { h } from "@rinsuki/dom-chef"
 import { isReleaseRelationshipEditor } from "typedbrainz"
 import { MediumRecordingStateT, RecordingT, REL_STATUS_ADD_T, REL_STATUS_EDIT_T, RelationshipEditStatusT } from "typedbrainz/types"
-import { resolveRecordingsRelationships } from "./_common/mb/resolve-recordings-relationships"
+import { resolveRecordingsRelationships } from "#common/mb/resolve-recordings-relationships"
 
 defineUserScript({
     name: "MB: Copy Recording Relationships to Karaoke/Edited Recordings",

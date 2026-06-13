@@ -1,4 +1,4 @@
-import { removeFirstZeroes } from "./_common/remove-first-zeroes"
+import { removeFirstZeroes } from "#common/remove-first-zeroes"
 
 defineUserScript({
     name: "MB: Barcode Search ++",

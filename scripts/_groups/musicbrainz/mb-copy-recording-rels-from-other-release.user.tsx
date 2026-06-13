@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from "@rinsuki/dom-chef"
-import { fetchOkOrThrow } from "./_common/fetch-ok-or-throw"
+import { fetchOkOrThrow } from "#common/fetch-ok-or-throw"
 import { MediumT, RelationshipEditStatusT, ReleaseT } from "typedbrainz/types"
 import { isReleaseRelationshipEditor } from "typedbrainz"
 

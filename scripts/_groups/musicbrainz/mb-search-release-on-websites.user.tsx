@@ -1,5 +1,5 @@
 import { iterate } from "weight-balanced-tree";
-import { isMBWithReleaseEditor } from "./_common/mb/release-editor";
+import { isMBWithReleaseEditor } from "#common/mb/release-editor";
 
 defineUserScript({
     name: "MusicBrainz: Search Release on Websites",

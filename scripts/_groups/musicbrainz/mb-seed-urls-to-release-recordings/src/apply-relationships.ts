@@ -1,5 +1,5 @@
 import { RecordingT, REL_STATUS_EDIT_T, REL_STATUS_REMOVE_T, RelationshipEditStatusT, RelationshipStateT, ReleaseRelationshipEditorActionT, UrlT } from "typedbrainz/types"
-import { CompleteReleaseRelationshipEditor } from "../../_common/mb/get-release-relationship-editor-or-throw"
+import { CompleteReleaseRelationshipEditor } from "#common/mb/get-release-relationship-editor-or-throw"
 
 export type PreparedRelationship = {
     recording: RecordingT,

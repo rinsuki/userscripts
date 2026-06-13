@@ -1,6 +1,6 @@
-import { getReactProps } from "../../_common/get-react-internals";
-import { getArtistCreditClipboard, setArtistCreditClipboard } from "../../_common/mb/artist-credit-clipboard";
-import { waitDOMByObserve } from "../../_common/wait-dom";
+import { getReactProps } from "#common/get-react-internals";
+import { getArtistCreditClipboard, setArtistCreditClipboard } from "#common/mb/artist-credit-clipboard";
+import { waitDOMByObserve } from "#common/wait-dom";
 import { splitCredit } from "./splitter";
 
 defineUserScript({

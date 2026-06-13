@@ -1,7 +1,7 @@
 import { iterate } from "weight-balanced-tree"
-import { LINK_TYPE_GID_RELEASE_FREE_STREAMING, LINK_TYPE_GID_RELEASE_PAID_DOWNLOAD, LINK_TYPE_GID_RELEASE_PAID_STREAMING } from "./_common/mb/gid"
-import { MEDIUM_FORMAT_DIGITAL_RELEASE } from "./_common/mb/medium-format-id"
-import { type EditorMedium, type EditorRelease, isMBWithReleaseEditor, MBWithReleaseEditor } from "./_common/mb/release-editor"
+import { LINK_TYPE_GID_RELEASE_FREE_STREAMING, LINK_TYPE_GID_RELEASE_PAID_DOWNLOAD, LINK_TYPE_GID_RELEASE_PAID_STREAMING } from "#common/mb/gid"
+import { MEDIUM_FORMAT_DIGITAL_RELEASE } from "#common/mb/medium-format-id"
+import { type EditorMedium, type EditorRelease, isMBWithReleaseEditor, MBWithReleaseEditor } from "#common/mb/release-editor"
 
 defineUserScript({
     name: "MB: Automatically Set Media Type by URL Relationships",

@@ -1,6 +1,6 @@
 import { ArtistCreditNameT, ArtistT } from "typedbrainz/types"
 import type { Observable } from "knockout"
-import { MBReleaseEditor } from "./_common/mb/release-editor"
+import { MBReleaseEditor } from "#common/mb/release-editor"
 
 defineUserScript({
     name: "MB: Match Tracklist Credits with Other Credits",

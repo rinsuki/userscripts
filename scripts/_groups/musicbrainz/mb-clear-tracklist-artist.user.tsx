@@ -1,4 +1,4 @@
-import { isMBWithReleaseEditor } from "./_common/mb/release-editor"
+import { isMBWithReleaseEditor } from "#common/mb/release-editor"
 
 defineUserScript({
     name: "MB: Clear Tracklist Artist",
