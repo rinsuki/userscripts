@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            MB: Split artist credit at selection
-// @description     Select text in "Artist as credited:" or "Join phrase:" in Artist Credit Editor, then Press (Ctrl or Command) + S to Split!
+// @description     Select text in "Artist as credited:" or "Join phrase:" field of Artist Credit Editor, then Press (Ctrl or Command) + S to Split!
 // @namespace       https://rinsuki.net
 // @grant           none
 // @match           https://*.musicbrainz.org/*/edit
