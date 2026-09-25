@@ -10,6 +10,7 @@ defineUserScript({
     author: "rinsuki",
     match: [
         "https://*.musicbrainz.org/release/*/edit-relationships",
+        "https://*.musicbrainz.org/release/*/edit-relationships*",
     ],
     grant: "none",
     includeContributionURL: true,
