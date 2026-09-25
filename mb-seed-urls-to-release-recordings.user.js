@@ -5,6 +5,7 @@
 // @description     Import recording-url relationship to release's recordings.
 // @author          rinsuki
 // @match           https://*.musicbrainz.org/release/*/edit-relationships
+// @match           https://*.musicbrainz.org/release/*/edit-relationships*
 // @grant           none
 // @contributionURL https://github.com/sponsors/rinsuki
 // @homepageURL     https://github.com/rinsuki/userscripts
