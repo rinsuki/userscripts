@@ -1,0 +1,21 @@
+/* ==UserStyle==
+@name           GitHub: Releases Paging Sticky
+@namespace      rinsuki.net
+@version        1.0.0
+@description    A new userstyle
+@author         rinsuki
+==/UserStyle== */
+
+@-moz-document regexp("https://github.com/[^/]+/[^/]+/releases(\\?.+?)?") {
+    turbo-frame .paginate-container {
+        position: sticky;
+        bottom: var(--base-size-16);
+        & > .pagination {
+            background: var(--bgColor-default,var(--color-canvas-default));
+            padding: var(--base-size-16);
+            border: solid 1px var(--borderColor-default,var(--color-border-default));
+            border-radius: 12px;
+            box-shadow: var(--shadow-floating-small,0 0 0 1px #d1d9e080,0 6px 12px -3px #25292e0a,0 6px 18px 0 #25292e1f);
+        }
+    }
+}
