@@ -19,4 +19,4 @@ needs: ViolentMonkeyが入ったブラウザ, Node.js, pnpm
 
 ## LICENSE
 
-MIT License.
+個々のスクリプトにライセンスが設定されているものを除いて MIT License

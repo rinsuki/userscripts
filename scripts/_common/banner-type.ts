@@ -1,4 +1,4 @@
-export const licenses = ["MIT"] as const
+export const licenses = ["MIT", "GPL-3.0-or-later"] as const
 
 export type BannerType = {
     name: string,
