@@ -21,7 +21,7 @@ function hookApplier(chunk: WebpackChunk, hooks: WebpackHook[]) {
             if (!hook.find.every(f => modCode.includes(f))) continue
             for (const patch of hook.patches) {
                 if (!patch.find.test(modCode)) {
-                    alert("RE is outdated, please tell the author to update!")
+                    alert(`RE is outdated, please tell the author to update!\n\nScript: ${GM_info.script.name}\n\nhook.find: ${JSON.stringify(hook.find)}\npatch.find: ${patch.find.source}`)
                     continue
                 }
                 console.log(patch)
