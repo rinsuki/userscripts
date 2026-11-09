@@ -34,7 +34,7 @@ function hookApplier(chunk: WebpackChunk, hooks: WebpackHook[]) {
             hook.patchedAtLeastOnce = true
         }
         if (modded) {
-            const moddedCode = `({${modCode}})`
+            const moddedCode = `({${modCode}})\n\n//# sourceURL=userscript-webpack-hook://${encodeURIComponent(GM_info.script.name.replace(/[: ]/g, "_"))}_${GM_info.script.uuid}/patched.${chunk[0].join("_")}.${modKey}.js`    
             const evaled = eval(moddedCode)
             chunk[1][modKey] = evaled[modKey]
         }
