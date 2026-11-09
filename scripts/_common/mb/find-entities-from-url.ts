@@ -9,6 +9,14 @@ const entityTypes = {
                 id: z.string(),
             })
         }).transform(d => ({target: d.label.id})),
+    },
+    artist: {
+        inc: "artist-rels",
+        scheme: z.object({
+            artist: z.object({
+                id: z.string(),
+            })
+        }).transform(d => ({target: d.artist.id})),
     }
 } as const
 
