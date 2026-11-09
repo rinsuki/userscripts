@@ -60,6 +60,7 @@ function convertBannerObjectToString(opts: BannerType): string {
                 // (どちらにせよ GitHub Sponsors の説明に FANBOX のリンクもあるし、GitHub Sponsors は手数料がタダなのでそちらを優先したい……)
                 // ["contributionURL", "https://rinsuki.fanbox.cc/"],
                 ["contributionURL", "https://github.com/sponsors/rinsuki"],
+                ["contributionAmount", "from 5.00 USD"],
             ] as const
         }
         if (key === "topInject") return [] as const
