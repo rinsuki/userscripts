@@ -1,14 +1,15 @@
 // ==UserScript==
-// @name            MusicBrainz: Search Release on Websites
-// @namespace       https://rinsuki.net
-// @match           https://*.musicbrainz.org/release/*/edit
-// @match           https://*.musicbrainz.org/release/add
-// @grant           none
-// @version         1.1
-// @author          rinsuki
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @name               MusicBrainz: Search Release on Websites
+// @namespace          https://rinsuki.net
+// @match              https://*.musicbrainz.org/release/*/edit
+// @match              https://*.musicbrainz.org/release/add
+// @grant              none
+// @version            1.1
+// @author             rinsuki
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

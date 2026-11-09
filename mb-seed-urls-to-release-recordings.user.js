@@ -1,15 +1,16 @@
 // ==UserScript==
-// @name            MusicBrainz: Seed URLs to Release Recordings
-// @namespace       https://rinsuki.net
-// @version         0.2.5
-// @description     Import recording-url relationship to release's recordings.
-// @author          rinsuki
-// @match           https://*.musicbrainz.org/release/*/edit-relationships*
-// @grant           none
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
-// @require         https://cdn.jsdelivr.net/npm/zod@3.24.4/lib/index.umd.js#sha256-JWI6HDMt5FcbdaKm+4vh+uQBgMj9/XtEIPCb6nJ87hw=,sha512-w/o1QQewvZigMuaxE5iaUXhSUomguLoRvf4n95QwcYXWxEs7xdMzM0Wmhqwt+PCcUkmE8prQjzcqDOIMhVD6ew==
+// @name               MusicBrainz: Seed URLs to Release Recordings
+// @namespace          https://rinsuki.net
+// @version            0.2.5
+// @description        Import recording-url relationship to release's recordings.
+// @author             rinsuki
+// @match              https://*.musicbrainz.org/release/*/edit-relationships*
+// @grant              none
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
+// @require            https://cdn.jsdelivr.net/npm/zod@3.24.4/lib/index.umd.js#sha256-JWI6HDMt5FcbdaKm+4vh+uQBgMj9/XtEIPCb6nJ87hw=,sha512-w/o1QQewvZigMuaxE5iaUXhSUomguLoRvf4n95QwcYXWxEs7xdMzM0Wmhqwt+PCcUkmE8prQjzcqDOIMhVD6ew==
 // ==/UserScript==
 
 (function () {

@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name            MB: Barcode Search ++
-// @namespace       https://rinsuki.net
-// @match           https://*.musicbrainz.org/search*
-// @description     Add seed barcode to new release button, highlights barcode-matched releases
-// @grant           none
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @name               MB: Barcode Search ++
+// @namespace          https://rinsuki.net
+// @match              https://*.musicbrainz.org/search*
+// @description        Add seed barcode to new release button, highlights barcode-matched releases
+// @grant              none
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

@@ -1,14 +1,15 @@
 // ==UserScript==
-// @name            Annict Slot Generator
-// @namespace       https://rinsuki.net
-// @description     Annictのスロットを自動生成します
-// @grant           none
-// @version         1.0
-// @license         MIT
-// @match           https://annict.com/*
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @name               Annict Slot Generator
+// @namespace          https://rinsuki.net
+// @description        Annictのスロットを自動生成します
+// @grant              none
+// @version            1.0
+// @license            MIT
+// @match              https://annict.com/*
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

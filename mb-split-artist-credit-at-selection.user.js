@@ -1,13 +1,14 @@
 // ==UserScript==
-// @name            MB: Split artist credit at selection
-// @description     Select text in "Artist as credited:" or "Join phrase:" field of Artist Credit Editor, then Press (Ctrl or Command) + S to Split!
-// @namespace       https://rinsuki.net
-// @grant           none
-// @match           https://*.musicbrainz.org/*/edit
-// @match           https://*.musicbrainz.org/*/create
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @name               MB: Split artist credit at selection
+// @description        Select text in "Artist as credited:" or "Join phrase:" field of Artist Credit Editor, then Press (Ctrl or Command) + S to Split!
+// @namespace          https://rinsuki.net
+// @grant              none
+// @match              https://*.musicbrainz.org/*/edit
+// @match              https://*.musicbrainz.org/*/create
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

@@ -1,16 +1,17 @@
 // ==UserScript==
-// @name            MB: Allow URL Relationships in Release Relationships Editor
-// @description     WIP!! THIS SCRIPT WOULD NOT CLEAN UP THE URL, PLEASE DO IT MANUALLY!! Special Thanks: Discord client modding community (such as Vencord), I stole the idea from them
-// @namespace       https://rinsuki.net
-// @author          rinsuki
-// @version         0.0.1
-// @license         GPL-3.0-or-later
-// @grant           none
-// @match           https://*.musicbrainz.org/release/*/edit-relationships*
-// @run-at          document-start
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
+// @name               MB: Allow URL Relationships in Release Relationships Editor
+// @description        WIP!! THIS SCRIPT WOULD NOT CLEAN UP THE URL, PLEASE DO IT MANUALLY!! Special Thanks: Discord client modding community (such as Vencord), I stole the idea from them
+// @namespace          https://rinsuki.net
+// @author             rinsuki
+// @version            0.0.1
+// @license            GPL-3.0-or-later
+// @grant              none
+// @match              https://*.musicbrainz.org/release/*/edit-relationships*
+// @run-at             document-start
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
 // ==/UserScript==
 
 (function () {

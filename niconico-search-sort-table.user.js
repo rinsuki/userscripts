@@ -1,16 +1,17 @@
 // ==UserScript==
-// @name            ニコニコ動画の検索のソート選択を表にする
-// @namespace       rinsuki.net
-// @version         1.0
-// @description     ニコニコ動画の検索のソート順を選ぶところを表レイアウトにします。
-// @author          rinsuki
-// @match           https://www.nicovideo.jp/tag/*
-// @match           https://www.nicovideo.jp/search/*
-// @contributionURL https://github.com/sponsors/rinsuki
-// @homepageURL     https://github.com/rinsuki/userscripts
-// @supportURL      https://github.com/rinsuki/userscripts/issues
-// @require         https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js#sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK/xTsvnUxN0=,sha512-QVs8Lo43F9lSuBykadDb0oSXDL/BbZ588urWVCRwSIoewQv/Ewg1f84mK3U790bZ0FfhFa1YSQUmIhG+pIRKeg==
-// @require         https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js#sha256-NfT5dPSyvNRNpzljNH+JUuNB+DkJ5EmCJ9Tia5j2bw0=,sha512-6a1107rTlA4gYpgHAqbwLAtxmWipBdJFcq8y5S/aTge3Bp+VAklABm2LO+Kg51vOWR9JMZq1Ovjl5tpluNpTeQ==
+// @name               ニコニコ動画の検索のソート選択を表にする
+// @namespace          rinsuki.net
+// @version            1.0
+// @description        ニコニコ動画の検索のソート順を選ぶところを表レイアウトにします。
+// @author             rinsuki
+// @match              https://www.nicovideo.jp/tag/*
+// @match              https://www.nicovideo.jp/search/*
+// @contributionURL    https://github.com/sponsors/rinsuki
+// @contributionAmount from 5.00 USD
+// @homepageURL        https://github.com/rinsuki/userscripts
+// @supportURL         https://github.com/rinsuki/userscripts/issues
+// @require            https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js#sha256-2Unxw2h67a3O2shSYYZfKbF80nOZfn9rK/xTsvnUxN0=,sha512-QVs8Lo43F9lSuBykadDb0oSXDL/BbZ588urWVCRwSIoewQv/Ewg1f84mK3U790bZ0FfhFa1YSQUmIhG+pIRKeg==
+// @require            https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js#sha256-NfT5dPSyvNRNpzljNH+JUuNB+DkJ5EmCJ9Tia5j2bw0=,sha512-6a1107rTlA4gYpgHAqbwLAtxmWipBdJFcq8y5S/aTge3Bp+VAklABm2LO+Kg51vOWR9JMZq1Ovjl5tpluNpTeQ==
 // ==/UserScript==
 
 (function () {
