@@ -6,7 +6,7 @@ defineUserScript({
     description: "WIP!! THIS SCRIPT WOULD NOT CLEAN UP THE URL, PLEASE DO IT MANUALLY!! Special Thanks: Discord client modding community (such as Vencord), I stole the idea from them",
     namespace: "https://rinsuki.net",
     author: "rinsuki",
-    version: "0.0.1",
+    version: "0.0.2",
     license: "GPL-3.0-or-later",
     grant: "none",
     match: [
@@ -25,6 +25,7 @@ function REpatch(input: RegExp): RegExp {
 
 const hooks: WebpackHook[] = [
     {
+        name: "patch_calculateAllowedRelations",
         find: [".link_type_tree);for("],
         patches: [
             {
@@ -34,6 +35,7 @@ const hooks: WebpackHook[] = [
         ],
     },
     {
+        name: "patch_RelationshipDialogContent_hasBlankRequiredFields",
         find: ["autocomplete?.selectedItem?.entity"],
         patches: [
             {
@@ -43,6 +45,7 @@ const hooks: WebpackHook[] = [
         ],
     },
     {
+        name: "patch_getInitialRelationshipUpdates",
         find: ['if("url"===', ".target_type)continue;"],
         patches: [
             {
@@ -59,4 +62,4 @@ declare global {
 window.webpackChunkmusicbrainz_server ??= []
 
 console.log(hooks)
-hookWebpack(window.webpackChunkmusicbrainz_server, hooks)
+hookWebpack(window.webpackChunkmusicbrainz_server, hooks, () => document.getElementById("tracklist") != null)
