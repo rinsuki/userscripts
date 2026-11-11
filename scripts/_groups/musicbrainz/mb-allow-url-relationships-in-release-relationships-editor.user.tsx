@@ -7,7 +7,7 @@ defineUserScript({
     description: "WIP!! THIS SCRIPT WOULD NOT VALIDATE THE RELATIONSHIP TYPE, PLEASE USE IT VERY CAREFULLY!! Excludes recording-url relationships. Special Thanks: Discord client modding community (such as Vencord), I stole the idea from them",
     namespace: "https://rinsuki.net",
     author: "rinsuki",
-    version: "0.1.0",
+    version: "0.1.1",
     license: "GPL-3.0-or-later", // because of hook-webpack
     grant: "none",
     match: [
@@ -32,6 +32,15 @@ const hooks: WebpackHook[] = [
                     REttl`){const`,
                 ),
                 replace: '"recording-url"!==$1',
+            },
+            {
+                // allows you to choose "Related type: URL" in "Add relationship" dialog, but for works.
+                find: REparts(
+                    REttl`}if(`,
+                    REttl`${varname(true)}!==${varname(true)}&&"url"!==${1}`,
+                    REttl`){const `
+                ),
+                replace: '$1!==$2&&("url"!==$1||"work"===$2)',
             }
         ],
     },
